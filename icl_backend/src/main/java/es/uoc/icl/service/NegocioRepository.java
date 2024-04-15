@@ -13,7 +13,8 @@ public interface NegocioRepository {
 	Negocio getNegocioConEmail(String email);
 	Negocio getNegocioConToken(String token);
 	List<Negocio> getNegocios();
-	List<Negocio> getNegociosConTipo(TipoNegocio tipo);
+	List<Negocio> getNegociosConTipo(Integer idTipoNegocio);
 	void guardarNegocio(Negocio negocio);
 	void modificarNegocio(Negocio negocio);
+	List<TipoNegocio> getTiposNegocio();
 }

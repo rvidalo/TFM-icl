@@ -13,6 +13,6 @@ public class Usuario {
     private LocalDate fechaNacimiento;
     private String email;
     private String contraseña;
-    private Boolean admin;
+    private boolean admin;
     private LocalDateTime fechaRegistro;
 }

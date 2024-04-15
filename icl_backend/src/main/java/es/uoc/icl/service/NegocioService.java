@@ -20,8 +20,8 @@ public class NegocioService {
 		return negocioRepository.getNegocios();
 	}
 	
-	public List<Negocio> getNegociosConTipo(TipoNegocio tipo){
-		return negocioRepository.getNegociosConTipo(tipo);
+	public List<Negocio> getNegociosConTipo(Integer idTipoNegocio){
+		return negocioRepository.getNegociosConTipo(idTipoNegocio);
 	}
 	
 	public Negocio getNegocio (Integer idNegocio) {
@@ -50,6 +50,10 @@ public class NegocioService {
 	
 	public void guardarNegocio(Negocio negocio) {
 		negocioRepository.guardarNegocio(negocio);
+	}
+
+	public List<TipoNegocio> getTipos() {
+		return negocioRepository.getTiposNegocio();
 	}
 	
 }
