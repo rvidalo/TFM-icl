@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="es.uoc.icl.service.UsuarioRepository">
+
+	<resultMap id="usuario" type="es.uoc.icl.domain.Usuario">
+		<id property="id" column="id" />
+		<result property="nombre" column="nombre" />
+		<result property="apellidos" column="apellidos" />
+		<result property="documento" column="documento" />
+		<result property="fechaNacimiento" column="fecha_nacimiento" />
+		<result property="email" column="email" />
+		<result property="contraseña" column="contraseña" />
+		<result property="admin" column="admin" />
+		<result property="fechaRegistro" column="fecha_registro" />
+	</resultMap>
+
+	<select id="getUsuarioConId" resultType="es.uoc.icl.domain.Usuario">
+		SELECT * FROM usuarios WHERE id = #{id}
+	</select>
+
+	<select id="getUsuarios" resultType="es.uoc.icl.domain.Usuario">
+		SELECT * FROM usuarios
+	</select>
+
+	<insert id="guardarUsuario"	parameterType="es.uoc.icl.domain.Usuario">
+		INSERT INTO usuarios (nombre, apellidos, documento, fecha_nacimiento, email,
+		contraseña, admin)
+		VALUES (#{nombre}, #{apellidos}, #{documento}, #{fechaNacimiento}, #{email},
+		#{contraseña}, #{admin})
+	</insert>
+
+	<update id="modificarUsuario" parameterType="es.uoc.icl.domain.Usuario">
+		UPDATE usuarios SET nombre = #{nombre}, apellidos = #{apellidos}, documento
+		= #{documento},
+		fecha_nacimiento = #{fechaNacimiento}, email = #{email}, contraseña = #{contraseña},
+		admin = #{admin}
+		WHERE id = #{id}
+	</update>
+
+</mapper>
