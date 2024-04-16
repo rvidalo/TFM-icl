@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="es.uoc.icl.service.ValeRepository">
+
+    <resultMap id="vale" type="es.uoc.icl.domain.Vale">
+        <id property="id" column="id"/>
+        <result property="fechaLimite" column="fecha_limite"/>
+        <result property="valorTotal" column="valor_total"/>
+        <result property="lote" column="lote"/>
+        <result property="fechaRegistro" column="fecha_registro"/>
+        <association property="usuario" javaType="es.uoc.icl.domain.Usuario">
+            <id property="id" column="usuario_id"/>
+            <result property="nombre" column="usuario_nombre"/>
+            <result property="apellidos" column="usuario_apellidos"/>
+            <result property="documento" column="usuario_documento"/>
+            <result property="fechaNacimiento" column="usuario_fecha_nacimiento"/>
+            <result property="email" column="usuario_email"/>
+            <result property="contrasena" column="usuario_contrasena"/>
+            <result property="admin" column="usuario_admin"/>
+            <result property="fechaRegistro" column="usuario_fecha_registro"/>
+        </association>
+    </resultMap>
+
+    <select id="getVale" resultMap="vale">
+        SELECT v.id, v.usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
+               u.fecha_nacimiento AS usuario_fecha_nacimiento, u.email AS usuario_email, u.contrasena AS usuario_contrasena,
+               u.admin AS usuario_admin, u.fecha_registro AS usuario_fecha_registro, v.fecha_limite, v.valor_total, v.lote, v.fecha_registro
+        FROM vale v
+        JOIN usuario u ON v.usuario_id = u.id
+        WHERE v.id = #{idVale}
+    </select>
+
+    <select id="getValeDeUsuario" resultMap="vale">
+        SELECT v.id, v.usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
+               u.fecha_nacimiento AS usuario_fecha_nacimiento, u.email AS usuario_email, u.contrasena AS usuario_contrasena,
+               u.admin AS usuario_admin, u.fecha_registro AS usuario_fecha_registro, v.fecha_limite, v.valor_total, v.lote, v.fecha_registro
+        FROM vale v
+        JOIN usuario u ON v.usuario_id = u.id
+        WHERE v.usuario_id = #{usuario.id}
+    </select>
+
+    <select id="getVales" resultMap="vale">
+        SELECT v.id, v.usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
+               u.fecha_nacimiento AS usuario_fecha_nacimiento, u.email AS usuario_email, u.contrasena AS usuario_contrasena,
+               u.admin AS usuario_admin, u.fecha_registro AS usuario_fecha_registro, v.fecha_limite, v.valor_total, v.lote, v.fecha_registro
+        FROM vale v
+        JOIN usuario u ON v.usuario_id = u.id
+    </select>
+
+    <insert id="guardarVale" parameterType="es.uoc.icl.domain.Vale">
+        INSERT INTO vale (usuario_id, fecha_limite, valor_total, lote, fecha_registro)
+        VALUES (#{usuario.id}, #{fechaLimite}, #{valorTotal}, #{lote}, #{fechaRegistro})
+    </insert>
+
+    <update id="modificarVale" parameterType="es.uoc.icl.domain.Vale">
+        UPDATE vale
+        SET usuario_id = #{usuario.id}, fecha_limite = #{fechaLimite}, valor_total = #{valorTotal}, lote = #{lote}, fecha_registro = #{fechaRegistro}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

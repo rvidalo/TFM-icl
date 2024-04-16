@@ -6,4 +6,8 @@ import lombok.Data;
 public class TipoNegocio {
 	private Integer id;
 	private String descripcion;
+	
+	public TipoNegocio(Integer id) {
+        this.id = id;
+    }
 }

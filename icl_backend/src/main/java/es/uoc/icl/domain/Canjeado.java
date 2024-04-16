@@ -1,9 +1,9 @@
 package es.uoc.icl.domain;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+
+import lombok.Data;
 
 @Data
 public class Canjeado {
@@ -13,5 +13,5 @@ public class Canjeado {
     private Usuario usuario;
     private BigDecimal total;
     private BigDecimal descuento;
-    private Date fechaRegistro;
+    private LocalDate fechaRegistro;
 }

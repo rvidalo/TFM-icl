@@ -1,9 +1,7 @@
 package es.uoc.icl.service;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
-
 import es.uoc.icl.domain.Negocio;
 import es.uoc.icl.domain.TipoNegocio;
 
@@ -17,4 +15,5 @@ public interface NegocioRepository {
 	void guardarNegocio(Negocio negocio);
 	void modificarNegocio(Negocio negocio);
 	List<TipoNegocio> getTiposNegocio();
+	List<Negocio> getNegociosAceptados();
 }

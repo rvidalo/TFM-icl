@@ -12,7 +12,7 @@ public class Usuario {
     private String documento;
     private LocalDate fechaNacimiento;
     private String email;
-    private String contraseña;
+    private String contrasena;
     private boolean admin;
     private LocalDateTime fechaRegistro;
 }

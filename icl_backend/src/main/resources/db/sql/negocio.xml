@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="es.uoc.icl.service.NegocioRepository">
+
+    <resultMap id="negocio" type="es.uoc.icl.domain.Negocio">
+	    <id property="id" column="id"/>
+	    <result property="cif" column="cif"/>
+	    <result property="email" column="email"/>
+	    <result property="nombre" column="nombre"/>
+	    <result property="direccion" column="direccion"/>
+	    <result property="valorTotal" column="valor_total"/>
+	    <result property="contrasena" column="contrasena"/>
+	    <result property="estado" column="estado"/>
+	    <result property="fechaRegistro" column="fecha_registro"/>
+	    <association property="tipo" javaType="es.uoc.icl.domain.TipoNegocio" resultMap="tipoNegocio"/>
+	</resultMap>
+
+ 	<resultMap id="tipoNegocio" type="es.uoc.icl.domain.TipoNegocio">
+        <id property="id" column="tipo_id"/>
+        <result property="descripcion" column="tipo_descripcion"/>
+    </resultMap>
+
+    <select id="getNegocio" resultMap="negocio">
+        SELECT n.id, cif, email, nombre, direccion, valor_total, contrasena, estado, fecha_registro, t.id AS tipo_id, t.descripcion AS tipo_descripcion
+		FROM negocios n
+		JOIN tipo_negocio t ON n.tipo = t.id
+        WHERE n.id = #{idNegocio}
+    </select>
+
+    <select id="getNegocioConEmail" resultMap="negocio">
+        SELECT n.id, cif, email, nombre, direccion, valor_total, contrasena, estado, fecha_registro, t.id AS tipo_id, t.descripcion AS tipo_descripcion
+		FROM negocios n
+		JOIN tipo_negocio t ON n.tipo = t.id
+        WHERE email = #{email}
+    </select>
+
+    <select id="getNegocios" resultMap="negocio">
+        SELECT n.id, cif, email, nombre, direccion, valor_total, contrasena, estado, fecha_registro, t.id AS tipo_id, t.descripcion AS tipo_descripcion
+		FROM negocios n
+		JOIN tipo_negocio t ON n.tipo = t.id
+    </select>
+    
+    <select id="getNegociosAceptados" resultMap="negocio">
+        SELECT n.id, cif, email, nombre, direccion, valor_total, contrasena, estado, fecha_registro, t.id AS tipo_id, t.descripcion AS tipo_descripcion
+		FROM negocios n
+		JOIN tipo_negocio t ON n.tipo = t.id
+        WHERE estado = 2
+    </select>
+
+    <select id="getNegociosConTipo" resultMap="negocio">
+        SELECT n.id, cif, email, nombre, direccion, valor_total, contrasena, estado, fecha_registro, t.id AS tipo_id, t.descripcion AS tipo_descripcion
+		FROM negocios n
+		JOIN tipo_negocio t ON n.tipo = t.id
+        WHERE t.id = #{idTipoNegocio}
+    </select>
+
+    <insert id="guardarNegocio" parameterType="es.uoc.icl.domain.Negocio">
+        INSERT INTO negocios (cif, email, nombre, tipo, direccion, valor_total, contrasena, estado, fecha_registro)
+        VALUES (#{cif}, #{email}, #{nombre}, #{tipo.id}, #{direccion}, #{valorTotal}, #{contrasena}, #{estado}, #{fechaRegistro})
+    </insert>
+
+    <update id="modificarNegocio" parameterType="es.uoc.icl.domain.Negocio">
+        UPDATE negocios
+        SET cif = #{cif}, email = #{email}, nombre = #{nombre}, tipo = #{tipo.id}, direccion = #{direccion}, valor_total = #{valorTotal},
+            contrasena = #{contrasena}, estado = #{estado}, fecha_registro = #{fechaRegistro}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getTiposNegocio" resultMap="tipoNegocio">
+        SELECT t.id AS tipo_id, t.descripcion AS tipo_descripcion
+        FROM tipo_negocio t
+    </select>
+
+</mapper>

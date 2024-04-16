@@ -1,16 +1,16 @@
 package es.uoc.icl.domain;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+
+import lombok.Data;
 
 @Data
 public class Vale {
     private Integer id;
     private Usuario usuario;
-    private Date fechaLimite;
+    private LocalDate fechaLimite;
     private BigDecimal valorTotal;
     private Integer lote;
-    private Date fechaRegistro;
+    private LocalDate fechaRegistro;
 }

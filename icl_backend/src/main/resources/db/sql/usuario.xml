@@ -10,7 +10,7 @@
 		<result property="documento" column="documento" />
 		<result property="fechaNacimiento" column="fecha_nacimiento" />
 		<result property="email" column="email" />
-		<result property="contraseña" column="contraseña" />
+		<result property="contrasena" column="contrasena" />
 		<result property="admin" column="admin" />
 		<result property="fechaRegistro" column="fecha_registro" />
 	</resultMap>
@@ -25,15 +25,15 @@
 
 	<insert id="guardarUsuario"	parameterType="es.uoc.icl.domain.Usuario">
 		INSERT INTO usuarios (nombre, apellidos, documento, fecha_nacimiento, email,
-		contraseña, admin)
+		contrasena, admin)
 		VALUES (#{nombre}, #{apellidos}, #{documento}, #{fechaNacimiento}, #{email},
-		#{contraseña}, #{admin})
+		#{contrasena}, #{admin})
 	</insert>
 
 	<update id="modificarUsuario" parameterType="es.uoc.icl.domain.Usuario">
 		UPDATE usuarios SET nombre = #{nombre}, apellidos = #{apellidos}, documento
 		= #{documento},
-		fecha_nacimiento = #{fechaNacimiento}, email = #{email}, contraseña = #{contraseña},
+		fecha_nacimiento = #{fechaNacimiento}, email = #{email}, contrasena = #{contrasena},
 		admin = #{admin}
 		WHERE id = #{id}
 	</update>

@@ -55,5 +55,9 @@ public class NegocioService {
 	public List<TipoNegocio> getTipos() {
 		return negocioRepository.getTiposNegocio();
 	}
+
+	public List<Negocio> getNegociosAceptados() {
+		return negocioRepository.getNegociosAceptados();
+	}
 	
 }

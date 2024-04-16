@@ -26,17 +26,27 @@ public class NegocioController {
 	@Autowired
 	NegocioService negocioService;
 	
-	@GetMapping
-	public ResponseEntity<List<Negocio>> getNegociosByGrupo(
-			@RequestParam(required = false) Integer idTipoNegocio) {
-		
+	@GetMapping("")
+	public ResponseEntity<List<Negocio>> getNegocios() {
+		List<Negocio> negocios = negocioService.getNegocios();
+		return new ResponseEntity<List<Negocio>>(negocios, HttpStatus.OK);
+	}
+	
+	@GetMapping("/aceptados")
+	public ResponseEntity<List<Negocio>> getNegociosAceptados() {
+		List<Negocio> negocios = negocioService.getNegociosAceptados();
+		return new ResponseEntity<List<Negocio>>(negocios, HttpStatus.OK);
+	}
+	
+	@GetMapping("/tipo")
+	public ResponseEntity<List<Negocio>> getNegociosConTipo(@RequestParam(required = true) Integer idTipoNegocio) {
 		List<Negocio> negocios = negocioService.getNegociosConTipo(idTipoNegocio);
 		return new ResponseEntity<List<Negocio>>(negocios, HttpStatus.OK);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("negocio")
-	public ResponseEntity<Negocio> getNegocio(@RequestParam int idNegocio) {
+	@GetMapping("/id")
+	public ResponseEntity<Negocio> getNegocio(@RequestParam (required = true) Integer idNegocio) {
 		Negocio negocio = negocioService.getNegocio(idNegocio);
 		if(negocio == null) {
 			return new ResponseEntity("El negocio no existe", HttpStatus.BAD_REQUEST);
@@ -60,7 +70,7 @@ public class NegocioController {
 		return new ResponseEntity<List<TipoNegocio>>(tipos, HttpStatus.OK);
 	}
 
-	@PostMapping("nuevo")
+	@PostMapping("/nuevo")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ResponseEntity<?> nuevoNegocio (@RequestBody Negocio negocio) {
 		if(negocioService.existeNegocioConEmail(negocio.getEmail())) {
@@ -70,7 +80,7 @@ public class NegocioController {
 		return new ResponseEntity(Collections.singletonMap("mensaje", "Negocio creado"), HttpStatus.CREATED);
 	}
 	
-	@PostMapping("actualizar")
+	@PostMapping("/actualizar")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ResponseEntity<?> modificarNegocio (@RequestBody Negocio negocio) {
 		if(!negocioService.existeNegocio(negocio.getId())) {

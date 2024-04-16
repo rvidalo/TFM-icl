@@ -11,7 +11,7 @@ public class Negocio {
     private TipoNegocio tipo;
     private String direccion;
     private Double valorTotal;
-    private String contraseña;
+    private String contrasena;
     private Integer estado;
     private String fechaRegistro;
 }
