@@ -19,6 +19,10 @@ public class UsuarioService {
 		return usuarioRepository.getUsuarios();
 	}
 	
+	public Usuario getUsuarioConEmail(String email){
+		return usuarioRepository.getUsuarioConEmail(email);
+	}
+	
 	public List<Usuario> getAdministradores(){
 		return usuarioRepository.getAdministradores();
 	}
@@ -31,12 +35,8 @@ public class UsuarioService {
 		return usuarioRepository.getUsuario(idUsuario) != null;
 	}
 	
-	public Usuario getUsuarioConEmail (String email) {
-		return usuarioRepository.getUsuarioConEmail(email);
-	}
-	
-	public boolean existeUsuarioConEmail(String email) {
-		return usuarioRepository.getUsuarioConEmail(email) != null;
+	public List<Usuario> getUsuariosConVale() {
+		return usuarioRepository.getUsuariosConVale();
 	}
 	
 	public Usuario getUsuarioConToken (String token) {
@@ -49,6 +49,16 @@ public class UsuarioService {
 	
 	public void guardarUsuario(Usuario usuario) {
 		usuarioRepository.guardarUsuario(usuario);
+	}
+
+	public boolean existeUsuarioConEmailODocumento(Usuario usuario) {
+		List<Usuario> usuariosConEmailODocumento = usuarioRepository.getUsuariosConEmailODocumento(usuario);
+		for (Usuario aux : usuariosConEmailODocumento) {
+			if(usuario.getId() != aux.getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

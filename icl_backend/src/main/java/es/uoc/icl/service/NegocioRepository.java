@@ -8,12 +8,13 @@ import es.uoc.icl.domain.TipoNegocio;
 @Mapper
 public interface NegocioRepository {
 	Negocio getNegocio(Integer idNegocio);
-	Negocio getNegocioConEmail(String email);
 	Negocio getNegocioConToken(String token);
 	List<Negocio> getNegocios();
+	List<Negocio> getNegociosConEmailOCif(Negocio negocio);
 	List<Negocio> getNegociosConTipo(Integer idTipoNegocio);
 	void guardarNegocio(Negocio negocio);
 	void modificarNegocio(Negocio negocio);
 	List<TipoNegocio> getTiposNegocio();
 	List<Negocio> getNegociosAceptados();
+	Negocio getNegocioConEmail(String email);
 }

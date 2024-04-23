@@ -48,10 +48,10 @@
                u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
                u.fecha_nacimiento as fecha_nacimiento_usuario, u.email as email_usuario, u.contrasena as contrasena_usuario,
                u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
-        FROM canjeado c
-        JOIN vale v ON c.vale_id = v.id
-        JOIN negocio n ON c.negocio_id = n.id
-        JOIN usuario u ON c.usuario_id = u.id
+        FROM canjeados c
+        JOIN vales v ON c.vale_id = v.id
+        JOIN negocios n ON c.negocio_id = n.id
+        JOIN usuarios u ON c.usuario_id = u.id
         WHERE c.id = #{idCanjeado}
     </select>
 
@@ -63,10 +63,10 @@
                u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
                u.fecha_nacimiento as fecha_nacimiento_usuario, u.email as email_usuario, u.contrasena as contrasena_usuario,
                u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
-        FROM canjeado c
-        JOIN vale v ON c.vale_id = v.id
-        JOIN negocio n ON c.negocio_id = n.id
-        JOIN usuario u ON c.usuario_id = u.id
+        FROM canjeados c
+        JOIN vales v ON c.vale_id = v.id
+        JOIN negocios n ON c.negocio_id = n.id
+        JOIN usuarios u ON c.usuario_id = u.id
     </select>
 
     <select id="getCanjeadoDeUsuario" resultMap="canjeadoResultMap">
@@ -77,10 +77,10 @@
                u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
                u.fecha_nacimiento as fecha_nacimiento_usuario, u.email as email_usuario, u.contrasena as contrasena_usuario,
                u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
-        FROM canjeado c
-        JOIN vale v ON c.vale_id = v.id
-        JOIN negocio n ON c.negocio_id = n.id
-        JOIN usuario u ON c.usuario_id = u.id
+        FROM canjeados c
+        JOIN vales v ON c.vale_id = v.id
+        JOIN negocios n ON c.negocio_id = n.id
+        JOIN usuarios u ON c.usuario_id = u.id
         WHERE c.usuario_id = #{usuario.id}
     </select>
 
@@ -92,20 +92,20 @@
                u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
                u.fecha_nacimiento as fecha_nacimiento_usuario, u.email as email_usuario, u.contrasena as contrasena_usuario,
                u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
-        FROM canjeado c
-        JOIN vale v ON c.vale_id = v.id
-        JOIN negocio n ON c.negocio_id = n.id
-        JOIN usuario u ON c.usuario_id = u.id
+        FROM canjeados c
+        JOIN vales v ON c.vale_id = v.id
+        JOIN negocios n ON c.negocio_id = n.id
+        JOIN usuarios u ON c.usuario_id = u.id
         WHERE c.negocio_id = #{negocio.id}
     </select>
 
     <insert id="guardarCanjeado" parameterType="es.uoc.icl.domain.Canjeado">
-        INSERT INTO canjeado (vale_id, negocio_id, usuario_id, total, descuento, fecha_registro)
+        INSERT INTO canjeados (vale_id, negocio_id, usuario_id, total, descuento, fecha_registro)
         VALUES (#{vale.id}, #{negocio.id}, #{usuario.id}, #{total}, #{descuento}, #{fechaRegistro})
     </insert>
 
     <update id="modificarCanjeado" parameterType="es.uoc.icl.domain.Canjeado">
-        UPDATE canjeado
+        UPDATE canjeados
         SET vale_id = #{vale.id}, negocio_id = #{negocio.id}, usuario_id = #{usuario.id}, total = #{total},
             descuento = #{descuento}, fecha_registro = #{fechaRegistro}
         WHERE id = #{id}

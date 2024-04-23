@@ -7,57 +7,62 @@
 
     <resultMap id="vale" type="es.uoc.icl.domain.Vale">
         <id property="id" column="id"/>
-        <result property="fechaLimite" column="fecha_limite"/>
         <result property="valorTotal" column="valor_total"/>
         <result property="lote" column="lote"/>
+        <result property="fechaLimite" column="fecha_limite"/>
         <result property="fechaRegistro" column="fecha_registro"/>
-        <association property="usuario" javaType="es.uoc.icl.domain.Usuario">
-            <id property="id" column="usuario_id"/>
-            <result property="nombre" column="usuario_nombre"/>
-            <result property="apellidos" column="usuario_apellidos"/>
-            <result property="documento" column="usuario_documento"/>
-            <result property="fechaNacimiento" column="usuario_fecha_nacimiento"/>
-            <result property="email" column="usuario_email"/>
-            <result property="contrasena" column="usuario_contrasena"/>
-            <result property="admin" column="usuario_admin"/>
-            <result property="fechaRegistro" column="usuario_fecha_registro"/>
-        </association>
+        <association property="usuario" javaType="es.uoc.icl.domain.Usuario" resultMap="usuario" />
     </resultMap>
+    
+    <resultMap id="usuario" type="es.uoc.icl.domain.Usuario">
+        <id property="id" column="usuario_id"/>
+        <result property="nombre" column="usuario_nombre"/>
+        <result property="apellidos" column="usuario_apellidos"/>
+        <result property="documento" column="usuario_documento"/>
+        <result property="email" column="usuario_email"/>
+        <result property="contrasena" column="usuario_contrasena"/>
+        <result property="admin" column="usuario_admin"/>
+        <result property="fechaNacimiento" column="usuario_fecha_nacimiento"/>
+        <result property="fechaRegistro" column="usuario_fecha_registro"/>
+	</resultMap>
 
     <select id="getVale" resultMap="vale">
-        SELECT v.id, v.usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
-               u.fecha_nacimiento AS usuario_fecha_nacimiento, u.email AS usuario_email, u.contrasena AS usuario_contrasena,
-               u.admin AS usuario_admin, u.fecha_registro AS usuario_fecha_registro, v.fecha_limite, v.valor_total, v.lote, v.fecha_registro
-        FROM vale v
-        JOIN usuario u ON v.usuario_id = u.id
+        SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro,
+        	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
+            u.email AS usuario_email, u.contrasena AS usuario_contrasena, u.admin AS usuario_admin, 
+            u.fecha_nacimiento AS usuario_fecha_nacimiento, u.fecha_registro AS usuario_fecha_registro
+        FROM vales v
+        JOIN usuarios u ON v.usuario = u.id
         WHERE v.id = #{idVale}
     </select>
 
     <select id="getValeDeUsuario" resultMap="vale">
-        SELECT v.id, v.usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
-               u.fecha_nacimiento AS usuario_fecha_nacimiento, u.email AS usuario_email, u.contrasena AS usuario_contrasena,
-               u.admin AS usuario_admin, u.fecha_registro AS usuario_fecha_registro, v.fecha_limite, v.valor_total, v.lote, v.fecha_registro
-        FROM vale v
-        JOIN usuario u ON v.usuario_id = u.id
-        WHERE v.usuario_id = #{usuario.id}
+        SELECT  v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro,
+        	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
+            u.email AS usuario_email, u.contrasena AS usuario_contrasena, u.admin AS usuario_admin, 
+            u.fecha_nacimiento AS usuario_fecha_nacimiento, u.fecha_registro AS usuario_fecha_registro
+        FROM vales v
+        JOIN usuarios u ON v.usuario = u.id
+        WHERE v.usuario = #{idUsuario}
     </select>
 
     <select id="getVales" resultMap="vale">
-        SELECT v.id, v.usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
-               u.fecha_nacimiento AS usuario_fecha_nacimiento, u.email AS usuario_email, u.contrasena AS usuario_contrasena,
-               u.admin AS usuario_admin, u.fecha_registro AS usuario_fecha_registro, v.fecha_limite, v.valor_total, v.lote, v.fecha_registro
-        FROM vale v
-        JOIN usuario u ON v.usuario_id = u.id
+        SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro,
+        	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
+             u.email AS usuario_email, u.contrasena AS usuario_contrasena, u.admin AS usuario_admin, 
+             u.fecha_nacimiento AS usuario_fecha_nacimiento, u.fecha_registro AS usuario_fecha_registro
+        FROM vales v
+        JOIN usuarios u ON v.usuario = u.id
     </select>
 
     <insert id="guardarVale" parameterType="es.uoc.icl.domain.Vale">
-        INSERT INTO vale (usuario_id, fecha_limite, valor_total, lote, fecha_registro)
+        INSERT INTO vales (usuario, fecha_limite, valor_total, lote, fecha_registro)
         VALUES (#{usuario.id}, #{fechaLimite}, #{valorTotal}, #{lote}, #{fechaRegistro})
     </insert>
 
     <update id="modificarVale" parameterType="es.uoc.icl.domain.Vale">
-        UPDATE vale
-        SET usuario_id = #{usuario.id}, fecha_limite = #{fechaLimite}, valor_total = #{valorTotal}, lote = #{lote}, fecha_registro = #{fechaRegistro}
+        UPDATE vales
+        SET usuario = #{usuario.id}, fecha_limite = #{fechaLimite}, valor_total = #{valorTotal}, lote = #{lote}, fecha_registro = #{fechaRegistro}
         WHERE id = #{id}
     </update>
 

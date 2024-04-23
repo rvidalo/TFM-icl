@@ -4,13 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import es.uoc.icl.domain.Usuario;
 import es.uoc.icl.domain.Vale;
 
 @Mapper
 public interface ValeRepository {
 	Vale getVale(Integer idVale);
-	Vale getValeDeUsuario(Usuario usuario);
+	Vale getValeDeUsuario(Integer idUsuario);
 	List<Vale> getVales();
 	void guardarVale(Vale vale);
 	void modificarVale(Vale vale);

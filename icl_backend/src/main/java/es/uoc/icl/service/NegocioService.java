@@ -32,12 +32,14 @@ public class NegocioService {
 		return negocioRepository.getNegocio(idNegocio) != null;
 	}
 	
-	public Negocio getNegocioConEmail (String email) {
-		return negocioRepository.getNegocioConEmail(email);
-	}
-	
-	public boolean existeNegocioConEmail(String email) {
-		return negocioRepository.getNegocioConEmail(email) != null;
+	public boolean existeNegocioConEmailOCif(Negocio negocio) {
+		List<Negocio> negociosConEmailOCif = negocioRepository.getNegociosConEmailOCif(negocio);
+		for (Negocio aux : negociosConEmailOCif) {
+			if(negocio.getId() != aux.getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public Negocio getNegocioConToken (String token) {
@@ -58,6 +60,10 @@ public class NegocioService {
 
 	public List<Negocio> getNegociosAceptados() {
 		return negocioRepository.getNegociosAceptados();
+	}
+
+	public Negocio getNegocioConEmail(String email) {
+		return negocioRepository.getNegocioConEmail(email);
 	}
 	
 }

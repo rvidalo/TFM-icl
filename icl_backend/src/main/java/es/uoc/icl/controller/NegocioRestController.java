@@ -21,7 +21,7 @@ import es.uoc.icl.service.NegocioService;
 @RestController
 @RequestMapping("/api/negocios")
 @CrossOrigin
-public class NegocioController {
+public class NegocioRestController {
 
 	@Autowired
 	NegocioService negocioService;
@@ -54,16 +54,6 @@ public class NegocioController {
 		return new ResponseEntity<Negocio>(negocio, HttpStatus.OK);
 	}
 	
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@GetMapping("/email")
-	public ResponseEntity<Negocio> getNegocioConEmail(@RequestParam String email) {
-		Negocio negocio = negocioService.getNegocioConEmail(email);
-		if(negocio == null) {
-			return new ResponseEntity("El negocio con email " +email+ " no existe", HttpStatus.BAD_REQUEST);
-		} 
-		return new ResponseEntity<Negocio>(negocio, HttpStatus.OK);
-	}
-	
 	@GetMapping("/tipos")
 	public ResponseEntity<List<TipoNegocio>> getTiposNegocio() {
 		List<TipoNegocio> tipos = negocioService.getTipos();
@@ -73,22 +63,21 @@ public class NegocioController {
 	@PostMapping("/nuevo")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ResponseEntity<?> nuevoNegocio (@RequestBody Negocio negocio) {
-		if(negocioService.existeNegocioConEmail(negocio.getEmail())) {
-			return new ResponseEntity("El negocio ya existe", HttpStatus.BAD_REQUEST);
+		if(negocioService.existeNegocioConEmailOCif(negocio)) {
+			return new ResponseEntity("El negocio con email " +negocio.getEmail()+ " o CIF " + negocio.getCif() +" ya existe", HttpStatus.BAD_REQUEST);
 		}
 		negocioService.guardarNegocio(negocio);
 		return new ResponseEntity(Collections.singletonMap("mensaje", "Negocio creado"), HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/actualizar")
+	@PostMapping("/modificar")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ResponseEntity<?> modificarNegocio (@RequestBody Negocio negocio) {
 		if(!negocioService.existeNegocio(negocio.getId())) {
 			return new ResponseEntity("El negocio no existe", HttpStatus.BAD_REQUEST);
 		}
-		Negocio aux = negocioService.getNegocioConEmail(negocio.getEmail());
-		if(aux != null && negocio.getId() != aux.getId()) {
-			return new ResponseEntity("El negocio con email " +negocio.getEmail()+ " ya existe", HttpStatus.BAD_REQUEST);
+		if(negocioService.existeNegocioConEmailOCif(negocio)) {
+			return new ResponseEntity("El negocio con email " +negocio.getEmail()+ " o CIF " + negocio.getCif() +" ya existe", HttpStatus.BAD_REQUEST);
 		}
 		negocioService.modificarNegocio(negocio);
 		return new ResponseEntity(Collections.singletonMap("mensaje", "Negocio modificado"), HttpStatus.OK);

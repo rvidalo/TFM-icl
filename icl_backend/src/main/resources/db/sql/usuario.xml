@@ -8,20 +8,49 @@
 		<result property="nombre" column="nombre" />
 		<result property="apellidos" column="apellidos" />
 		<result property="documento" column="documento" />
-		<result property="fechaNacimiento" column="fecha_nacimiento" />
 		<result property="email" column="email" />
 		<result property="contrasena" column="contrasena" />
 		<result property="admin" column="admin" />
+		<result property="fechaNacimiento" column="fecha_nacimiento" />
 		<result property="fechaRegistro" column="fecha_registro" />
 	</resultMap>
 
-	<select id="getUsuarioConId" resultType="es.uoc.icl.domain.Usuario">
-		SELECT * FROM usuarios WHERE id = #{id}
+	<select id="getUsuario" resultType="es.uoc.icl.domain.Usuario">
+		SELECT *
+		FROM usuarios 
+		WHERE id = #{id}
+	</select>
+	
+	<select id="getUsuarioConEmail" resultType="es.uoc.icl.domain.Usuario">
+		SELECT *
+		FROM usuarios 
+		WHERE email = #{email}
 	</select>
 
 	<select id="getUsuarios" resultType="es.uoc.icl.domain.Usuario">
-		SELECT * FROM usuarios
+		SELECT * 
+		FROM usuarios
+		WHERE admin = 0
 	</select>
+	
+	<select id="getAdministradores" resultType="es.uoc.icl.domain.Usuario">
+		SELECT * 
+		FROM usuarios
+		WHERE admin = 1
+	</select>
+	
+	<select id="getUsuariosConVale" resultType="es.uoc.icl.domain.Usuario">
+		SELECT u.* 
+		FROM usuarios u
+		JOIN vales v on v.usuario = u.id
+	</select>
+	
+	<select id="getUsuariosConEmailODocumento" resultMap="usuario">
+        SELECT *
+		FROM usuarios
+        WHERE email = #{email}
+        	OR documento = #{documento}
+    </select>
 
 	<insert id="guardarUsuario"	parameterType="es.uoc.icl.domain.Usuario">
 		INSERT INTO usuarios (nombre, apellidos, documento, fecha_nacimiento, email,

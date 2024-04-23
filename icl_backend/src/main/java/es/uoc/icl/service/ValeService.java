@@ -24,8 +24,8 @@ public class ValeService {
 		return valeRepository.getVale(idVale);
 	}
 
-	public Vale getValeDeUsuario (Usuario usuario) {
-		return valeRepository.getValeDeUsuario(usuario);
+	public Vale getValeDeUsuario (Integer idUsuario) {
+		return valeRepository.getValeDeUsuario(idUsuario);
 	}
 	
 	public void modificarVale(Vale vale) {
@@ -35,5 +35,12 @@ public class ValeService {
 	public void guardarVale(Vale vale) {
 		valeRepository.guardarVale(vale);
 	}
-	
+
+	public boolean existeValeDeUsuario(Usuario usuario) {
+		return getValeDeUsuario(usuario.getId()) != null;
+	}
+
+	public boolean existeVale(Integer id) {
+		return getVale(id) != null;
+	}
 }

@@ -1,5 +1,8 @@
 package es.uoc.icl.domain;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 @Data
@@ -10,8 +13,8 @@ public class Negocio {
     private String nombre;
     private TipoNegocio tipo;
     private String direccion;
-    private Double valorTotal;
+    private BigDecimal valorTotal;
     private String contrasena;
     private Integer estado;
-    private String fechaRegistro;
+    private LocalDateTime fechaRegistro;
 }

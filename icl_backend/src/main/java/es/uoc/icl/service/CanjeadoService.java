@@ -6,34 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.uoc.icl.domain.Usuario;
-import es.uoc.icl.domain.Vale;
+import es.uoc.icl.domain.Canjeado;
 
 @Service
 @Transactional
 public class CanjeadoService {
 	
 	@Autowired
-	ValeRepository valeRepository;
+	CanjeadoRepository canjeadoRepository;
 
-	public List<Vale> getVales(){
-		return valeRepository.getVales();
+	public List<Canjeado> getCanjeados(){
+		return canjeadoRepository.getCanjeados();
 	}
 	
-	public Vale getVale (Integer idVale) {
-		return valeRepository.getVale(idVale);
+	public Canjeado getCanjeado (Integer idCanjeado) {
+		return canjeadoRepository.getCanjeado(idCanjeado);
 	}
 
-	public Vale getValeDeUsuario (Usuario usuario) {
-		return valeRepository.getValeDeUsuario(usuario);
+	public List<Canjeado> getCanjeadosDeUsuario (Integer idUsuario) {
+		return canjeadoRepository.getCanjeadosDeUsuario(idUsuario);
 	}
 	
-	public void modificarVale(Vale vale) {
-		valeRepository.modificarVale(vale);
+	public List<Canjeado> getCanjeadosDeNegocio (Integer idNegocio) {
+		return canjeadoRepository.getCanjeadosDeNegocio(idNegocio);
 	}
 	
-	public void guardarVale(Vale vale) {
-		valeRepository.guardarVale(vale);
+	public void guardarCanjeado(Canjeado canjeado) {
+		canjeadoRepository.guardarCanjeado(canjeado);
 	}
 	
 }

@@ -12,7 +12,7 @@
 	    <result property="valorTotal" column="valor_total"/>
 	    <result property="contrasena" column="contrasena"/>
 	    <result property="estado" column="estado"/>
-	    <result property="fechaRegistro" column="fecha_registro"/>
+	    <result property="fechaRegistro" column="fecha_registro" />
 	    <association property="tipo" javaType="es.uoc.icl.domain.TipoNegocio" resultMap="tipoNegocio"/>
 	</resultMap>
 
@@ -27,12 +27,20 @@
 		JOIN tipo_negocio t ON n.tipo = t.id
         WHERE n.id = #{idNegocio}
     </select>
-
+    
     <select id="getNegocioConEmail" resultMap="negocio">
         SELECT n.id, cif, email, nombre, direccion, valor_total, contrasena, estado, fecha_registro, t.id AS tipo_id, t.descripcion AS tipo_descripcion
 		FROM negocios n
 		JOIN tipo_negocio t ON n.tipo = t.id
         WHERE email = #{email}
+    </select>
+
+    <select id="getNegociosConEmailOCif" resultMap="negocio">
+        SELECT n.id, cif, email, nombre, direccion, valor_total, contrasena, estado, fecha_registro, t.id AS tipo_id, t.descripcion AS tipo_descripcion
+		FROM negocios n
+		JOIN tipo_negocio t ON n.tipo = t.id
+        WHERE email = #{email}
+        	OR cif = #{cif}
     </select>
 
     <select id="getNegocios" resultMap="negocio">
@@ -56,14 +64,14 @@
     </select>
 
     <insert id="guardarNegocio" parameterType="es.uoc.icl.domain.Negocio">
-        INSERT INTO negocios (cif, email, nombre, tipo, direccion, valor_total, contrasena, estado, fecha_registro)
-        VALUES (#{cif}, #{email}, #{nombre}, #{tipo.id}, #{direccion}, #{valorTotal}, #{contrasena}, #{estado}, #{fechaRegistro})
+        INSERT INTO negocios (cif, email, nombre, tipo, direccion, valor_total, contrasena, estado)
+        VALUES (#{cif}, #{email}, #{nombre}, #{tipo.id}, #{direccion}, #{valorTotal}, #{contrasena}, #{estado})
     </insert>
 
     <update id="modificarNegocio" parameterType="es.uoc.icl.domain.Negocio">
         UPDATE negocios
         SET cif = #{cif}, email = #{email}, nombre = #{nombre}, tipo = #{tipo.id}, direccion = #{direccion}, valor_total = #{valorTotal},
-            contrasena = #{contrasena}, estado = #{estado}, fecha_registro = #{fechaRegistro}
+            contrasena = #{contrasena}, estado = #{estado}
         WHERE id = #{id}
     </update>
 
