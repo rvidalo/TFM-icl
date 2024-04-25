@@ -42,7 +42,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			Authentication authResult) throws IOException, ServletException {
 
 		UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
-		String token = TokenUtils.createToken(userDetails.getNombre(), userDetails.getUsername());
+		String token = null;
+		try {
+			token = TokenUtils.createToken(userDetails.getNombre(), userDetails.getUsername());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		response.addHeader("Authorization", "Bearer " + token);
 		response.getWriter().flush();

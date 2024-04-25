@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Bienvenida</title>
+<style>
+	body {
+	  background-color: #e9ecef;
+	}
+	
+	.container {
+	    background-color: white;
+	    margin: auto;
+	    padding: 5em;
+	}
+	
+	.imagen {
+	    width: 100%;
+	    text-align: center;
+	}
+	
+	.imagen img {
+	    width: 50%;
+	}
+	
+	.enlace {
+		margin-top: 50px;
+	}
+	
+	.enlace a {
+	    text-decoration: none;
+	    background-color: #007bff;
+	    padding: 8px 16px;
+	    border-radius: 5px;
+	    color: white;
+	    border: solid 1px lightgray;
+	}
+	
+	.enlace a:hover {
+	    background-color: dodgerblue;
+	}
+</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="imagen">
+			<img src="cid:logo"/>
+		</div>
+		<h2>¡Bienvenido/a, confirma tu registro!</h2>
+		<div class="texto">
+			<p>Le damos la bienvenida a la plataforma de Impulso del comercio local del Ayuntamiento de Chiclana.</p>
+			<p>Estamos encantados de tenerte con nosotros. Para completar tu registro, por favor haz clic en el siguiente enlace:</p>
+		</div>
+		<div class="enlace">
+			<a th:href="@{${url}}">Iniciar sesión</a>
+		</div>
+		
+		<p>¡Gracias por unirte a nuestra comunidad!</p>
+	</div>
+</body>
+</html>

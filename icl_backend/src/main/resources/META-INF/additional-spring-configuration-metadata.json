@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "access.token.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'access.token.secret'"
+  },
+  {
+    "name": "access.token.validity",
+    "type": "java.lang.String",
+    "description": "A description for 'access.token.validity'"
+  },
+  {
+    "name": "url.frontend",
+    "type": "java.lang.String",
+    "description": "A description for 'url.frontend'"
+  }
+]}

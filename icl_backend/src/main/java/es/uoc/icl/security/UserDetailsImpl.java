@@ -17,7 +17,6 @@ public class UserDetailsImpl implements UserDetails {
 	private final Usuario usuario;
 	private final Negocio negocio;
 	
-	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Collections.emptyList();
