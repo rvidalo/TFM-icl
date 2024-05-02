@@ -1,57 +1,63 @@
 package es.uoc.icl.security;
 
 import java.io.IOException;
-import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+@Component
+@RequiredArgsConstructor
+public class JWTAuthenticationFilter extends OncePerRequestFilter {
+
+	@Autowired
+	JwtService jwtService;
+	@Autowired
+	UserDetailsService userDetailsService;
 	
 	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException {
-
-		AuthCredentials authCredentials = new AuthCredentials();
-		try {
-			authCredentials = new ObjectMapper().readValue(request.getReader(), AuthCredentials.class);
-		}catch (IOException e) {
-			
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+		
+		final String token = getTokenFromRequest(request);
+		if(token == null) {
+			filterChain.doFilter(request, response);
+			return;
 		}
 		
-		UsernamePasswordAuthenticationToken usernamePAT = new UsernamePasswordAuthenticationToken(
-			authCredentials.getEmail(),
-			authCredentials.getPassword(),
-			Collections.emptyList()
-		);
+		final String email = jwtService.getEmailFromToken(token);
+		if(email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			UserDetails usuario = userDetailsService.loadUserByUsername(email);
+			if(jwtService.isTokenValid(token, usuario)) {
+				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(authToken);
+			}
+		}
 		
-		return getAuthenticationManager().authenticate(usernamePAT);
+		filterChain.doFilter(request, response);
+	}
+
+	private String getTokenFromRequest(HttpServletRequest request) {
+		final String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+		
+		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+			return bearerToken.substring(7);
+		}
+		return null;
 	}
 	
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {
-
-		UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
-		String token = null;
-		try {
-			token = TokenUtils.createToken(userDetails.getNombre(), userDetails.getUsername());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		response.addHeader("Authorization", "Bearer " + token);
-		response.getWriter().flush();
-		
-		super.successfulAuthentication(request, response, chain, authResult);
-	}
 }

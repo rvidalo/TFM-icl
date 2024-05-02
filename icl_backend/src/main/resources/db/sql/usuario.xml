@@ -10,9 +10,6 @@
 		<result property="documento" column="documento" />
 		<result property="email" column="email" />
 		<result property="contrasena" column="contrasena" />
-		<result property="admin" column="admin" />
-		<result property="fechaNacimiento" column="fecha_nacimiento" />
-		<result property="fechaRegistro" column="fecha_registro" />
 	</resultMap>
 
 	<select id="getUsuario" resultType="es.uoc.icl.domain.Usuario">
@@ -53,17 +50,20 @@
     </select>
 
 	<insert id="guardarUsuario"	parameterType="es.uoc.icl.domain.Usuario">
-		INSERT INTO usuarios (nombre, apellidos, documento, fecha_nacimiento, email,
+		INSERT INTO usuarios (nombre, apellidos, documento, email,
 		contrasena, admin)
-		VALUES (#{nombre}, #{apellidos}, #{documento}, #{fechaNacimiento}, #{email},
-		#{contrasena}, #{admin})
+		VALUES (#{nombre}, #{apellidos}, #{documento}, #{email},
+		#{contrasena}, 0)
 	</insert>
 
-	<update id="modificarUsuario" parameterType="es.uoc.icl.domain.Usuario">
+	<update id="modificarUsuario" parameterType="es.uoc.icl.domain.Perfil">
 		UPDATE usuarios SET nombre = #{nombre}, apellidos = #{apellidos}, documento
-		= #{documento},
-		fecha_nacimiento = #{fechaNacimiento}, email = #{email}, contrasena = #{contrasena},
-		admin = #{admin}
+		= #{documento}, email = #{email}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="modificarContrasena">
+		UPDATE usuarios SET contrasena = #{contrasena}
 		WHERE id = #{id}
 	</update>
 

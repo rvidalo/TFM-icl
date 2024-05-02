@@ -1,7 +1,6 @@
 package es.uoc.icl.domain;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -16,5 +15,4 @@ public class Negocio {
     private BigDecimal valorTotal;
     private String contrasena;
     private Integer estado;
-    private LocalDateTime fechaRegistro;
 }

@@ -7,29 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.uoc.icl.domain.Jwt;
+import es.uoc.icl.domain.Login;
 import es.uoc.icl.domain.Usuario;
-import es.uoc.icl.security.TokenUtils;
 import es.uoc.icl.service.AuthService;
 import es.uoc.icl.service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/auth")
-@CrossOrigin
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class LoginRestController {
-
-	@Autowired
-	PasswordEncoder passwordEncoder;
 
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -38,62 +32,38 @@ public class LoginRestController {
 	UsuarioService usuarioService;
 	
 	@Autowired
+	PasswordEncoder passwordEncoder;
+	
+	@Autowired
 	AuthService authService;
 	
-	@PostMapping("/registro")
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ResponseEntity<?> nuevo(@RequestBody Usuario nuevoUsuario) {
+	@PostMapping("/registroUsuario")
+	public ResponseEntity<?> registro(@RequestBody Usuario nuevoUsuario) {
 		if (usuarioService.existeUsuario(nuevoUsuario.getId())) {
-			return new ResponseEntity("El usuario ya existe", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("El usuario ya existe", HttpStatus.BAD_REQUEST);
 		}
 		if (usuarioService.existeUsuarioConEmailODocumento(nuevoUsuario)) {
-			return new ResponseEntity("El email ya existe", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("El email ya existe", HttpStatus.BAD_REQUEST);
 		}
 
-		nuevoUsuario.setContrasena(passwordEncoder.encode(nuevoUsuario.getContrasena()));
-		usuarioService.guardarUsuario(nuevoUsuario);
 		try {
 			authService.enviarEmailBienvenida(nuevoUsuario.getEmail());
 		} catch (Exception e) {
 			System.out.println("Error enviando correo: "+e.getMessage());
 		}
-		return new ResponseEntity(Collections.singletonMap("mensaje", "Usuario creado"), HttpStatus.CREATED);
+		return ResponseEntity.ok(authService.registroUsuario(nuevoUsuario));
 	}
 	
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping("/login")
-	public ResponseEntity<Jwt> login (@RequestBody Usuario loginUsuario){
-		Authentication authentication = null;
-		try {
-			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getId(), loginUsuario.getContrasena()));
-		} catch (Exception e) {
-			return new ResponseEntity(Collections.singletonMap("mensaje", "Credenciales incorrectas"), HttpStatus.BAD_REQUEST);
-		}
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		Usuario usuario = (Usuario) authentication.getPrincipal();
-		Jwt jwt = new Jwt(TokenUtils.createToken(usuario.getNombre(), usuario.getEmail()));
-		return new ResponseEntity<Jwt>(jwt, HttpStatus.OK);
+	public ResponseEntity<Jwt> login (@RequestBody Login login){
+		return ResponseEntity.ok(authService.login(login));
 	}
-	
-//	@SuppressWarnings({ "unchecked", "rawtypes" })
-//	@PostMapping("/refresh")
-//	public ResponseEntity<Jwt> refreshToken (@RequestBody Jwt jwt){
-//		String token;
-//		try {
-//			token = TokenUtils.refreshToken(jwt);
-//		} catch (Exception e) {
-//			return new ResponseEntity(e.getMessage(), HttpStatus.BAD_GATEWAY);
-//		}
-//		Jwt jwt = new Jwt(token);
-//		return new ResponseEntity<Jwt>(jwt, HttpStatus.OK);
-//	}
 	
 	@PostMapping("/email-password")
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ResponseEntity<?> enviarEmailCambioContrasena(@RequestBody Usuario us) {
 		try {
-			Usuario usuario = usuarioService.getUsuarioConEmail(us.getEmail());
+			Usuario usuario = usuarioService.getUsuarioConEmail(us.getEmail()).get();
 			if(usuario == null) {
 				return new ResponseEntity("No existe un usuario con esas credenciales", HttpStatus.BAD_REQUEST);
 			}
@@ -121,9 +91,7 @@ public class LoginRestController {
 			return new ResponseEntity("No existe el usuario", HttpStatus.BAD_REQUEST);
 		}
 		
-		String newPassword = passwordEncoder.encode(aux.getContrasena());
-		usuario.setContrasena(newPassword);
-		usuarioService.modificarUsuario(usuario);
+		usuarioService.modificarContrasenaUsuario(aux.getId(), passwordEncoder.encode(aux.getContrasena()));
 		return new ResponseEntity(Collections.singletonMap("mensaje", "Contraseña actualizada"), HttpStatus.OK);
 	}
 }

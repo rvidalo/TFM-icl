@@ -1,9 +1,11 @@
 package es.uoc.icl.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import es.uoc.icl.domain.Perfil;
 import es.uoc.icl.domain.Usuario;
 
 @Mapper
@@ -15,6 +17,7 @@ public interface UsuarioRepository {
 	List<Usuario> getUsuariosConVale();
 	List<Usuario> getAdministradores();
 	void guardarUsuario(Usuario usuario);
-	void modificarUsuario(Usuario usuario);
-	Usuario getUsuarioConEmail(String email);
+	void modificarUsuario(Perfil perfil);
+	Optional<Usuario> getUsuarioConEmail(String email);
+	void modificarContrasena(Integer id, String contrasena);
 }

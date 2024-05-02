@@ -46,16 +46,20 @@ public class EmailService {
 	public void enviarEmailPlantilla(Email email, Map<String, Object> model, String template) throws Exception {
 		
 		MimeMessage message = javaMailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-		Context context = new Context();
-		context.setVariables(model);
-		String html = templateEngine.process(template, context);
-		helper.setFrom(remitente);
-		helper.setTo(email.getDestino());
-		helper.setSubject(email.getTitulo());
-		helper.setText(html, true);
-		FileSystemResource res = new FileSystemResource(new File("src/main/resources/static/images/logo.png"));
-		helper.addInline("logo", res);
-		javaMailSender.send(message);
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			Context context = new Context();
+			context.setVariables(model);
+			String html = templateEngine.process(template, context);
+			helper.setFrom(remitente);
+			helper.setTo(email.getDestino());
+			helper.setSubject(email.getTitulo());
+			helper.setText(html, true);
+			FileSystemResource res = new FileSystemResource(new File("src/main/resources/static/images/logo.png"));
+			helper.addInline("logo", res);
+			javaMailSender.send(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

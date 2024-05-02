@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class Jwt {
-	private String token;
+@NoArgsConstructor
+public class Login {
+	String email;
+	String contrasena;
 }

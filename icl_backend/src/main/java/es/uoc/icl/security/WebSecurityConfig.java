@@ -2,67 +2,39 @@ package es.uoc.icl.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
-@AllArgsConstructor
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
+@EnableWebSecurity
 public class WebSecurityConfig {
 	
-	private final UserDetailsService userDetailsService;
-	private final JWTAuthorizationFilter jwtAuthorizationFilter;
-	
-	@SuppressWarnings({ "removal", "deprecation" })
-	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
-		
-		JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
-		jwtAuthenticationFilter.setAuthenticationManager(authManager);
-		jwtAuthenticationFilter.setFilterProcessesUrl("/login");
-		
-		return http
-				.csrf().disable()
-				.authorizeRequests()
-				.anyRequest()
-				.authenticated()
-				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.addFilter(jwtAuthenticationFilter)
-				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-				.build();
-	}
+	private final JWTAuthenticationFilter jwtAuthenticationFilter;
+	private final AuthenticationProvider authProvider;
 	
 	@Bean
-	AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
-		return http.getSharedObject(AuthenticationManagerBuilder.class)
-				.userDetailsService(userDetailsService)
-				.passwordEncoder(passwordEncoder())
-				.and()
-				.build();
-	}
-	
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-	public static void main(String[] args) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String contrasena = encoder.encode("contrasena");
-		System.out.println("pass: " + contrasena);
+		return http
+				.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(authRequest -> 
+					authRequest
+						.requestMatchers("/api/**").permitAll() //auth/
+			//			.anyRequest().authenticated()
+				)				
+				.sessionManagement(sessionManager ->
+						sessionManager
+							.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authenticationProvider(authProvider)
+				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
 	}
 	
 }

@@ -1,11 +1,13 @@
 package es.uoc.icl.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.uoc.icl.domain.Perfil;
 import es.uoc.icl.domain.Usuario;
 
 @Service
@@ -19,7 +21,7 @@ public class UsuarioService {
 		return usuarioRepository.getUsuarios();
 	}
 	
-	public Usuario getUsuarioConEmail(String email){
+	public Optional<Usuario> getUsuarioConEmail(String email){
 		return usuarioRepository.getUsuarioConEmail(email);
 	}
 	
@@ -43,8 +45,8 @@ public class UsuarioService {
 		return usuarioRepository.getUsuarioConToken(token);
 	}
 	
-	public void modificarUsuario(Usuario usuario) {
-		usuarioRepository.modificarUsuario(usuario);
+	public void modificarUsuario(Perfil perfil) {
+		usuarioRepository.modificarUsuario(perfil);
 	}
 	
 	public void guardarUsuario(Usuario usuario) {
@@ -59,6 +61,10 @@ public class UsuarioService {
 			}
 		}
 		return false;
+	}
+
+	public void modificarContrasenaUsuario(Integer id, String contrasena) {
+		usuarioRepository.modificarContrasena(id, contrasena);
 	}
 	
 }

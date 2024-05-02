@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.uoc.icl.domain.Perfil;
 import es.uoc.icl.domain.Usuario;
 import es.uoc.icl.service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin
+@RequiredArgsConstructor
 public class UsuarioRestController {
 
 	@Autowired
@@ -44,35 +46,27 @@ public class UsuarioRestController {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/id")
-	public ResponseEntity<Usuario> getUsuario(@RequestParam (required = true) Integer idUsuario) {
-		Usuario usuario = usuarioService.getUsuario(idUsuario);
+	@GetMapping("/perfil")
+	public ResponseEntity<Perfil> getUsuario(@RequestParam String email) {
+		Usuario usuario = usuarioService.getUsuarioConEmail(email).orElseThrow();
 		if(usuario == null) {
 			return new ResponseEntity("El usuario no existe", HttpStatus.BAD_REQUEST);
-		} 
-		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
-	}
-	
-	@PostMapping("/nuevo")
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ResponseEntity<?> nuevoUsuario (@RequestBody Usuario usuario) {
-		if(usuarioService.existeUsuarioConEmailODocumento(usuario)) {
-			return new ResponseEntity("El usuario con email " +usuario.getEmail()+ " o NIF " + usuario.getDocumento() +" ya existe", HttpStatus.BAD_REQUEST);
 		}
-		usuarioService.guardarUsuario(usuario);
-		return new ResponseEntity(Collections.singletonMap("mensaje", "Usuario creado"), HttpStatus.CREATED);
+		Perfil perfil = new Perfil(usuario);
+		return new ResponseEntity<Perfil>(perfil, HttpStatus.OK);
 	}
 	
 	@PostMapping("/modificar")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ResponseEntity<?> modificarUsuario (@RequestBody Usuario usuario) {
-		if(!usuarioService.existeUsuario(usuario.getId())) {
+	public ResponseEntity<?> modificarUsuario (@RequestBody Perfil perfil) {
+		Usuario usuario = usuarioService.getUsuario(perfil.getId());
+		if(usuario == null) {
 			return new ResponseEntity("El usuario no existe", HttpStatus.BAD_REQUEST);
 		}
 		if(usuarioService.existeUsuarioConEmailODocumento(usuario)) {
 			return new ResponseEntity("El usuario con email " +usuario.getEmail()+ " o NIF " + usuario.getDocumento() +" ya existe", HttpStatus.BAD_REQUEST);
 		}
-		usuarioService.modificarUsuario(usuario);
+		usuarioService.modificarUsuario(perfil);
 		return new ResponseEntity(Collections.singletonMap("mensaje", "Usuario modificado"), HttpStatus.OK);
 	}
 }
