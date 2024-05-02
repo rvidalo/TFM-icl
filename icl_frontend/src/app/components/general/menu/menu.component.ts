@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MenuComponent implements OnInit {
   isLogged = false;
-  nombre = '';
+  email = '';
   isAdmin = false;
 
   constructor(private authService: AuthService) {}
@@ -17,13 +17,13 @@ export class MenuComponent implements OnInit {
     this.isLogged = this.authService.isLogged();
     this.isAdmin = this.authService.isAdmin();
     if (this.isLogged) {
-      this.nombre = this.authService.getUsername();
+      this.email = this.authService.getEmail();
     }
     this.closeOnClick();
   }
 
   onLogOut(): void {
-    this.nombre = '';
+    this.email = '';
     this.isLogged = false;
     this.authService.logOut();
     window.location.reload();

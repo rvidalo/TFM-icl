@@ -1,0 +1,115 @@
+<div class="d-flex h-100vh align-items-center justify-content-center">
+    <div class="card col-11 col-md-5 col-lg-5 col-xl-3 shadow-lg">
+        <div class="card-body">
+            <div class="row d-flex justify-content-center">
+                <div class="col-3">
+                    <img src="assets/images/logo.png" alt="QCH" class="w-100" />
+                </div>
+            </div>
+            <h4 class="text-center mt-3">Registro</h4>
+            <div *ngIf="mensaje" class="alert alert-danger" role="alert">
+                {{ mensaje }}
+            </div>
+            <form [formGroup]="registroForm" (ngSubmit)="onRegister()">
+                <div class="form-group m-3">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text h-100 rounded-left">
+                                <i class="fas fa-address-card"></i>
+                            </div>
+                        </div>
+                        <input type="text" name="nombre" class="form-control" placeholder="Nombre" [formControl]="nombre" />
+                    </div>
+                    <span class="text-danger" *ngIf="
+              registroForm.get('nombre').errors &&
+              (registroForm.get('nombre').touched ||
+                registroForm.get('nombre').dirty)
+            ">
+                        <span class="text-danger" *ngIf="nombre.invalid && nombre.errors && nombre.errors['required']">El campo es obligatorio</span>
+                        <span class="text-danger" *ngIf="nombre.invalid && nombre.errors && nombre.errors['pattern']">El campo tiene un caracter no permitido</span>
+                    </span>
+                </div>
+                <div class="form-group m-3">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text h-100 rounded-left">
+                                <i class="fas fa-address-card"></i>
+                            </div>
+                        </div>
+                        <input type="text" name="apellidos" class="form-control" placeholder="Apellidos" [formControl]="apellidos" />
+                    </div>
+                    <span class="text-danger" *ngIf="
+              registroForm.get('apellidos').errors &&
+              (registroForm.get('apellidos').touched ||
+                registroForm.get('apellidos').dirty)
+            ">
+                        <span class="text-danger" *ngIf="apellidos.invalid && apellidos.errors && apellidos.errors['required']">El campo es obligatorio</span>
+                        <span class="text-danger" *ngIf="apellidos.invalid && apellidos.errors && apellidos.errors['pattern']">El campo tiene un caracter no permitido</span>
+                    </span>
+                </div>
+                <div class="form-group m-3">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text h-100 rounded-left">
+                                <i class="fas fa-address-card"></i>
+                            </div>
+                        </div>
+                        <input type="text" name="documento" class="form-control" placeholder="Documento" [formControl]="documento" />
+                    </div>
+                    <span class="text-danger" *ngIf="
+              registroForm.get('documento').errors &&
+              (registroForm.get('documento').touched ||
+                registroForm.get('documento').dirty)
+            ">
+                        <span class="text-danger" *ngIf="documento.invalid && documento.errors && documento.errors['required']">El campo es obligatorio</span>
+                        <span class="text-danger" *ngIf="documento.invalid && documento.errors && documento.errors['pattern']">El documento no es válido</span>
+                    </span>
+                </div>
+                <div class="form-group m-3">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text h-100 rounded-left">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
+                        <input type="text" name="email" class="form-control" placeholder="Correo electrónico" [formControl]="email" />
+                    </div>
+                    <span class="text-danger" *ngIf="
+              registroForm.get('email').errors &&
+              (registroForm.get('email').touched ||
+                registroForm.get('email').dirty)
+            ">
+                        <span class="text-danger" *ngIf="email.invalid && email.errors && email.errors['required']">El campo es obligatorio</span>
+                        <span class="text-danger" *ngIf="email.invalid && email.errors && email.errors['pattern']">El email no es válido</span>
+                    </span>
+                </div>
+                <div class="form-group m-3">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text h-100 rounded-left">
+                                <i class="fas fa-key"></i>
+                            </div>
+                        </div>
+                        <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" [formControl]="contrasena" />
+                    </div>
+                    <span class="text-danger" *ngIf="
+              registroForm.get('contrasena').errors &&
+              (registroForm.get('contrasena').touched ||
+                registroForm.get('contrasena').dirty)
+            ">
+                        <span class="text-danger" *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['required']">El campo es obligatorio</span>
+                        <span class="text-danger" *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['minlength']">La contraseña debe tener 8 caracteres como mínimo</span>
+                    </span>
+                </div>
+                <div class="form-group m-3">
+                    <button class="btn btn-success btn-block w-100" [disabled]="!registroForm.valid" type="submit">
+                        Registrarse
+                    </button>
+                    <button class="btn btn-primary btn-block w-100 mt-1" routerLink="/login" type="button">
+                        Iniciar sesión
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

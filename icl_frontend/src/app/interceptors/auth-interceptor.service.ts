@@ -35,16 +35,6 @@ export class AuthInterceptorService implements HttpInterceptor {
     }
     return next.handle(intReq).pipe(
       catchError((err: HttpErrorResponse) => {
-        if (err.status === 401 && token) {
-          const dto: Jwt = new Jwt(token);
-          return this.authService.refresh(dto).pipe(
-            concatMap((data: any) => {
-              this.authService.setToken(data.token);
-              intReq = this.addToken(req, data.token);
-              return next.handle(intReq);
-            })
-          );
-        }
         if (err.status === 502 && token) {
           this.authService.logOut();
         }

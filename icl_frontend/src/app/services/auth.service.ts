@@ -1,13 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Jwt } from '../models/jwt';
 // import { CambiarPassword } from '../models/cambiar-password';
 // import { EmailPassword } from '../models/email-password';
-// import { LoginUsuario } from '../models/login-usuario';
 import { Usuario } from '../models/usuario';
+import { Login } from '../models/login';
+import { CambiarContrasena } from '../models/cambiar-contrasena';
 
 const TOKEN_KEY = 'AuthToken';
 const BACK_URL = environment.APIEndpoint;
@@ -16,6 +17,7 @@ const BACK_URL = environment.APIEndpoint;
   providedIn: 'root',
 })
 export class AuthService {
+
   constructor(private router: Router, private http: HttpClient) {}
 
   public setToken(token: string): void {
@@ -27,7 +29,7 @@ export class AuthService {
     return sessionStorage.getItem(TOKEN_KEY);
   }
 
-  public getUsername(): string | null {
+  public getEmail(): string | null {
     const token = this.getToken();
 
     if (token == null || !this.isLogged()) {
@@ -58,6 +60,7 @@ export class AuthService {
     const payloadDecoded = atob(payload);
     const values = JSON.parse(payloadDecoded);
     const admin = values.roles;
+    console.log('Roles: ' + admin)
     if (admin == 0) {
       return false;
     }
@@ -69,26 +72,24 @@ export class AuthService {
     window.location.href = '/';
   }
 
-  // public registro(nuevoUsuario: NuevoUsuario): Observable<any> {
-  //   return this.http.post<any>(BACK_URL + 'auth/registro', nuevoUsuario);
-  // }
+   public registro(nuevoUsuario: Usuario): Observable<any> {
+     return this.http.post<Jwt>(BACK_URL + 'api/auth/registroUsuario', nuevoUsuario);
+   }
 
-  public login(loginUsuario: Usuario): Observable<Jwt> {
-    return this.http.post<Jwt>(BACK_URL + 'auth/login', loginUsuario);
+   public login(loginUsuario: Login): Observable<Jwt> {
+    console.log(BACK_URL + 'api/auth/login');
+    console.log(loginUsuario)
+    return this.http.post<Jwt>(BACK_URL + 'api/auth/login', loginUsuario);
   }
 
-  public refresh(jwdto: Jwt): Observable<Jwt> {
-    return this.http.post<Jwt>(BACK_URL + 'auth/refresh', jwdto);
-  }
+    public refresh(jwt: Jwt): Observable<Jwt> {
+      return this.http.post<Jwt>(BACK_URL + 'api/auth/refresh', jwt);
+    }
+/*   public enviarEmailPassword(emailPassword: EmailPassword): Observable<any> {
+    return this.http.post<any>(BACK_URL + 'api/auth/email-password', emailPassword);
+  }*/
 
-  // public enviarEmailPassword(emailPassword: EmailPassword): Observable<any> {
-  //   return this.http.post<any>(BACK_URL + 'auth/email-password', emailPassword);
-  // }
-
-  // public cambiarPassword(cambiarPassword: CambiarPassword): Observable<any> {
-  //   return this.http.post<any>(
-  //     BACK_URL + 'auth/cambiar-password',
-  //     cambiarPassword
-  //   );
-  // }
+  public cambiarContrasena(cambiarContrasena: CambiarContrasena): Observable<any> {
+    return this.http.post<any>(BACK_URL + 'api/auth/cambiar-contrasena', cambiarContrasena);
+  } 
 }

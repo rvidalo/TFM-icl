@@ -5,8 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Login } from 'src/app/models/login';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
+import { ReactiveFormsModule } from '@angular/forms'; // Importa ReactiveFormsModule
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  loginUsuario = new Usuario();
+  loginUsuario = new Login();
 
   email: FormControl;
   contrasena: FormControl;
@@ -43,17 +45,19 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginUsuario).subscribe(
       (data) => {
-        this.authService.setToken(data.token);
-        window.location.href = '/';
+        console.log('Datos recibidos:', data); 
+        if (data) {
+          this.authService.setToken(data.token);
+          window.location.href = '/';
+        } else {
+          console.error('Error: datos nulos recibidos');
+        }
       },
       (err) => {
-        let msg = err.error.mensaje;
-        if (!msg) {
-          msg = 'Ha ocurrido un error de conexión, vuelva a intentarlo mas tarde';
-        }
+        let msg = err.error && err.error.mensaje ? err.error.mensaje : 'El email o contraseña no son correctos';
         this.mensaje = msg;
-        console.log(err);
-      }
+        console.error('Error en la solicitud:', err);
+      } 
     );
   }
 }
