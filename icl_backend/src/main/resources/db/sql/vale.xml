@@ -22,15 +22,12 @@
         <result property="email" column="usuario_email"/>
         <result property="contrasena" column="usuario_contrasena"/>
         <result property="admin" column="usuario_admin"/>
-        <result property="fechaNacimiento" column="usuario_fecha_nacimiento"/>
-        <result property="fechaRegistro" column="usuario_fecha_registro"/>
 	</resultMap>
 
     <select id="getVale" resultMap="vale">
         SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
-            u.email AS usuario_email, u.contrasena AS usuario_contrasena, u.admin AS usuario_admin, 
-            u.fecha_nacimiento AS usuario_fecha_nacimiento, u.fecha_registro AS usuario_fecha_registro
+            u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
         JOIN usuarios u ON v.usuario = u.id
         WHERE v.id = #{idVale}
@@ -39,18 +36,16 @@
     <select id="getValeDeUsuario" resultMap="vale">
         SELECT  v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
-            u.email AS usuario_email, u.contrasena AS usuario_contrasena, u.admin AS usuario_admin, 
-            u.fecha_nacimiento AS usuario_fecha_nacimiento, u.fecha_registro AS usuario_fecha_registro
+            u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
         JOIN usuarios u ON v.usuario = u.id
-        WHERE v.usuario = #{idUsuario}
+        WHERE v.email = #{email}
     </select>
 
     <select id="getVales" resultMap="vale">
         SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
-             u.email AS usuario_email, u.contrasena AS usuario_contrasena, u.admin AS usuario_admin, 
-             u.fecha_nacimiento AS usuario_fecha_nacimiento, u.fecha_registro AS usuario_fecha_registro
+             u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
         JOIN usuarios u ON v.usuario = u.id
     </select>

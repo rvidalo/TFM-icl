@@ -7,6 +7,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { LoginGuard } from './guards/login.guard';
 import { RegistroComponent } from './components/usuarios/registro/registro.component';
 import { PerfilComponent } from './components/usuarios/perfil/perfil.component';
+import { SolicitudValeComponent } from './components/vales/solicitud-vale/solicitud-vale.component';
+import { ValesUsuarioComponent } from './components/vales/vales-usuario/vales-usuario.component';
 
 const routes: Routes = [{ path: '', component: IndexComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
@@ -15,7 +17,8 @@ const routes: Routes = [{ path: '', component: IndexComponent, canActivate: [Aut
   // { path: 'cambiar-password/:tokenPassword', component: CambiarPasswordComponent, canActivate: [LoginGuard] },
   { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
   // { path: 'negocios', component: NegociosComponent, canActivate: [AuthGuard] },
-  // { path: 'mis-vales', component: MisValesComponent, canActivate: [AuthGuard] },
+   { path: 'solicitud-vale', component: SolicitudValeComponent, canActivate: [AuthGuard] },
+   { path: 'vales-usuario', component: ValesUsuarioComponent, canActivate: [AuthGuard] },
   // { path: 'admin/usuarios', component: ListaUsuariosComponent, canActivate: [AdminGuard] }
 ];
 

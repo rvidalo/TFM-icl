@@ -14,7 +14,6 @@ export class UsuarioService {
 
   public getPerfilUsuario(email: string): Observable<any> {
     const param = new HttpParams().append('email', email);
-    console.log(param);
     return this.http.get<PerfilUsuario>(BACK_URL + 'api/usuarios/perfil', { params: param });
   }
 

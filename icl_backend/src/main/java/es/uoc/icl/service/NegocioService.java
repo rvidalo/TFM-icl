@@ -65,5 +65,15 @@ public class NegocioService {
 	public Negocio getNegocioConEmail(String email) {
 		return negocioRepository.getNegocioConEmail(email);
 	}
+
+	public void aceptar(Negocio negocio) {
+		negocio.setEstado(1);
+		negocioRepository.modificarNegocio(negocio);
+	}
+
+	public void rechazar(Negocio negocio) {
+		negocio.setEstado(2);
+		negocioRepository.modificarNegocio(negocio);
+	}
 	
 }

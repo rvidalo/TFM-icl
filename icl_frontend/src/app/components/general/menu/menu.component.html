@@ -11,16 +11,16 @@
         <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/">Inicio</a>
+                    <a class="nav-link px-4" routerLink="/">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="recetas">Negocios</a>
+                    <a class="nav-link px-4" routerLink="negocios-lista">Negocios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="ingredientes">Ingredientes</a>
+                    <a class="nav-link px-4" routerLink="solicitud-vale">Solicitud</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="recetas-recomendadas">Qué como hoy</a>
+                    <a class="nav-link px-4" routerLink="vales-usuario">Vales</a>
                 </li>
                 <li *ngIf="isLogged && isAdmin" class="nav-item dropdown">
                     <button class="nav-link dropdown-toggle border-0 bg-transparent w-100" href="#"
@@ -42,12 +42,6 @@
                         <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="navbarDropdown">
                             <li>
                                 <a class="dropdown-item" routerLink="perfil">Mi perfil</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" routerLink="mis-recetas">Mis vales</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" routerLink="mi-alimentacion">Mi alimentación</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider" />

@@ -15,6 +15,8 @@ public class ValeService {
 	
 	@Autowired
 	ValeRepository valeRepository;
+	@Autowired
+	UsuarioService usuarioService;
 
 	public List<Vale> getVales(){
 		return valeRepository.getVales();
@@ -23,21 +25,23 @@ public class ValeService {
 	public Vale getVale (Integer idVale) {
 		return valeRepository.getVale(idVale);
 	}
-
-	public Vale getValeDeUsuario (Integer idUsuario) {
-		return valeRepository.getValeDeUsuario(idUsuario);
+	
+	public Vale getValeDeUsuario (String email) {
+		return valeRepository.getValeDeUsuario(email);
 	}
 	
 	public void modificarVale(Vale vale) {
 		valeRepository.modificarVale(vale);
 	}
 	
-	public void guardarVale(Vale vale) {
+	public void guardarVale(String email) {
+		Usuario usuario = usuarioService.getUsuarioConEmail(email).get();
+		Vale vale = new Vale(usuario);
 		valeRepository.guardarVale(vale);
 	}
 
-	public boolean existeValeDeUsuario(Usuario usuario) {
-		return getValeDeUsuario(usuario.getId()) != null;
+	public boolean existeValeDeUsuario(String email) {
+		return getValeDeUsuario(email) != null;
 	}
 
 	public boolean existeVale(Integer id) {

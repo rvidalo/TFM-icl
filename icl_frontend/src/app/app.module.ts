@@ -13,6 +13,8 @@ import { MenuComponent } from './components/general/menu/menu.component';
 import { interceptorProvider } from './interceptors/auth-interceptor.service';
 import { RegistroComponent } from './components/usuarios/registro/registro.component';
 import { PerfilComponent } from './components/usuarios/perfil/perfil.component';
+import { SolicitudValeComponent } from './components/vales/solicitud-vale/solicitud-vale.component';
+import { ValesUsuarioComponent } from './components/vales/vales-usuario/vales-usuario.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { PerfilComponent } from './components/usuarios/perfil/perfil.component';
     FooterComponent,
     MenuComponent,
     RegistroComponent,
-    PerfilComponent
+    PerfilComponent,
+    SolicitudValeComponent,
+    ValesUsuarioComponent
   ],
   imports: [
     BrowserModule,

@@ -32,8 +32,8 @@ public class ValeRestController {
 	}
 	
 	@GetMapping("/usuario")
-	public ResponseEntity<Vale> getValeDeUsuario(@RequestParam(required = true) Integer idUsuario) {
-		Vale vale = valeService.getValeDeUsuario(idUsuario);
+	public ResponseEntity<Vale> getValeDeUsuario(@RequestParam String email) {
+		Vale vale = valeService.getValeDeUsuario(email);
 		return new ResponseEntity<Vale>(vale, HttpStatus.OK);
 	}
 	
@@ -49,11 +49,11 @@ public class ValeRestController {
 
 	@PostMapping("/nuevo")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ResponseEntity<?> nuevoVale (@RequestBody Vale vale) {
-		if(valeService.existeValeDeUsuario(vale.getUsuario())) {
+	public ResponseEntity<?> nuevoVale (@RequestParam String email) {
+		if(valeService.existeValeDeUsuario(email)) {
 			return new ResponseEntity("El usuario no puede solicitar más vales", HttpStatus.BAD_REQUEST);
 		}
-		valeService.guardarVale(vale);
+		valeService.guardarVale(email);
 		return new ResponseEntity(Collections.singletonMap("mensaje", "Vale creado"), HttpStatus.CREATED);
 	}
 	

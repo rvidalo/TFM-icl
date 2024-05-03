@@ -1,14 +1,5 @@
-/* CUSTOM STYLES */
 body {
     background-color: #e9ecef;
-}
-
-.portada {
-    height: 60vh;
-    background-image: url("/assets/images/portada.jpg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .h-100vh {
@@ -24,11 +15,20 @@ body {
 }
 
 .bg-principal {
-    background-color: #c0a58d;
+    background-color: #4169e1;
 }
 
 .text-principal {
-    color: #c0a58d;
+    color: #4169e1;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fff;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #2e4a66;
+    font-weight: bold;
 }
 
 a {
@@ -37,17 +37,17 @@ a {
 }
 
 a:hover {
-    color: #c0a58d;
+    color: #4169e1;
 }
 
 .page-link,
 .page-link:hover {
-    color: #c0a58d;
+    color: #4169e1;
 }
 
 .page-item.active .page-link {
-    background-color: #c0a58d;
-    border-color: #c0a58d;
+    background-color: #4169e1;
+    border-color: #4169e1;
 }
 
 .rounded-left {
@@ -78,4 +78,20 @@ a:hover {
 
 .accordion-button:not(.collapsed) {
     background-color: white;
+}
+
+.progress {
+    border: 2px solid #ccc;
+    /* Agrega un borde a la barra de progreso */
+    border-radius: 5px;
+    /* Borde redondeado */
+    height: 30px;
+    background-color: #fff;
+}
+
+.progress-bar {
+    font-size: 16px;
+    /* Tamaño de fuente */
+    line-height: 50px;
+    /* Altura de línea para centrar el texto verticalmente */
 }

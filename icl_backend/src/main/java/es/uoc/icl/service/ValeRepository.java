@@ -9,7 +9,7 @@ import es.uoc.icl.domain.Vale;
 @Mapper
 public interface ValeRepository {
 	Vale getVale(Integer idVale);
-	Vale getValeDeUsuario(Integer idUsuario);
+	Vale getValeDeUsuario(String email);
 	List<Vale> getVales();
 	void guardarVale(Vale vale);
 	void modificarVale(Vale vale);
