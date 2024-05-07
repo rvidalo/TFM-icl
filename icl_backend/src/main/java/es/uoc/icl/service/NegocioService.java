@@ -1,12 +1,14 @@
 package es.uoc.icl.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.uoc.icl.domain.Negocio;
+import es.uoc.icl.domain.PerfilNegocio;
 import es.uoc.icl.domain.TipoNegocio;
 
 @Service
@@ -46,8 +48,8 @@ public class NegocioService {
 		return negocioRepository.getNegocioConToken(token);
 	}
 	
-	public void modificarNegocio(Negocio negocio) {
-		negocioRepository.modificarNegocio(negocio);
+	public void modificarNegocio(PerfilNegocio perfil) {
+		negocioRepository.modificarPerfilNegocio(perfil);
 	}
 	
 	public void guardarNegocio(Negocio negocio) {
@@ -62,8 +64,13 @@ public class NegocioService {
 		return negocioRepository.getNegociosAceptados();
 	}
 
-	public Negocio getNegocioConEmail(String email) {
-		return negocioRepository.getNegocioConEmail(email);
+	public Optional<Negocio> getNegocioConEmail(String email) {
+		try {
+			return negocioRepository.getNegocioConEmail(email);
+		}catch (Exception e) {
+			System.out.println("Negocio con email " + email +" no encontrado");
+			return null;
+		}
 	}
 
 	public void aceptar(Negocio negocio) {

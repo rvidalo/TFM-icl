@@ -64,13 +64,18 @@
 
     <insert id="guardarNegocio" parameterType="es.uoc.icl.domain.Negocio">
         INSERT INTO negocios (cif, email, nombre, tipo, direccion, valor_total, contrasena, estado)
-        VALUES (#{cif}, #{email}, #{nombre}, #{tipo.id}, #{direccion}, #{valorTotal}, #{contrasena}, #{estado})
+        VALUES (#{cif}, #{email}, #{nombre}, #{tipo.id}, #{direccion}, 300, #{contrasena}, #{estado})
     </insert>
 
     <update id="modificarNegocio" parameterType="es.uoc.icl.domain.Negocio">
         UPDATE negocios
-        SET cif = #{cif}, email = #{email}, nombre = #{nombre}, tipo = #{tipo.id}, direccion = #{direccion}, valor_total = #{valorTotal},
-            contrasena = #{contrasena}, estado = #{estado}
+        SET cif = #{cif}, email = #{email}, nombre = #{nombre}, tipo = #{tipo.id}, direccion = #{direccion}, contrasena = #{contrasena}, estado = #{estado}
+        WHERE id = #{id}
+    </update>
+    
+    <update id="modificarPerfilNegocio" parameterType="es.uoc.icl.domain.PerfilNegocio">
+        UPDATE negocios
+        SET cif = #{cif}, email = #{email}, nombre = #{nombre}, tipo = #{tipo.id}, direccion = #{direccion}
         WHERE id = #{id}
     </update>
 

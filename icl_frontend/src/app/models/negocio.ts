@@ -10,7 +10,7 @@ export class Negocio {
   contrasena: string;
   valorTotal: number;
   estado: number;
-  tipoNegocio: TipoNegocio;
+  tipo: TipoNegocio;
 
   constructor(
     id: string = '',
@@ -20,8 +20,8 @@ export class Negocio {
     email: string = '',
     contrasena: string = '',
     valorTotal: number = 0,
-    estado: number = 0,
-    tipoNegocio: TipoNegocio = new TipoNegocio,
+    estado: number = 1,
+    tipo: TipoNegocio = new TipoNegocio,
   ) {
     this.id = id;
     this.nombre = nombre;
@@ -31,6 +31,6 @@ export class Negocio {
     this.contrasena = contrasena;
     this.valorTotal = valorTotal;
     this.estado = estado;
-    this.tipoNegocio = tipoNegocio;
+    this.tipo = tipo;
   }
 }

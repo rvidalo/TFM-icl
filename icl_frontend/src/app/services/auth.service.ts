@@ -8,6 +8,7 @@ import { Jwt } from '../models/jwt';
 // import { EmailPassword } from '../models/email-password';
 import { Usuario } from '../models/usuario';
 import { Login } from '../models/login';
+import { Negocio } from '../models/negocio';
 import { CambiarContrasena } from '../models/cambiar-contrasena';
 
 const TOKEN_KEY = 'AuthToken';
@@ -76,10 +77,14 @@ export class AuthService {
      return this.http.post<Jwt>(BACK_URL + 'api/auth/registroUsuario', nuevoUsuario);
    }
 
-   public login(loginUsuario: Login): Observable<Jwt> {
+   public registroNegocio(nuevoNegocio: Negocio): Observable<any> {
+     return this.http.post<Jwt>(BACK_URL + 'api/auth/registroNegocio', nuevoNegocio);
+   }
+
+   public login(login: Login): Observable<Jwt> {
     console.log(BACK_URL + 'api/auth/login');
-    console.log(loginUsuario)
-    return this.http.post<Jwt>(BACK_URL + 'api/auth/login', loginUsuario);
+    console.log(login)
+    return this.http.post<Jwt>(BACK_URL + 'api/auth/login', login);
   }
 
     public refresh(jwt: Jwt): Observable<Jwt> {

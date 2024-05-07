@@ -22,7 +22,12 @@ public class UsuarioService {
 	}
 	
 	public Optional<Usuario> getUsuarioConEmail(String email){
-		return usuarioRepository.getUsuarioConEmail(email);
+		try {
+			return usuarioRepository.getUsuarioConEmail(email);
+		}catch (Exception e) {
+			System.out.println("Usuario con email " + email +" no encontrado");
+			return null;
+		}
 	}
 	
 	public List<Usuario> getAdministradores(){

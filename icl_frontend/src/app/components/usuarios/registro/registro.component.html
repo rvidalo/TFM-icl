@@ -2,114 +2,281 @@
     <div class="card col-11 col-md-5 col-lg-5 col-xl-3 shadow-lg">
         <div class="card-body">
             <div class="row d-flex justify-content-center">
-                <div class="col-3">
-                    <img src="assets/images/logo.png" alt="QCH" class="w-100" />
+                <div class="col-6">
+                    <img src="assets/images/logo.png" alt="Impulso del comercio local" class="w-100" />
                 </div>
             </div>
-            <h4 class="text-center mt-3">Registro</h4>
-            <div *ngIf="mensaje" class="alert alert-danger" role="alert">
-                {{ mensaje }}
+            <div class="container mt-5">
+                <!-- Pestañas de navegación -->
+                <ul class="nav nav-tabs text-center">
+                    <li class="nav-item w-50 border border-custom-color" >
+                        <a class="nav-link" [ngClass]="{ 'activo': formularioActivo === 'usuario' }"
+                            (click)="mostrarFormulario('usuario')">Usuario</a>
+                    </li>
+                    <li class="nav-item w-50 border border-custom-color">
+                        <a class="nav-link" [ngClass]="{ 'activo': formularioActivo === 'negocio' }"
+                            (click)="mostrarFormulario('negocio')">Negocio</a>
+                    </li>
+                </ul>
+
+            
+                <div class="tab-content mt-3">
+                    <!-- Formulario de Usuario -->
+                    <div *ngIf="formularioActivo === 'usuario'" class="tab-pane fade show active">
+                        <h4 class="text-center mt-3">Registro de Usuario</h4>
+                        <div *ngIf="mensaje" class="alert alert-danger" role="alert">
+                            {{ mensaje }}
+                        </div>
+                        <form [formGroup]="registroForm" (ngSubmit)="onRegisterUsuario()">
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-address-card"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="nombre" class="form-control" placeholder="Nombre" [formControl]="nombre" />
+                                </div>
+                                <span class="text-danger" *ngIf="
+                        registroForm.get('nombre').errors &&
+                        (registroForm.get('nombre').touched ||
+                            registroForm.get('nombre').dirty)
+                        ">
+                                    <span class="text-danger" *ngIf="nombre.invalid && nombre.errors && nombre.errors['required']">El campo es obligatorio</span>
+                                    <span class="text-danger" *ngIf="nombre.invalid && nombre.errors && nombre.errors['pattern']">El campo tiene un caracter no permitido</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-address-card"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="apellidos" class="form-control" placeholder="Apellidos" [formControl]="apellidos" />
+                                </div>
+                                <span class="text-danger" *ngIf="
+                        registroForm.get('apellidos').errors &&
+                        (registroForm.get('apellidos').touched ||
+                            registroForm.get('apellidos').dirty)
+                        ">
+                                    <span class="text-danger" *ngIf="apellidos.invalid && apellidos.errors && apellidos.errors['required']">El campo es obligatorio</span>
+                                    <span class="text-danger" *ngIf="apellidos.invalid && apellidos.errors && apellidos.errors['pattern']">El campo tiene un caracter no permitido</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-address-card"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="documento" class="form-control" placeholder="Documento" [formControl]="documento" />
+                                </div>
+                                <span class="text-danger" *ngIf="
+                        registroForm.get('documento').errors &&
+                        (registroForm.get('documento').touched ||
+                            registroForm.get('documento').dirty)
+                        ">
+                                    <span class="text-danger" *ngIf="documento.invalid && documento.errors && documento.errors['required']">El campo es obligatorio</span>
+                                    <span class="text-danger" *ngIf="documento.invalid && documento.errors && documento.errors['pattern']">El documento no es válido</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-envelope"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="email" class="form-control" placeholder="Correo electrónico" [formControl]="email" />
+                                </div>
+                                <span class="text-danger" *ngIf="
+                        registroForm.get('email').errors &&
+                        (registroForm.get('email').touched ||
+                            registroForm.get('email').dirty)
+                        ">
+                                    <span class="text-danger" *ngIf="email.invalid && email.errors && email.errors['required']">El campo es obligatorio</span>
+                                    <span class="text-danger" *ngIf="email.invalid && email.errors && email.errors['pattern']">El email no es válido</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-key"></i>
+                                        </div>
+                                    </div>
+                                    <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" [formControl]="contrasena" />
+                                </div>
+                                <span class="text-danger" *ngIf="
+                        registroForm.get('contrasena').errors &&
+                        (registroForm.get('contrasena').touched ||
+                            registroForm.get('contrasena').dirty)
+                        ">
+                                    <span class="text-danger" *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['required']">El campo es obligatorio</span>
+                                    <span class="text-danger" *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['minlength']">La contraseña debe tener 8 caracteres como mínimo</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <button class="btn btn-success btn-block w-100" [disabled]="!registroForm.valid" type="submit">
+                                    Registrarse
+                                </button>
+                                <button class="btn btn-primary btn-block w-100 mt-1" routerLink="/login" type="button">
+                                    Iniciar sesión
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Formulario de Negocio -->
+                    
+                    <div *ngIf="formularioActivo === 'negocio'" class="tab-pane fade show active">
+                        <h4 class="text-center mt-3">Registro de Negocio</h4>
+
+                        <div *ngIf="mensaje" class="alert alert-danger" role="alert">
+                            {{ mensaje }}
+                        </div>
+                        <form [formGroup]="registroNegocioForm" (ngSubmit)="onRegisterNegocio()">
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-address-card"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="nombreNegocio" class="form-control" placeholder="Nombre" [formControl]="nombreNegocio" />
+                                </div>
+                                <span class="text-danger" *ngIf="
+                                                registroNegocioForm.get('nombreNegocio').errors &&
+                                                (registroNegocioForm.get('nombreNegocio').touched ||
+                                                    registroNegocioForm.get('nombreNegocio').dirty)
+                                                ">
+                                    <span class="text-danger" *ngIf="nombreNegocio.invalid && nombreNegocio.errors && nombreNegocio.errors['required']">El campo es
+                                        obligatorio</span>
+                                    <span class="text-danger" *ngIf="nombreNegocio.invalid && nombreNegocio.errors && nombreNegocio.errors['pattern']">El campo tiene
+                                        un caracter no permitido</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-address-card"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="direccionNegocio" class="form-control" placeholder="Dirección"
+                                        [formControl]="direccionNegocio" />
+                                </div>
+                                <span class="text-danger" *ngIf="
+                                                registroNegocioForm.get('direccionNegocio').errors &&
+                                                (registroNegocioForm.get('direccionNegocio').touched ||
+                                                    registroNegocioForm.get('direccionNegocio').dirty)
+                                                ">
+                                    <span class="text-danger" *ngIf="direccionNegocio.invalid && direccionNegocio.errors && direccionNegocio.errors['required']">El
+                                        campo es obligatorio</span>
+                                    <span class="text-danger" *ngIf="direccionNegocio.invalid && direccionNegocio.errors && direccionNegocio.errors['pattern']">El
+                                        campo tiene un caracter no permitido</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-address-card"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="cifNegocio" class="form-control" placeholder="CIF"
+                                        [formControl]="cifNegocio" />
+                                </div>
+                                <span class="text-danger" *ngIf="
+                                                registroNegocioForm.get('cifNegocio').errors &&
+                                                (registroNegocioForm.get('cifNegocio').touched ||
+                                                    registroNegocioForm.get('cifNegocio').dirty)
+                                                ">
+                                    <span class="text-danger" *ngIf="cifNegocio.invalid && cifNegocio.errors && cifNegocio.errors['required']">El
+                                        campo es obligatorio</span>
+                                    <span class="text-danger" *ngIf="cifNegocio.invalid && cifNegocio.errors && cifNegocio.errors['pattern']">El
+                                        documento no es válido</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-building"></i>
+                                        </div>
+                                    </div>
+                                    <select class="form-control" name="tipoNegocio" [formControl]="tipoNegocio">
+                                        <option value="">Selecciona el tipo de negocio</option>
+                                        <option *ngFor="let tipo of tiposNegocio" [value]="tipo.id">{{ tipo.descripcion }}</option>
+                                    </select>
+                                </div>
+                                <span class="text-danger" *ngIf="
+                                    registroNegocioForm.get('tipoNegocio').errors &&
+                                    (registroNegocioForm.get('tipoNegocio').touched || registroNegocioForm.get('tipoNegocio').dirty)
+                                ">
+                                    <span class="text-danger" *ngIf="tipoNegocio.invalid && tipoNegocio.errors && tipoNegocio.errors['required']">
+                                        Debes seleccionar un tipo de negocio
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-envelope"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="emailNegocio" class="form-control" placeholder="Correo electrónico"
+                                        [formControl]="emailNegocio" />
+                                </div>
+                                <span class="text-danger" *ngIf="
+                                                registroNegocioForm.get('emailNegocio').errors &&
+                                                (registroNegocioForm.get('emailNegocio').touched ||
+                                                    registroNegocioForm.get('emailNegocio').dirty)
+                                                ">
+                                    <span class="text-danger" *ngIf="emailNegocio.invalid && emailNegocio.errors && emailNegocio.errors['required']">El campo es
+                                        obligatorio</span>
+                                    <span class="text-danger" *ngIf="emailNegocio.invalid && emailNegocio.errors && emailNegocio.errors['pattern']">El email no es
+                                        válido</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text h-100 rounded-left">
+                                            <i class="fas fa-key"></i>
+                                        </div>
+                                    </div>
+                                    <input type="password" name="contrasenaNegocio" class="form-control" placeholder="Contraseña"
+                                        [formControl]="contrasenaNegocio" />
+                                </div>
+                                <span class="text-danger" *ngIf="
+                                                registroNegocioForm.get('contrasenaNegocio').errors &&
+                                                (registroNegocioForm.get('contrasenaNegocio').touched ||
+                                                    registroNegocioForm.get('contrasenaNegocio').dirty)
+                                                ">
+                                    <span class="text-danger"
+                                        *ngIf="contrasenaNegocio.invalid && contrasenaNegocio.errors && contrasenaNegocio.errors['required']">El campo es
+                                        obligatorio</span>
+                                    <span class="text-danger"
+                                        *ngIf="contrasenaNegocio.invalid && contrasenaNegocio.errors && contrasenaNegocio.errors['minlength']">La contraseña debe
+                                        tener 8 caracteres como mínimo</span>
+                                </span>
+                            </div>
+                            <div class="form-group m-3">
+                                <button class="btn btn-success btn-block w-100" [disabled]="!registroNegocioForm.valid" type="submit">
+                                    Registrarse
+                                </button>
+                                <button class="btn btn-primary btn-block w-100 mt-1" routerLink="/login" type="button">
+                                    Iniciar sesión
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <form [formGroup]="registroForm" (ngSubmit)="onRegister()">
-                <div class="form-group m-3">
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text h-100 rounded-left">
-                                <i class="fas fa-address-card"></i>
-                            </div>
-                        </div>
-                        <input type="text" name="nombre" class="form-control" placeholder="Nombre" [formControl]="nombre" />
-                    </div>
-                    <span class="text-danger" *ngIf="
-              registroForm.get('nombre').errors &&
-              (registroForm.get('nombre').touched ||
-                registroForm.get('nombre').dirty)
-            ">
-                        <span class="text-danger" *ngIf="nombre.invalid && nombre.errors && nombre.errors['required']">El campo es obligatorio</span>
-                        <span class="text-danger" *ngIf="nombre.invalid && nombre.errors && nombre.errors['pattern']">El campo tiene un caracter no permitido</span>
-                    </span>
-                </div>
-                <div class="form-group m-3">
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text h-100 rounded-left">
-                                <i class="fas fa-address-card"></i>
-                            </div>
-                        </div>
-                        <input type="text" name="apellidos" class="form-control" placeholder="Apellidos" [formControl]="apellidos" />
-                    </div>
-                    <span class="text-danger" *ngIf="
-              registroForm.get('apellidos').errors &&
-              (registroForm.get('apellidos').touched ||
-                registroForm.get('apellidos').dirty)
-            ">
-                        <span class="text-danger" *ngIf="apellidos.invalid && apellidos.errors && apellidos.errors['required']">El campo es obligatorio</span>
-                        <span class="text-danger" *ngIf="apellidos.invalid && apellidos.errors && apellidos.errors['pattern']">El campo tiene un caracter no permitido</span>
-                    </span>
-                </div>
-                <div class="form-group m-3">
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text h-100 rounded-left">
-                                <i class="fas fa-address-card"></i>
-                            </div>
-                        </div>
-                        <input type="text" name="documento" class="form-control" placeholder="Documento" [formControl]="documento" />
-                    </div>
-                    <span class="text-danger" *ngIf="
-              registroForm.get('documento').errors &&
-              (registroForm.get('documento').touched ||
-                registroForm.get('documento').dirty)
-            ">
-                        <span class="text-danger" *ngIf="documento.invalid && documento.errors && documento.errors['required']">El campo es obligatorio</span>
-                        <span class="text-danger" *ngIf="documento.invalid && documento.errors && documento.errors['pattern']">El documento no es válido</span>
-                    </span>
-                </div>
-                <div class="form-group m-3">
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text h-100 rounded-left">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                        </div>
-                        <input type="text" name="email" class="form-control" placeholder="Correo electrónico" [formControl]="email" />
-                    </div>
-                    <span class="text-danger" *ngIf="
-              registroForm.get('email').errors &&
-              (registroForm.get('email').touched ||
-                registroForm.get('email').dirty)
-            ">
-                        <span class="text-danger" *ngIf="email.invalid && email.errors && email.errors['required']">El campo es obligatorio</span>
-                        <span class="text-danger" *ngIf="email.invalid && email.errors && email.errors['pattern']">El email no es válido</span>
-                    </span>
-                </div>
-                <div class="form-group m-3">
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text h-100 rounded-left">
-                                <i class="fas fa-key"></i>
-                            </div>
-                        </div>
-                        <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" [formControl]="contrasena" />
-                    </div>
-                    <span class="text-danger" *ngIf="
-              registroForm.get('contrasena').errors &&
-              (registroForm.get('contrasena').touched ||
-                registroForm.get('contrasena').dirty)
-            ">
-                        <span class="text-danger" *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['required']">El campo es obligatorio</span>
-                        <span class="text-danger" *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['minlength']">La contraseña debe tener 8 caracteres como mínimo</span>
-                    </span>
-                </div>
-                <div class="form-group m-3">
-                    <button class="btn btn-success btn-block w-100" [disabled]="!registroForm.valid" type="submit">
-                        Registrarse
-                    </button>
-                    <button class="btn btn-primary btn-block w-100 mt-1" routerLink="/login" type="button">
-                        Iniciar sesión
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 </div>

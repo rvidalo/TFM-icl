@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.uoc.icl.domain.Email;
 import es.uoc.icl.domain.Jwt;
 import es.uoc.icl.domain.Login;
+import es.uoc.icl.domain.Negocio;
 import es.uoc.icl.domain.Usuario;
 import es.uoc.icl.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -71,12 +72,30 @@ public class AuthService {
 				.token(jwtService.getToken(nuevoUsuario))
 				.build();
 	}
+	
+	public Jwt registroNegocio(Negocio nuevoNegocio) {
+		nuevoNegocio.setContrasena(passwordEncoder.encode(nuevoNegocio.getContrasena()));
+		negocioService.guardarNegocio(nuevoNegocio);
+		
+		return Jwt.builder()
 
-	public Jwt login(Login login) {
+				.token(jwtService.getToken(nuevoNegocio))
+				.build();
+	}
+
+	public Jwt loginUsuario(Login login) {
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getEmail(), login.getContrasena()));
 		UserDetails usuario = usuarioService.getUsuarioConEmail(login.getEmail()).orElseThrow();
 		return Jwt.builder()
 				.token(jwtService.getToken(usuario))
+				.build();
+	}
+	
+	public Jwt loginNegocio(Login login) {
+		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getEmail(), login.getContrasena()));
+		UserDetails negocio = negocioService.getNegocioConEmail(login.getEmail()).orElseThrow();
+		return Jwt.builder()
+				.token(jwtService.getToken(negocio))
 				.build();
 	}
 	

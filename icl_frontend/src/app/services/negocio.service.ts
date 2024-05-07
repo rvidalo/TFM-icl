@@ -37,7 +37,7 @@ export class NegocioService {
   }
 
   public getTiposNegocio(): Observable<any> {
-    return this.http.get<any>(BACK_URL + 'api/negocios/tipo');
+    return this.http.get<any>(BACK_URL + 'api/negocios/tipos');
   }
 
   public nuevo(negocio: Negocio): Observable<any> {

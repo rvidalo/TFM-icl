@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.uoc.icl.domain.Negocio;
+import es.uoc.icl.domain.PerfilNegocio;
 import es.uoc.icl.domain.TipoNegocio;
 import es.uoc.icl.service.NegocioService;
 
@@ -43,19 +44,20 @@ public class NegocioRestController {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/email")
-	public ResponseEntity<Negocio> getNegocio(@RequestParam (required = true) String email) {
-		Negocio negocio = negocioService.getNegocioConEmail(email);
+	@GetMapping("/perfil")
+	public ResponseEntity<PerfilNegocio> getNegocio(@RequestParam (required = true) String email) {
+		Negocio negocio = negocioService.getNegocioConEmail(email).orElseThrow();
 		if(negocio == null) {
 			return new ResponseEntity("El negocio no existe", HttpStatus.BAD_REQUEST);
 		} 
-		return new ResponseEntity<Negocio>(negocio, HttpStatus.OK);
+		PerfilNegocio perfil = new PerfilNegocio(negocio);
+		return new ResponseEntity<PerfilNegocio>(perfil, HttpStatus.OK);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("/aceptar")
 	public ResponseEntity<Negocio> aceptarNegocio(@RequestParam (required = true) String email) {
-		Negocio negocio = negocioService.getNegocioConEmail(email);
+		Negocio negocio = negocioService.getNegocioConEmail(email).orElseThrow();
 		if(negocio == null) {
 			return new ResponseEntity("El negocio no existe", HttpStatus.BAD_REQUEST);
 		} 
@@ -66,7 +68,7 @@ public class NegocioRestController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("/rechazar")
 	public ResponseEntity<Negocio> rechazarNegocio(@RequestParam (required = true) String email) {
-		Negocio negocio = negocioService.getNegocioConEmail(email);
+		Negocio negocio = negocioService.getNegocioConEmail(email).orElseThrow();
 		if(negocio == null) {
 			return new ResponseEntity("El negocio no existe", HttpStatus.BAD_REQUEST);
 		} 
@@ -92,15 +94,15 @@ public class NegocioRestController {
 	
 	@PostMapping("/modificar")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ResponseEntity<?> modificarNegocio (@RequestBody Negocio modificado) {
-		Negocio negocio = negocioService.getNegocio(modificado.getId());
+	public ResponseEntity<?> modificarNegocio (@RequestBody PerfilNegocio perfil) {
+		Negocio negocio = negocioService.getNegocio(perfil.getId());
 		if(negocio == null) {
 			return new ResponseEntity("El negocio no existe", HttpStatus.BAD_REQUEST);
 		}
 		if(negocioService.existeNegocioConEmailOCif(negocio)) {
 			return new ResponseEntity("El negocio con email " +negocio.getEmail()+ " o CIF " + negocio.getCif() +" ya existe", HttpStatus.BAD_REQUEST);
 		}
-		negocioService.modificarNegocio(modificado);
+		negocioService.modificarNegocio(perfil);
 		return new ResponseEntity(Collections.singletonMap("mensaje", "Negocio modificado"), HttpStatus.OK);
 	}
 }
