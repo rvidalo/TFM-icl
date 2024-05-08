@@ -40,6 +40,7 @@ export class AuthService {
     const payload = token.split('.')[1];
     const payloadDecoded = atob(payload);
     const values = JSON.parse(payloadDecoded);
+    
     return values.sub;
   }
 
@@ -60,12 +61,48 @@ export class AuthService {
     const payload = token.split('.')[1];
     const payloadDecoded = atob(payload);
     const values = JSON.parse(payloadDecoded);
-    const admin = values.roles;
-    console.log('Roles: ' + admin)
-    if (admin == 0) {
+    const rol = values.rol[0].authority;
+    if (rol == 'ADMIN') {
+      console.log(rol);
+      return true;
+    }
+    return false;
+  }
+  
+  public isUsuario(): boolean {
+    const token = this.getToken();
+
+    if (!token || !this.isLogged()) {
       return false;
     }
-    return true;
+
+    const payload = token.split('.')[1];
+    const payloadDecoded = atob(payload);
+    const values = JSON.parse(payloadDecoded);
+    const rol = values.rol[0].authority;
+    if (rol == 'USUARIO') {
+      console.log(rol);
+      return true;
+    }
+    return false;
+  }
+
+  public isNegocio(): boolean {
+    const token = this.getToken();
+
+    if (!token || !this.isLogged()) {
+      return false;
+    }
+
+    const payload = token.split('.')[1];
+    const payloadDecoded = atob(payload);
+    const values = JSON.parse(payloadDecoded);
+    const rol = values.rol[0].authority;
+    if (rol == 'NEGOCIO') {
+      console.log(rol);
+      return true;
+    }
+    return false;
   }
 
   public logOut(): void {

@@ -1,8 +1,9 @@
 package es.uoc.icl.domain;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
@@ -26,8 +27,8 @@ public class Usuario implements UserDetails{
     private Rol rol;
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.emptyList();
-				//List.of(new SimpleGrantedAuthority(rol.name()));
+//		return Collections.emptyList();
+		return List.of(new SimpleGrantedAuthority(Rol.USUARIO.name()));
 	}
 	@Override
 	public String getPassword() {

@@ -13,14 +13,17 @@
                 <li class="nav-item">
                     <a class="nav-link px-4" routerLink="/">Inicio</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link px-4" routerLink="negocios-lista">Negocios</a>
+                <li   class="nav-item">
+                    <a class="nav-link px-4" routerLink="lista-negocios">Negocios</a>
                 </li>
-                <li class="nav-item">
+                <li *ngIf="isLogged && isUsuario"  class="nav-item">
                     <a class="nav-link px-4" routerLink="solicitud-vale">Solicitud</a>
                 </li>
-                <li class="nav-item">
+                <li *ngIf="isLogged && isUsuario"  class="nav-item">
                     <a class="nav-link px-4" routerLink="vales-usuario">Vales</a>
+                </li>
+                <li *ngIf="isLogged && isNegocio" class="nav-item">
+                    <a class="nav-link px-4" routerLink="vales-negocio">Vales</a>
                 </li>
                 <li *ngIf="isLogged && isAdmin" class="nav-item dropdown">
                     <button class="nav-link dropdown-toggle border-0 bg-transparent w-100" href="#"
@@ -40,8 +43,11 @@
                             Bienvenido, {{ email }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="navbarDropdown">
-                            <li>
+                            <li *ngIf="isLogged && (isAdmin || isUsuario)">
                                 <a class="dropdown-item" routerLink="perfil">Mi perfil</a>
+                            </li>
+                            <li *ngIf="isLogged && isNegocio">
+                                <a class="dropdown-item" routerLink="perfil-negocio">Mi perfil</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider" />

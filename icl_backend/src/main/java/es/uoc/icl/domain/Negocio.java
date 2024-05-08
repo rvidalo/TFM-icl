@@ -2,9 +2,10 @@ package es.uoc.icl.domain;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
@@ -22,11 +23,12 @@ public class Negocio implements UserDetails{
     private BigDecimal valorTotal;
     private String contrasena;
     private Integer estado;
+    private Rol rol;
     
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.emptyList();
-		//List.of(new SimpleGrantedAuthority(rol.name()));
+//		return Collections.emptyList();
+		return List.of(new SimpleGrantedAuthority(Rol.NEGOCIO.name()));
 	}
 	@Override
 	public String getPassword() {

@@ -15,7 +15,14 @@ import { RegistroComponent } from './components/usuarios/registro/registro.compo
 import { PerfilComponent } from './components/usuarios/perfil/perfil.component';
 import { SolicitudValeComponent } from './components/vales/solicitud-vale/solicitud-vale.component';
 import { ValesUsuarioComponent } from './components/vales/vales-usuario/vales-usuario.component';
-
+import { PerfilNegocioComponent } from './components/negocios/perfil-negocio/perfil-negocio.component';
+import { ValesNegocioComponent } from './components/vales/vales-negocio/vales-negocio.component';
+import { ListaNegociosComponent } from './components/negocios/lista-negocios/lista-negocios.component';
+import { FiltroNegociosPipe } from './pipes/filtro-negocios.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -27,13 +34,21 @@ import { ValesUsuarioComponent } from './components/vales/vales-usuario/vales-us
     RegistroComponent,
     PerfilComponent,
     SolicitudValeComponent,
-    ValesUsuarioComponent
+    ValesUsuarioComponent,
+    PerfilNegocioComponent,
+    ValesNegocioComponent,
+    ListaNegociosComponent,
+    FiltroNegociosPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule, 
+    MatTableModule,
+    MatSortModule 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [interceptorProvider],

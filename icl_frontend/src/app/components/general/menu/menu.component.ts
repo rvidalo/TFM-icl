@@ -10,12 +10,16 @@ export class MenuComponent implements OnInit {
   isLogged = false;
   email = '';
   isAdmin = false;
+  isUsuario = false;
+  isNegocio = false;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.isLogged = this.authService.isLogged();
     this.isAdmin = this.authService.isAdmin();
+    this.isUsuario = this.authService.isUsuario();
+    this.isNegocio = this.authService.isNegocio();
     if (this.isLogged) {
       this.email = this.authService.getEmail();
     }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Negocio } from '../models/negocio';
+import { PerfilNegocio } from '../models/perfil-negocio';
 
 const BACK_URL = environment.APIEndpoint;
 
@@ -44,7 +45,12 @@ export class NegocioService {
     return this.http.post<Negocio>(BACK_URL + 'api/negocios/nuevo', Negocio);
   }
 
-  public modificar(negocio: Negocio): Observable<any> {
-    return this.http.post<Negocio>(BACK_URL + 'api/negocios/modificar', negocio);
+  public modificar(perfilNegocio: PerfilNegocio): Observable<any> {
+    return this.http.post<PerfilNegocio>(BACK_URL + 'api/negocios/modificar', perfilNegocio);
+  }
+
+  public getPerfilNegocio(email: string): Observable<any> {
+    const param = new HttpParams().append('email', email);
+    return this.http.get<PerfilNegocio>(BACK_URL + 'api/negocios/perfil', { params: param });
   }
 }

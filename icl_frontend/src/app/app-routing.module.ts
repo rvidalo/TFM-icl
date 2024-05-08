@@ -9,6 +9,9 @@ import { RegistroComponent } from './components/usuarios/registro/registro.compo
 import { PerfilComponent } from './components/usuarios/perfil/perfil.component';
 import { SolicitudValeComponent } from './components/vales/solicitud-vale/solicitud-vale.component';
 import { ValesUsuarioComponent } from './components/vales/vales-usuario/vales-usuario.component';
+import { PerfilNegocioComponent } from './components/negocios/perfil-negocio/perfil-negocio.component';
+import { ValesNegocioComponent } from './components/vales/vales-negocio/vales-negocio.component';
+import { ListaNegociosComponent } from './components/negocios/lista-negocios/lista-negocios.component';
 
 const routes: Routes = [{ path: '', component: IndexComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
@@ -16,9 +19,11 @@ const routes: Routes = [{ path: '', component: IndexComponent, canActivate: [Aut
   // { path: 'email-password', component: EmailPasswordComponent, canActivate: [LoginGuard] },
   // { path: 'cambiar-password/:tokenPassword', component: CambiarPasswordComponent, canActivate: [LoginGuard] },
   { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
-  // { path: 'negocios', component: NegociosComponent, canActivate: [AuthGuard] },
+  { path: 'perfil-negocio', component: PerfilNegocioComponent, canActivate: [AuthGuard] },
+   { path: 'lista-negocios', component: ListaNegociosComponent, canActivate: [AuthGuard] },
    { path: 'solicitud-vale', component: SolicitudValeComponent, canActivate: [AuthGuard] },
    { path: 'vales-usuario', component: ValesUsuarioComponent, canActivate: [AuthGuard] },
+   { path: 'vales-negocio', component: ValesNegocioComponent, canActivate: [AuthGuard] },
   // { path: 'admin/usuarios', component: ListaUsuariosComponent, canActivate: [AdminGuard] }
 ];
 

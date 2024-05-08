@@ -1,0 +1,128 @@
+<h3 class="mt-5 text-center">PERFIL DE NEGOCIO</h3>
+<div class="container col-md-5 mx-auto">
+    <form class="bg-white p-3" *ngIf="perfilNegocioForm" [formGroup]="perfilNegocioForm"
+        (ngSubmit)="onActualizaDatos()">
+        <div class="form-group m-3" *ngIf="mensaje && !error" class="alert" [class.alert-success]="!error"
+            [class.alert-danger]="error" role="alert"> {{ mensaje }}
+        </div>
+        <input type="hidden" name="id" [formControl]="id" />
+        <div class="form-group m-3">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" class="form-control" [formControl]="nombre" />
+            <span class="text-danger" *ngIf="
+          perfilNegocioForm.get('nombre').errors &&
+          (perfilNegocioForm.get('nombre').touched ||
+            perfilNegocioForm.get('nombre').dirty)
+        ">
+                <span class="text-danger" *ngIf="nombre.invalid && nombre.errors && nombre.errors['required']">El campo
+                    es
+                    obligatorio</span>
+            </span>
+        </div>
+        <div class="form-group m-3">
+            <label for="direccion">Dirección</label>
+            <input type="text" name="direccion" class="form-control" [formControl]="direccion" />
+            <span class="text-danger" *ngIf="
+          perfilNegocioForm.get('direccion').errors &&
+          (perfilNegocioForm.get('direccion').touched ||
+            perfilNegocioForm.get('direccion').dirty)
+        ">
+                <span class="text-danger"
+                    *ngIf="direccion.invalid && direccion.errors && direccion.errors['required']">El campo es
+                    obligatorio</span>
+            </span>
+        </div>
+        <div class="form-group m-3">
+            <label for="cif">CIF</label>
+            <input type="text" name="cif" class="form-control" [formControl]="cif" />
+            <span class="text-danger" *ngIf="
+          perfilNegocioForm.get('cif').errors &&
+          (perfilNegocioForm.get('cif').touched ||
+            perfilNegocioForm.get('cif').dirty)
+        ">
+                <span class="text-danger"
+                    *ngIf="cif.invalid && cif.errors && cif.errors['required']">El campo es
+                    obligatorio</span>
+            </span>
+        </div>
+
+        <div class="form-group m-3">
+            <label for="tipoNegocio">Tipo Negocio</label>
+            <select class="form-control" name="tipoNegocio" [formControl]="tipoNegocio">
+                <option value="">Selecciona el tipo de negocio</option>
+                <option *ngFor="let tipo of tiposNegocio" [value]="tipo.id">{{ tipo.descripcion }}</option>
+            </select>
+            <span class="text-danger" *ngIf="
+                                            perfilNegocioForm.get('tipoNegocio').errors &&
+                                            (perfilNegocioForm.get('tipoNegocio').touched || perfilNegocioForm.get('tipoNegocio').dirty)
+                                        ">
+                <span class="text-danger" *ngIf="tipoNegocio.invalid && tipoNegocio.errors && tipoNegocio.errors['required']">
+                    Debes seleccionar un tipo de negocio
+                </span>
+            </span>
+        </div>
+        <div class="form-group m-3">
+            <label for="email">Email</label>
+            <input type="text" name="email" class="form-control" [formControl]="email" />
+            <span class="text-danger" *ngIf="
+          perfilNegocioForm.get('email').errors &&
+          (perfilNegocioForm.get('email').touched ||
+            perfilNegocioForm.get('email').dirty)
+        ">
+                <span class="text-danger" *ngIf="email.invalid && email.errors && email.errors['required']">El campo es
+                    obligatorio</span>
+            </span>
+        </div>
+        <div class="form-group m-3">
+            <button class="btn btn-success btn-block w-100" [disabled]="!perfilNegocioForm.valid" type="submit">
+                Actualizar datos
+            </button>
+        </div>
+    </form>
+    <form class="bg-white p-3 mt-3 mb-3" [formGroup]="cambiarContrasenaForm" (ngSubmit)="onCambiarContrasena()">
+        <div class="form-group m-3" *ngIf="mensajePass" class="alert" [class.alert-success]="!errorPass"
+            [class.alert-danger]="errorPass" role="alert">
+            {{ mensajePass }}
+        </div>
+        <div class="form-group m-3">
+            <label for="email">Nueva contraseña</label>
+            <input type="password" name="contrasena" class="form-control" [formControl]="contrasena" />
+            <span class="text-danger" *ngIf="
+          cambiarContrasenaForm.get('contrasena').errors &&
+          (cambiarContrasenaForm.get('contrasena').touched ||
+            cambiarContrasenaForm.get('contrasena').dirty)
+        ">
+                <span class="text-danger"
+                    *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['required']">El campo es
+                    obligatorio</span>
+                <span class="text-danger"
+                    *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['minlength']">Debe tener 8
+                    caracteres
+                    como mínimo</span>
+            </span>
+        </div>
+        <div class="form-group m-3">
+            <label for="email">Confirme nueva contraseña</label>
+            <input type="password" name="contrasena" class="form-control" [formControl]="confirmaContrasena" />
+            <span class="text-danger" *ngIf="
+          cambiarContrasenaForm.get('confirmaContrasena').errors &&
+          (cambiarContrasenaForm.get('confirmaContrasena').touched ||
+            cambiarContrasenaForm.get('confirmaContrasena').dirty)
+        ">
+                <span class="text-danger"
+                    *ngIf="confirmaContrasena.invalid && confirmaContrasena.errors && confirmaContrasena.errors['required']">El
+                    campo es
+                    obligatorio</span>
+                <span class="text-danger"
+                    *ngIf="confirmaContrasena.invalid && confirmaContrasena.errors && confirmaContrasena.errors['minlength']">Debe
+                    tener
+                    8 caracteres como mínimo</span>
+            </span>
+        </div>
+        <div class="form-group m-3">
+            <button class="btn btn-outline-success btn-block" [disabled]="!cambiarContrasenaForm.valid" type="submit">
+                Actualizar contraseña
+            </button>
+        </div>
+    </form>
+</div>
