@@ -32,7 +32,6 @@
             <result property="nombre" column="nombre_usuario"/>
             <result property="apellidos" column="apellidos_usuario"/>
             <result property="documento" column="documento_usuario"/>
-            <result property="fechaNacimiento" column="fecha_nacimiento_usuario"/>
             <result property="email" column="email_usuario"/>
             <result property="contrasena" column="contrasena_usuario"/>
             <result property="admin" column="admin_usuario"/>
@@ -46,7 +45,7 @@
                n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio,
                n.valor_total as valor_total_negocio, n.estado as estado_negocio, n.fecha_registro as fecha_registro_negocio,
                u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
-               u.fecha_nacimiento as fecha_nacimiento_usuario, u.email as email_usuario, u.contrasena as contrasena_usuario,
+               u.email as email_usuario, u.contrasena as contrasena_usuario,
                u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
         FROM canjeados c
         JOIN vales v ON c.vale_id = v.id
@@ -61,7 +60,7 @@
                n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio,
                n.valor_total as valor_total_negocio, n.estado as estado_negocio, n.fecha_registro as fecha_registro_negocio,
                u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
-               u.fecha_nacimiento as fecha_nacimiento_usuario, u.email as email_usuario, u.contrasena as contrasena_usuario,
+               u.email as email_usuario, u.contrasena as contrasena_usuario,
                u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
         FROM canjeados c
         JOIN vales v ON c.vale_id = v.id
@@ -75,7 +74,7 @@
                n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio,
                n.valor_total as valor_total_negocio, n.estado as estado_negocio, n.fecha_registro as fecha_registro_negocio,
                u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
-               u.fecha_nacimiento as fecha_nacimiento_usuario, u.email as email_usuario, u.contrasena as contrasena_usuario,
+               u.email as email_usuario, u.contrasena as contrasena_usuario,
                u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
         FROM canjeados c
         JOIN vales v ON c.vale_id = v.id
@@ -90,7 +89,7 @@
                n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio,
                n.valor_total as valor_total_negocio, n.estado as estado_negocio, n.fecha_registro as fecha_registro_negocio,
                u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
-               u.fecha_nacimiento as fecha_nacimiento_usuario, u.email as email_usuario, u.contrasena as contrasena_usuario,
+               u.email as email_usuario, u.contrasena as contrasena_usuario,
                u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
         FROM canjeados c
         JOIN vales v ON c.vale_id = v.id

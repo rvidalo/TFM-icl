@@ -15,7 +15,7 @@ export class SolicitudValeComponent implements OnInit {
   valeUsuario: Vale;
   numVales: number;
   solicitudRealizada: boolean = false;
-  //porcentajeSolicitados:number
+  mensaje = '';
  
   constructor(
     //private formBuilder: FormBuilder,
@@ -29,8 +29,6 @@ export class SolicitudValeComponent implements OnInit {
     console.log('Solicitud vale');
     this.valeService.getVales().subscribe(
       (data) => {
-        console.log('Solicitud vale');
-        console.log(data);
         this.valesSolicitados = data;
         this.numVales = this.valesSolicitados.length;
       },
@@ -60,6 +58,25 @@ export class SolicitudValeComponent implements OnInit {
   }
 
   onSolicitudVale() {
-    throw new Error('Method not implemented.');
+    this.valeService.nuevoVale(this.authService.getEmail()).subscribe(
+      (data) => {
+        this.mensaje = data.mensaje;
+        this.valeService.getVales().subscribe(
+          (data) => {
+            this.valesSolicitados = data;
+            this.numVales = this.valesSolicitados.length;
+            this.solicitudRealizada = true;
+          },
+          (err) => {
+            this.mensaje = err.error;
+            console.log(err);
+          }
+        );
+      },
+      (err) => {
+        this.mensaje = err.error;
+        console.log(err);
+      }
+    );
   }
 }

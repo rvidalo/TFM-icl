@@ -11,6 +11,7 @@
         <result property="lote" column="lote"/>
         <result property="fechaLimite" column="fecha_limite"/>
         <result property="fechaRegistro" column="fecha_registro"/>
+        <result property="qr" column="qr"/>
         <association property="usuario" javaType="es.uoc.icl.domain.Usuario" resultMap="usuario" />
     </resultMap>
     
@@ -25,7 +26,7 @@
 	</resultMap>
 
     <select id="getVale" resultMap="vale">
-        SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro,
+        SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro, v.qr,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
             u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
@@ -34,16 +35,16 @@
     </select>
 
     <select id="getValeDeUsuario" resultMap="vale">
-        SELECT  v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro,
+        SELECT  v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro, v.qr,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
             u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
         JOIN usuarios u ON v.usuario = u.id
-        WHERE v.email = #{email}
+        WHERE u.email = #{email}
     </select>
 
     <select id="getVales" resultMap="vale">
-        SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro,
+        SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro, v.qr,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
              u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
@@ -51,14 +52,8 @@
     </select>
 
     <insert id="guardarVale" parameterType="es.uoc.icl.domain.Vale">
-        INSERT INTO vales (usuario, fecha_limite, valor_total, lote, fecha_registro)
-        VALUES (#{usuario.id}, #{fechaLimite}, #{valorTotal}, #{lote}, #{fechaRegistro})
+        INSERT INTO vales (usuario, fecha_limite, valor_total, lote, fecha_registro, qr)
+        VALUES (#{usuario.id}, #{fechaLimite}, #{valorTotal}, #{lote}, #{fechaRegistro}, #{qr})
     </insert>
-
-    <update id="modificarVale" parameterType="es.uoc.icl.domain.Vale">
-        UPDATE vales
-        SET usuario = #{usuario.id}, fecha_limite = #{fechaLimite}, valor_total = #{valorTotal}, lote = #{lote}, fecha_registro = #{fechaRegistro}
-        WHERE id = #{id}
-    </update>
 
 </mapper>

@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <h2>Reglas de Uso de los Vales</h2>
     <ul class="list-group">
         <li class="list-group-item">Regla 1: Lorem ipsum dolor sit amet.</li>
@@ -17,8 +17,27 @@
         </div>
     </div>
 
-    <button class="btn btn-primary mt-3" (click)="onSolicitudVale()"
-        [disabled]="numVales >= 1000 || solicitudRealizada">
-        Solicitar Vale
-    </button>
+    <div *ngIf="solicitudRealizada">
+        <qrcode [qrdata]="valeUsuario.qr" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+    </div>
+
+    <div *ngIf="solicitudRealizada">
+        <div class="alert alert-info mt-3" role="alert">
+            ¡Ya tienes un vale asignado! Por favor, ve al menú de Vales.
+        </div>
+    </div>
+    
+    <div *ngIf="!solicitudRealizada && numVales >= 1000">
+        <div class="alert alert-warning mt-3" role="alert">
+            ¡Se ha alcanzado el máximo de vales solicitados (1000)!
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary btn-lg mt-3" (click)="onSolicitudVale()"
+            [disabled]="numVales >= 1000 || solicitudRealizada">
+            Solicitar Vale
+        </button>
+    </div>
+
 </div>

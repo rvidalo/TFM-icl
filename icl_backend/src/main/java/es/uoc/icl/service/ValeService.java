@@ -30,13 +30,9 @@ public class ValeService {
 		return valeRepository.getValeDeUsuario(email);
 	}
 	
-	public void modificarVale(Vale vale) {
-		valeRepository.modificarVale(vale);
-	}
-	
-	public void guardarVale(String email) {
+	public void nuevoVale(String email) {
 		Usuario usuario = usuarioService.getUsuarioConEmail(email).get();
-		Vale vale = new Vale(usuario);
+		Vale vale = new Vale(usuario);		
 		valeRepository.guardarVale(vale);
 	}
 

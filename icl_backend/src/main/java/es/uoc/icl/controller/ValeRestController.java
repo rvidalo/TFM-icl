@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,17 +52,7 @@ public class ValeRestController {
 		if(valeService.existeValeDeUsuario(email)) {
 			return new ResponseEntity("El usuario no puede solicitar más vales", HttpStatus.BAD_REQUEST);
 		}
-		valeService.guardarVale(email);
+		valeService.nuevoVale(email);
 		return new ResponseEntity(Collections.singletonMap("mensaje", "Vale creado"), HttpStatus.CREATED);
-	}
-	
-	@PostMapping("/modificar")
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ResponseEntity<?> modificarVale (@RequestBody Vale vale) {
-		if(!valeService.existeVale(vale.getId())) {
-			return new ResponseEntity("El vale no existe", HttpStatus.BAD_REQUEST);
-		}
-		valeService.modificarVale(vale);
-		return new ResponseEntity(Collections.singletonMap("mensaje", "Vale modificado"), HttpStatus.OK);
 	}
 }

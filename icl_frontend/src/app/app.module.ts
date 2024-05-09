@@ -18,11 +18,11 @@ import { ValesUsuarioComponent } from './components/vales/vales-usuario/vales-us
 import { PerfilNegocioComponent } from './components/negocios/perfil-negocio/perfil-negocio.component';
 import { ValesNegocioComponent } from './components/vales/vales-negocio/vales-negocio.component';
 import { ListaNegociosComponent } from './components/negocios/lista-negocios/lista-negocios.component';
-import { FiltroNegociosPipe } from './pipes/filtro-negocios.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -37,8 +37,7 @@ import { MatSortModule } from '@angular/material/sort';
     ValesUsuarioComponent,
     PerfilNegocioComponent,
     ValesNegocioComponent,
-    ListaNegociosComponent,
-    FiltroNegociosPipe
+    ListaNegociosComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +47,8 @@ import { MatSortModule } from '@angular/material/sort';
     BrowserAnimationsModule,
     MatPaginatorModule, 
     MatTableModule,
-    MatSortModule 
+    MatSortModule,
+    QRCodeModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [interceptorProvider],

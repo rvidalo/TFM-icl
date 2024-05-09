@@ -109,13 +109,6 @@ a:hover {
     /* Altura de línea para centrar el texto verticalmente */
 }
 
-.mat-column-nombre,
-.mat-column-direccion,
-.mat-column-tipo,
-.mat-column-email {
-    flex: 0 0 25% !important; 
-}
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 

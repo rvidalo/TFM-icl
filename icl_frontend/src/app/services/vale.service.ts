@@ -24,7 +24,8 @@ export class ValeService {
 
   public nuevoVale(email: string): Observable<any> {
     const param = new HttpParams().append('email', email);
-    return this.http.post<any>(BACK_URL + 'api/vales/nuevo', { params: param });
+    console.log('Nuevo vale: ' + BACK_URL + 'api/vales/nuevo?email=' + email);
+    return this.http.post<any>(BACK_URL + 'api/vales/nuevo?email='+email, null);
   }
 
 }

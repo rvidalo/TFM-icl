@@ -55,17 +55,4 @@ public class Usuario implements UserDetails{
 		return true;
 	}
 
-//    public Usuario(Integer id, String nombre, String apellidos, String documento, String email, String contrasena,
-//    		boolean admin, LocalDate fechaNacimiento, LocalDateTime fechaRegistro) {
-//    	this.id = id;
-//    	this.nombre = nombre;
-//    	this.apellidos = apellidos;
-//    	this.documento = documento;
-//    	this.email = email;
-//    	this.contrasena = contrasena;
-//    	this.admin = admin;
-//    	this.fechaNacimiento = fechaNacimiento;
-//    	this.fechaRegistro = fechaRegistro;
-//    }
-//    public Usuario () { }
 }

@@ -12,5 +12,5 @@ public interface ValeRepository {
 	Vale getValeDeUsuario(String email);
 	List<Vale> getVales();
 	void guardarVale(Vale vale);
-	void modificarVale(Vale vale);
+	void modificarVale2(Vale vale);
 }
