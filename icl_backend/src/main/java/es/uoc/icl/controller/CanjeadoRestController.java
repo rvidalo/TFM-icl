@@ -1,6 +1,6 @@
 package es.uoc.icl.controller;
 
-import java.util.Collections;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.uoc.icl.domain.Canjeado;
+import es.uoc.icl.domain.CanjearVale;
 import es.uoc.icl.service.CanjeadoService;
 
 @RestController
@@ -54,10 +55,9 @@ public class CanjeadoRestController {
 	}
 
 	@PostMapping("/nuevo")
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ResponseEntity<?> nuevoCanjeado (@RequestBody Canjeado canjeado) {
-		canjeadoService.guardarCanjeado(canjeado);
-		return new ResponseEntity(Collections.singletonMap("mensaje", "Canjeado creado"), HttpStatus.CREATED);
+	public ResponseEntity<BigDecimal> nuevoCanjeado (@RequestBody CanjearVale canjearVale) {
+		BigDecimal descuento = canjeadoService.guardarCanjeado(canjearVale);
+		return new ResponseEntity<BigDecimal>(descuento, HttpStatus.OK);
 	}
 	
 }

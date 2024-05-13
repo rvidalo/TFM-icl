@@ -1,5 +1,6 @@
 package es.uoc.icl.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,4 +22,5 @@ public interface NegocioRepository {
 	List<TipoNegocio> getTiposNegocio();
 	List<Negocio> getNegociosAceptados();
 	Optional<Negocio> getNegocioConEmail(String email);
+	BigDecimal getTotalCanjeado(Negocio negocio);
 }

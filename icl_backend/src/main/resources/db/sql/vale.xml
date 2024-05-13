@@ -33,6 +33,15 @@
         JOIN usuarios u ON v.usuario = u.id
         WHERE v.id = #{idVale}
     </select>
+    
+    <select id="getValeConQr" resultMap="vale">
+		SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro, v.qr,
+        	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
+            u.email AS usuario_email, u.contrasena AS usuario_contrasena
+        FROM vales v
+        JOIN usuarios u ON v.usuario = u.id
+        WHERE qr = #{qr}
+	</select>
 
     <select id="getValeDeUsuario" resultMap="vale">
         SELECT  v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro, v.qr,
@@ -55,5 +64,11 @@
         INSERT INTO vales (usuario, fecha_limite, valor_total, lote, fecha_registro, qr)
         VALUES (#{usuario.id}, #{fechaLimite}, #{valorTotal}, #{lote}, #{fechaRegistro}, #{qr})
     </insert>
+    
+    <select id="getTotalCanjeado" resultType="java.math.BigDecimal">
+        SELECT COALESCE(SUM(descuento), 0)
+        FROM canjeados
+        WHERE vale = #{id}
+    </select>
 
 </mapper>

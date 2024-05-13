@@ -23,6 +23,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { QRCodeModule } from 'angularx-qrcode';
+import { CanjearValeComponent } from './components/vales/canjear-vale/canjear-vale.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     ValesUsuarioComponent,
     PerfilNegocioComponent,
     ValesNegocioComponent,
-    ListaNegociosComponent
+    ListaNegociosComponent,
+    CanjearValeComponent
   ],
   imports: [
     BrowserModule,

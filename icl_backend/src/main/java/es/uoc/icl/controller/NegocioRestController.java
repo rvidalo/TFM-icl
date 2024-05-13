@@ -1,5 +1,6 @@
 package es.uoc.icl.controller;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,6 +53,17 @@ public class NegocioRestController {
 		} 
 		PerfilNegocio perfil = new PerfilNegocio(negocio);
 		return new ResponseEntity<PerfilNegocio>(perfil, HttpStatus.OK);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("/total")
+	public ResponseEntity<BigDecimal> obtenerTotalCanjeado(@RequestParam (required = true) String email) {
+		Negocio negocio = negocioService.getNegocioConEmail(email).orElseThrow();
+		if(negocio == null) {
+			return new ResponseEntity("El negocio no existe", HttpStatus.BAD_REQUEST);
+		} 
+		BigDecimal totalCanjeado = negocioService.getTotalCanjeado(negocio);
+		return new ResponseEntity<BigDecimal>(totalCanjeado, HttpStatus.OK);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })

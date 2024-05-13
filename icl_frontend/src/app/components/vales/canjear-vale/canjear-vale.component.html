@@ -1,0 +1,47 @@
+<div class="d-flex h-100vh align-items-center justify-content-center">
+    <div class="card col-11 col-md-5 col-lg-5 col-xl-3 shadow-lg">
+        <div class="card-body">
+            <h4 class="text-center mb-4">Canjear vale</h4>
+
+            <div *ngIf="valeCanjeado" class="alert alert-success mt-4" role="alert">
+                ¡Vale canjeado con éxito!
+            </div>
+
+            <form [formGroup]="canjearValeForm" (ngSubmit)="onCanjearVale()">
+                <div class="form-group m-3">
+                    <label for="codigo">Código</label>
+                    <input type="text" id="codigo" class="form-control" formControlName="qr"
+                        placeholder="Ingrese el código" />
+                    <div *ngIf="qr.invalid && (qr.dirty || qr.touched)" class="text-danger">
+                        <span *ngIf="qr.errors['required']">El código es obligatorio.</span>
+                        <span *ngIf="qr.errors['minlength']">El código debe tener exactamente 20 caracteres.</span>
+                        <span *ngIf="qr.errors['maxlength']">El código debe tener exactamente 20 caracteres.</span>
+                    </div>
+                </div>
+                <div class="form-group m-3">
+                    <label for="costoTotal">Coste Total</label>
+                    <input type="number" id="costoTotal" class="form-control" formControlName="total"
+                        placeholder="Ingrese el coste total" />
+                    <div *ngIf="total.invalid && (total.dirty || total.touched)"
+                        class="text-danger">
+                        <span *ngIf="total.errors['required']">El coste total es obligatorio.</span>
+                        <span *ngIf="total.errors['pattern']">Ingrese un valor numérico válido (puede incluir hasta
+                            2 decimales).</span>
+                    </div>
+                </div>
+
+                <div *ngIf="valeCanjeado" class="m-3">
+                    <p><b>Descuento:</b> {{ descuento | currency:'EUR':'symbol':'1.2-2' }}</p>
+                    <p><b>Pago Pendiente:</b> {{ total.value - descuento | currency:'EUR':'symbol':'1.2-2' }}</p>
+                </div>
+
+                <div *ngIf="!valeCanjeado" class="form-group m-3">
+                    <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="canjearValeForm.invalid">
+                        Guardar Operación
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

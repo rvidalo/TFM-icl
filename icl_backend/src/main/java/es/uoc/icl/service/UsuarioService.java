@@ -71,5 +71,5 @@ public class UsuarioService {
 	public void modificarContrasenaUsuario(Integer id, String contrasena) {
 		usuarioRepository.modificarContrasena(id, contrasena);
 	}
-	
+
 }

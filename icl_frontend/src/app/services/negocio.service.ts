@@ -53,4 +53,9 @@ export class NegocioService {
     const param = new HttpParams().append('email', email);
     return this.http.get<PerfilNegocio>(BACK_URL + 'api/negocios/perfil', { params: param });
   }
+
+  public obtenerTotalCanjeadoNegocio(emailNegocio: string) {
+    const param = new HttpParams().append('emailNegocio', emailNegocio);
+    return this.http.get<number>(BACK_URL + 'api/negocios/total', { params: param });
+  }
 }

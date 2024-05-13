@@ -1,5 +1,6 @@
 package es.uoc.icl.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -13,4 +14,6 @@ public interface ValeRepository {
 	List<Vale> getVales();
 	void guardarVale(Vale vale);
 	void modificarVale2(Vale vale);
+	Vale getValeConQr(String qr);
+	BigDecimal getTotalCanjeado(Vale vale);
 }

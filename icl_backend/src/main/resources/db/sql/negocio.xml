@@ -83,5 +83,11 @@
         SELECT t.id AS tipo_id, t.descripcion AS tipo_descripcion
         FROM tipo_negocio t
     </select>
+    
+    <select id="getTotalCanjeado" resultType="java.math.BigDecimal">
+        SELECT COALESCE(SUM(descuento), 0)
+        FROM canjeados
+        WHERE negocio = #{id}
+    </select>
 
 </mapper>

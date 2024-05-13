@@ -12,6 +12,7 @@ import { ValesUsuarioComponent } from './components/vales/vales-usuario/vales-us
 import { PerfilNegocioComponent } from './components/negocios/perfil-negocio/perfil-negocio.component';
 import { ValesNegocioComponent } from './components/vales/vales-negocio/vales-negocio.component';
 import { ListaNegociosComponent } from './components/negocios/lista-negocios/lista-negocios.component';
+import { CanjearValeComponent } from './components/vales/canjear-vale/canjear-vale.component';
 
 const routes: Routes = [{ path: '', component: IndexComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
@@ -24,6 +25,7 @@ const routes: Routes = [{ path: '', component: IndexComponent, canActivate: [Aut
    { path: 'solicitud-vale', component: SolicitudValeComponent, canActivate: [AuthGuard] },
    { path: 'vales-usuario', component: ValesUsuarioComponent, canActivate: [AuthGuard] },
    { path: 'vales-negocio', component: ValesNegocioComponent, canActivate: [AuthGuard] },
+   { path: 'canjear-vale', component: CanjearValeComponent, canActivate: [AuthGuard] },
   // { path: 'admin/usuarios', component: ListaUsuariosComponent, canActivate: [AdminGuard] }
 ];
 
