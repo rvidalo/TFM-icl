@@ -8,7 +8,6 @@
     <resultMap id="vale" type="es.uoc.icl.domain.Vale">
         <id property="id" column="id"/>
         <result property="valorTotal" column="valor_total"/>
-        <result property="lote" column="lote"/>
         <result property="fechaLimite" column="fecha_limite"/>
         <result property="fechaRegistro" column="fecha_registro"/>
         <result property="qr" column="qr"/>
@@ -26,7 +25,7 @@
 	</resultMap>
 
     <select id="getVale" resultMap="vale">
-        SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro, v.qr,
+        SELECT v.id, v.valor_total, v.fecha_limite, v.fecha_registro, v.qr,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
             u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
@@ -35,7 +34,7 @@
     </select>
     
     <select id="getValeConQr" resultMap="vale">
-		SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro, v.qr,
+		SELECT v.id, v.valor_total, v.fecha_limite, v.fecha_registro, v.qr,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
             u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
@@ -44,7 +43,7 @@
 	</select>
 
     <select id="getValeDeUsuario" resultMap="vale">
-        SELECT  v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro, v.qr,
+        SELECT  v.id, v.valor_total, v.fecha_limite, v.fecha_registro, v.qr,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
             u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
@@ -53,7 +52,7 @@
     </select>
 
     <select id="getVales" resultMap="vale">
-        SELECT v.id, v.valor_total, v.lote, v.fecha_limite, v.fecha_registro, v.qr,
+        SELECT v.id, v.valor_total, v.fecha_limite, v.fecha_registro, v.qr,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
              u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
@@ -61,8 +60,8 @@
     </select>
 
     <insert id="guardarVale" parameterType="es.uoc.icl.domain.Vale">
-        INSERT INTO vales (usuario, fecha_limite, valor_total, lote, fecha_registro, qr)
-        VALUES (#{usuario.id}, #{fechaLimite}, #{valorTotal}, #{lote}, #{fechaRegistro}, #{qr})
+        INSERT INTO vales (usuario, fecha_limite, valor_total, fecha_registro, qr)
+        VALUES (#{usuario.id}, #{fechaLimite}, #{valorTotal}, #{fechaRegistro}, #{qr})
     </insert>
     
     <select id="getTotalCanjeado" resultType="java.math.BigDecimal">

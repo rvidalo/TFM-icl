@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { ValeService } from 'src/app/services/vale.service';
 
 @Component({
   selector: 'app-menu',
@@ -12,8 +13,12 @@ export class MenuComponent implements OnInit {
   isAdmin = false;
   isUsuario = false;
   isNegocio = false;
+  solicitudRealizada = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private valeService: ValeService,
+  ) {}
 
   ngOnInit(): void {
     this.isLogged = this.authService.isLogged();
@@ -24,6 +29,21 @@ export class MenuComponent implements OnInit {
       this.email = this.authService.getEmail();
     }
     this.closeOnClick();
+
+    if(this.isUsuario){
+      this.valeService.getValeUsuario(this.email).subscribe(
+        (data) => {
+          console.log("menu usuario con vale?")
+          console.log(data);
+          if (data != null){
+            this.solicitudRealizada = true;
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
 
   onLogOut(): void {

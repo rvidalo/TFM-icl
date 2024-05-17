@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.uoc.icl.domain.Canjeado;
 import es.uoc.icl.domain.CanjearVale;
 import es.uoc.icl.service.CanjeadoService;
 
@@ -27,31 +26,31 @@ public class CanjeadoRestController {
 	CanjeadoService canjeadoService;
 	
 	@GetMapping("")
-	public ResponseEntity<List<Canjeado>> getCanjeados() {
-		List<Canjeado> canjeados = canjeadoService.getCanjeados();
-		return new ResponseEntity<List<Canjeado>>(canjeados, HttpStatus.OK);
+	public ResponseEntity<List<CanjearVale>> getCanjeados() {
+		List<CanjearVale> canjeados = canjeadoService.getCanjeados();
+		return new ResponseEntity<List<CanjearVale>>(canjeados, HttpStatus.OK);
 	}
 	
 	@GetMapping("/usuario")
-	public ResponseEntity<List<Canjeado>> getCanjeadoDeUsuario(@RequestParam(required = true) Integer idUsuario) {
-		List<Canjeado> canjeados = canjeadoService.getCanjeadosDeUsuario(idUsuario);
-		return new ResponseEntity<List<Canjeado>>(canjeados, HttpStatus.OK);
+	public ResponseEntity<List<CanjearVale>> getCanjeadoDeUsuario(@RequestParam String email) {
+		List<CanjearVale> canjeados = canjeadoService.getCanjeadosDeUsuario(email);
+		return new ResponseEntity<List<CanjearVale>>(canjeados, HttpStatus.OK);
 	}
 
 	@GetMapping("/negocio")
-	public ResponseEntity<List<Canjeado>> getCanjeadoDeNegocio(@RequestParam(required = true) Integer idNegocio) {
-		List<Canjeado> canjeados = canjeadoService.getCanjeadosDeUsuario(idNegocio);
-		return new ResponseEntity<List<Canjeado>>(canjeados, HttpStatus.OK);
+	public ResponseEntity<List<CanjearVale>> getCanjeadoDeNegocio(@RequestParam String email) {
+		List<CanjearVale> canjeados = canjeadoService.getCanjeadosDeNegocio(email);
+		return new ResponseEntity<List<CanjearVale>>(canjeados, HttpStatus.OK);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("/id")
-	public ResponseEntity<Canjeado> getCanjeado(@RequestParam (required = true) Integer idCanjeado) {
-		Canjeado canjeado = canjeadoService.getCanjeado(idCanjeado);
+	public ResponseEntity<CanjearVale> getCanjeado(@RequestParam (required = true) Integer idCanjeado) {
+		CanjearVale canjeado = canjeadoService.getCanjeado(idCanjeado);
 		if(canjeado == null) {
 			return new ResponseEntity("El canjeado no existe", HttpStatus.BAD_REQUEST);
 		} 
-		return new ResponseEntity<Canjeado>(canjeado, HttpStatus.OK);
+		return new ResponseEntity<CanjearVale>(canjeado, HttpStatus.OK);
 	}
 
 	@PostMapping("/nuevo")

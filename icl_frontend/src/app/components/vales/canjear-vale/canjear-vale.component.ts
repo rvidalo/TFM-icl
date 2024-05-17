@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { PerfilNegocio } from 'src/app/models/perfil-negocio';
 import { Vale } from 'src/app/models/vale';
 import { ValeCanjeado } from 'src/app/models/vale-canjeado';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,6 +18,7 @@ export class CanjearValeComponent implements OnInit {
   totalNegocio: number;
   totalCanjeadoNegocio: number;
   descuento: number;
+  negocio: PerfilNegocio;
   
   qr: FormControl;
   total: FormControl;
@@ -60,9 +62,10 @@ export class CanjearValeComponent implements OnInit {
       }
     );
 
-    this.negocioService.getNegocio(emailNegocio).subscribe(
+    this.negocioService.getPerfilNegocio(emailNegocio).subscribe(
       (data) => {
-        this.totalNegocio = data;
+        this.negocio = data
+        this.totalNegocio = this.negocio.valorTotal;
       },
       (err) => {
         this.error = true;

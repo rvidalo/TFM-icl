@@ -55,4 +55,7 @@ public class Usuario implements UserDetails{
 		return true;
 	}
 
+	public String getNombreCompleto() {
+		return this.nombre + " " + this.apellidos;
+	}
 }

@@ -19,7 +19,7 @@
                 <li *ngIf="isLogged && isUsuario"  class="nav-item">
                     <a class="nav-link px-4" routerLink="solicitud-vale">Solicitud</a>
                 </li>
-                <li *ngIf="isLogged && isUsuario"  class="nav-item">
+                <li *ngIf="isLogged && isUsuario && solicitudRealizada"  class="nav-item">
                     <a class="nav-link px-4" routerLink="vales-usuario">Vales</a>
                 </li>
                 <li *ngIf="isLogged && isNegocio" class="nav-item">

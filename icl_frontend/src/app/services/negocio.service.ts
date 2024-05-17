@@ -14,11 +14,6 @@ export class NegocioService {
 
   constructor(private http: HttpClient) {}
   
-  public getNegocio(email: string): Observable<any> {
-    const param = new HttpParams().append('email', email);
-    return this.http.get<any>(BACK_URL + 'api/negocios/email', { params: param });
-  }
-
   public getNegocios(): Observable<any> {
     return this.http.get<any>(BACK_URL + 'api/negocios');
   }

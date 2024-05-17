@@ -5,97 +5,98 @@
 
 <mapper namespace="es.uoc.icl.service.CanjeadoRepository">
 
-    <resultMap id="canjeadoResultMap" type="es.uoc.icl.domain.Canjeado">
-        <id property="id" column="id"/>
-        <result property="total" column="total"/>
-        <result property="descuento" column="descuento"/>
+    <resultMap id="canjeado" type="es.uoc.icl.domain.Canjeado">
+        <id property="id" column="id_canjeado"/>
+        <result property="total" column="total_canjeado"/>
+	    <result property="descuento" column="descuento_canjeado"/>
         <result property="fechaRegistro" column="fecha_registro_canjeado"/>
-        <association property="vale" javaType="es.uoc.icl.domain.Vale">
-            <id property="id" column="vale_id"/>
-            <result property="fechaLimite" column="fecha_limite"/>
-            <result property="valorTotal" column="valor_total"/>
-            <result property="lote" column="lote"/>
-            <result property="fechaRegistro" column="fecha_registro_vale"/>
-        </association>
-        <association property="negocio" javaType="es.uoc.icl.domain.Negocio">
-            <id property="id" column="negocio_id"/>
-            <result property="cif" column="cif_negocio"/>
-            <result property="email" column="email_negocio"/>
-            <result property="nombre" column="nombre_negocio"/>
-            <result property="direccion" column="direccion_negocio"/>
-            <result property="valorTotal" column="valor_total_negocio"/>
-            <result property="estado" column="estado_negocio"/>
-            <result property="fechaRegistro" column="fecha_registro_negocio"/>
-        </association>
-        <association property="usuario" javaType="es.uoc.icl.domain.Usuario">
-            <id property="id" column="usuario_id"/>
-            <result property="nombre" column="nombre_usuario"/>
-            <result property="apellidos" column="apellidos_usuario"/>
-            <result property="documento" column="documento_usuario"/>
-            <result property="email" column="email_usuario"/>
-            <result property="contrasena" column="contrasena_usuario"/>
-            <result property="admin" column="admin_usuario"/>
-            <result property="fechaRegistro" column="fecha_registro_usuario"/>
-        </association>
+        <association property="negocio" javaType="es.uoc.icl.domain.Negocio" resultMap="negocio"/>
+    </resultMap>
+    
+    <resultMap id="vale" type="es.uoc.icl.domain.Vale">
+        <id property="id" column="id"/>
+        <result property="valorTotal" column="valor_total"/>
+        <result property="fechaLimite" column="fecha_limite"/>
+        <result property="fechaRegistro" column="fecha_registro"/>
+        <result property="qr" column="qr"/>
+    </resultMap>
+    
+    <resultMap id="usuario" type="es.uoc.icl.domain.Usuario">
+        <id property="id" column="usuario_id"/>
+        <result property="nombre" column="usuario_nombre"/>
+        <result property="apellidos" column="usuario_apellidos"/>
+        <result property="documento" column="usuario_documento"/>
+        <result property="email" column="usuario_email"/>
+        <result property="contrasena" column="usuario_contrasena"/>
+        <result property="admin" column="usuario_admin"/>
+	</resultMap>
+	
+	<resultMap id="negocio" type="es.uoc.icl.domain.Negocio">
+	    <id property="id" column="id_negocio"/>
+	    <result property="cif" column="cif_negocio"/>
+	    <result property="email" column="email_negocio"/>
+	    <result property="nombre" column="nombre_negocio"/>
+	    <result property="direccion" column="direccion_negocio"/>
+	    <result property="valorTotal" column="valor_total_negocio"/>
+	    <result property="contrasena" column="contrasena_negocio"/>
+	    <result property="estado" column="estado_negocio"/>
+	    <association property="tipo" javaType="es.uoc.icl.domain.TipoNegocio" resultMap="tipoNegocio"/>
+	</resultMap>
+
+ 	<resultMap id="tipoNegocio" type="es.uoc.icl.domain.TipoNegocio">
+        <id property="id" column="id_tipo"/>
+        <result property="descripcion" column="descripcion_tipo"/>
     </resultMap>
 
-    <select id="getCanjeado" resultMap="canjeadoResultMap">
-        SELECT c.id, c.vale_id, c.negocio_id, c.usuario_id, c.total, c.descuento, c.fecha_registro as fecha_registro_canjeado,
-               v.fecha_limite, v.valor_total, v.lote, v.fecha_registro as fecha_registro_vale,
-               n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio,
-               n.valor_total as valor_total_negocio, n.estado as estado_negocio, n.fecha_registro as fecha_registro_negocio,
-               u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
-               u.email as email_usuario, u.contrasena as contrasena_usuario,
-               u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
+    <select id="getCanjeado" resultMap="canjeado">
+        SELECT c.id as id_canjeado, c.total as total_canjeado, c.descuento as descuento_canjeado, c.fecha_registro as fecha_registro_canjeado,
+	         n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio, n.valor_total as valor_total_negocio,
+	         t.descripcion as descripcion_tipo, v.valor_total as valor_total_vale, v.qr as qr_vale, v.fecha_limite as fecha_limite_vale,
+	         u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario, u.email as email_usuario
         FROM canjeados c
-        JOIN vales v ON c.vale_id = v.id
-        JOIN negocios n ON c.negocio_id = n.id
-        JOIN usuarios u ON c.usuario_id = u.id
+        JOIN vales v ON c.vale = v.id
+        JOIN usuarios u ON v.usuario = u.id
+        JOIN negocios n ON c.negocio = n.id
+        JOIN tipo_negocio t ON n.tipo = t.id
         WHERE c.id = #{idCanjeado}
     </select>
 
-    <select id="getCanjeados" resultMap="canjeadoResultMap">
-        SELECT c.id, c.vale_id, c.negocio_id, c.usuario_id, c.total, c.descuento, c.fecha_registro as fecha_registro_canjeado,
-               v.fecha_limite, v.valor_total, v.lote, v.fecha_registro as fecha_registro_vale,
-               n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio,
-               n.valor_total as valor_total_negocio, n.estado as estado_negocio, n.fecha_registro as fecha_registro_negocio,
-               u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
-               u.email as email_usuario, u.contrasena as contrasena_usuario,
-               u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
+    <select id="getCanjeados" resultMap="canjeado">
+        SELECT c.id as id_canjeado, c.total as total_canjeado, c.descuento as descuento_canjeado, c.fecha_registro as fecha_registro_canjeado,
+	         n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio, n.valor_total as valor_total_negocio,
+	         t.descripcion as descripcion_tipo, v.valor_total as valor_total_vale, v.qr as qr_vale, v.fecha_limite as fecha_limite_vale,
+	         u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario, u.email as email_usuario
         FROM canjeados c
-        JOIN vales v ON c.vale_id = v.id
-        JOIN negocios n ON c.negocio_id = n.id
-        JOIN usuarios u ON c.usuario_id = u.id
+        JOIN vales v ON c.vale = v.id
+        JOIN usuarios u ON v.usuario = u.id
+        JOIN negocios n ON c.negocio = n.id
+        JOIN tipo_negocio t ON n.tipo = t.id
     </select>
 
-    <select id="getCanjeadoDeUsuario" resultMap="canjeadoResultMap">
-        SELECT c.id, c.vale_id, c.negocio_id, c.usuario_id, c.total, c.descuento, c.fecha_registro as fecha_registro_canjeado,
-               v.fecha_limite, v.valor_total, v.lote, v.fecha_registro as fecha_registro_vale,
-               n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio,
-               n.valor_total as valor_total_negocio, n.estado as estado_negocio, n.fecha_registro as fecha_registro_negocio,
-               u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
-               u.email as email_usuario, u.contrasena as contrasena_usuario,
-               u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
+    <select id="getCanjeadosDeUsuario" resultMap="canjeado">
+        SELECT c.id as id_canjeado, c.total as total_canjeado, c.descuento as descuento_canjeado, c.fecha_registro as fecha_registro_canjeado,
+	         n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio, n.valor_total as valor_total_negocio,
+	         t.descripcion as descripcion_tipo, v.valor_total as valor_total_vale, v.qr as qr_vale, v.fecha_limite as fecha_limite_vale,
+	         u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario, u.email as email_usuario
         FROM canjeados c
-        JOIN vales v ON c.vale_id = v.id
-        JOIN negocios n ON c.negocio_id = n.id
-        JOIN usuarios u ON c.usuario_id = u.id
-        WHERE c.usuario_id = #{usuario.id}
+        JOIN vales v ON c.vale = v.id
+        JOIN usuarios u ON v.usuario = u.id
+        JOIN negocios n ON c.negocio = n.id
+        JOIN tipo_negocio t ON n.tipo = t.id
+        WHERE u.email = #{email}
     </select>
 
-    <select id="getCanjeadoDeNegocio" resultMap="canjeadoResultMap">
-        SELECT c.id, c.vale_id, c.negocio_id, c.usuario_id, c.total, c.descuento, c.fecha_registro as fecha_registro_canjeado,
-               v.fecha_limite, v.valor_total, v.lote, v.fecha_registro as fecha_registro_vale,
-               n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio,
-               n.valor_total as valor_total_negocio, n.estado as estado_negocio, n.fecha_registro as fecha_registro_negocio,
-               u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario,
-               u.email as email_usuario, u.contrasena as contrasena_usuario,
-               u.admin as admin_usuario, u.fecha_registro as fecha_registro_usuario
+    <select id="getCanjeadosDeNegocio" resultMap="canjeado">
+        SELECT c.id as id_canjeado, c.total as total_canjeado, c.descuento as descuento_canjeado, c.fecha_registro as fecha_registro_canjeado,
+	         n.cif as cif_negocio, n.email as email_negocio, n.nombre as nombre_negocio, n.direccion as direccion_negocio, n.valor_total as valor_total_negocio,
+	         t.descripcion as descripcion_tipo, v.valor_total as valor_total_vale, v.qr as qr_vale, v.fecha_limite as fecha_limite_vale,
+	         u.nombre as nombre_usuario, u.apellidos as apellidos_usuario, u.documento as documento_usuario, u.email as email_usuario
         FROM canjeados c
-        JOIN vales v ON c.vale_id = v.id
-        JOIN negocios n ON c.negocio_id = n.id
-        JOIN usuarios u ON c.usuario_id = u.id
-        WHERE c.negocio_id = #{negocio.id}
+        JOIN vales v ON c.vale = v.id
+        JOIN usuarios u ON v.usuario = u.id
+        JOIN negocios n ON c.negocio = n.id
+        JOIN tipo_negocio t ON n.tipo = t.id
+        WHERE n.email = #{email}
     </select>
 
     <insert id="guardarCanjeado" parameterType="es.uoc.icl.domain.Canjeado">
@@ -105,7 +106,7 @@
 
     <update id="modificarCanjeado" parameterType="es.uoc.icl.domain.Canjeado">
         UPDATE canjeados
-        SET vale_id = #{vale.id}, negocio_id = #{negocio.id}, usuario_id = #{usuario.id}, total = #{total},
+        SET vale = #{vale.id}, negocio = #{negocio.id}, usuario = #{usuario.id}, total = #{total},
             descuento = #{descuento}
         WHERE id = #{id}
     </update>

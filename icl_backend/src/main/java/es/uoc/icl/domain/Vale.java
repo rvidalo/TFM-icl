@@ -7,12 +7,13 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Vale {
     private Integer id;
     private BigDecimal valorTotal;
-    private Integer lote;
     private String qr;
     private LocalDate fechaLimite;
     private LocalDateTime fechaRegistro;
@@ -21,7 +22,6 @@ public class Vale {
 	public Vale (Usuario usuario) {
 		this.usuario=usuario;
 		this.valorTotal = new BigDecimal(50);
-		this.lote = 1;
 		this.fechaLimite = LocalDate.now().plusMonths(1);
 		this.fechaRegistro = LocalDateTime.now();
 		this.qr = generarCodigoQr(usuario.getDocumento());
@@ -40,28 +40,22 @@ public class Vale {
             return null; 
         }
 	}
-	
-	public static void main(String[] args) {
-		String codigoQr = generarCodigoQr("76086755M");
-		System.out.println(codigoQr);
-	}
 
-	public Vale(Integer id, BigDecimal valorTotal, Integer lote, LocalDate fechaLimite, LocalDateTime fechaRegistro, String qr,
+	public Vale(Integer id, BigDecimal valorTotal, LocalDate fechaLimite, LocalDateTime fechaRegistro, String qr,
 			Integer usuario_id, String usuario_nombre, String usuario_apellidos, String usuario_documento, String usuario_email, String usuario_contrasena) {
 		this.id = id;
 		this.valorTotal = valorTotal;
-		this.lote = lote;
 		this.fechaLimite = fechaLimite;
 		this.fechaRegistro = fechaRegistro;
 		this.qr = qr;
 		this.usuario = new Usuario();
 	}
 	
-	public Vale(Integer id, BigDecimal valorTotal, Integer lote, LocalDate fechaLimite, LocalDateTime fechaRegistro, String qr) {
+	public Vale(Integer id, BigDecimal valorTotal, LocalDate fechaLimite, LocalDateTime fechaRegistro, String qr) {
 		this.id = id;
 		this.valorTotal = valorTotal;
-		this.lote = lote;
 		this.fechaLimite = fechaLimite;
 		this.fechaRegistro = fechaRegistro;
 	}
+	
 }

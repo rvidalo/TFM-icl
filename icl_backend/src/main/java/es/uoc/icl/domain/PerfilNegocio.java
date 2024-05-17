@@ -1,5 +1,7 @@
 package es.uoc.icl.domain;
 
+import java.math.BigDecimal;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,7 @@ public class PerfilNegocio {
     private String direccion;
     private String cif;
     private String email;
+    private BigDecimal valorTotal;
     private TipoNegocio tipo;
     
     public PerfilNegocio(Negocio negocio) {
@@ -21,6 +24,7 @@ public class PerfilNegocio {
     	this.direccion = negocio.getDireccion();
     	this.cif = negocio.getCif();
     	this.email = negocio.getEmail();
+    	this.valorTotal = negocio.getValorTotal();
     	this.tipo = negocio.getTipo();
     }
 }

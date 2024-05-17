@@ -2,6 +2,7 @@ package es.uoc.icl.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,20 +30,38 @@ public class CanjeadoService {
 	@Autowired
 	ValeService valeService;
 
-	public List<Canjeado> getCanjeados(){
-		return canjeadoRepository.getCanjeados();
-	}
-	
-	public Canjeado getCanjeado (Integer idCanjeado) {
-		return canjeadoRepository.getCanjeado(idCanjeado);
+	public List<CanjearVale> getCanjeados(){
+		List<CanjearVale> listaCanjear = new ArrayList<CanjearVale>();
+		List<Canjeado> canjeados = canjeadoRepository.getCanjeados();
+		for (Canjeado canjeado : canjeados) {
+			CanjearVale aux = new CanjearVale(canjeado, true, true);
+			listaCanjear.add(aux);
+		}
+		return listaCanjear;
 	}
 
-	public List<Canjeado> getCanjeadosDeUsuario (Integer idUsuario) {
-		return canjeadoRepository.getCanjeadosDeUsuario(idUsuario);
+	public CanjearVale getCanjeado (Integer idCanjeado) {
+		return new CanjearVale(canjeadoRepository.getCanjeado(idCanjeado));
+	}
+
+	public List<CanjearVale> getCanjeadosDeUsuario (String email) {
+		List<CanjearVale> listaCanjear = new ArrayList<CanjearVale>();
+		List<Canjeado> canjeadosDeUsuario = canjeadoRepository.getCanjeadosDeUsuario(email);
+		for (Canjeado canjeado : canjeadosDeUsuario) {
+			CanjearVale aux = new CanjearVale(canjeado, true, false);
+			listaCanjear.add(aux);
+		}
+		return listaCanjear;
 	}
 	
-	public List<Canjeado> getCanjeadosDeNegocio (Integer idNegocio) {
-		return canjeadoRepository.getCanjeadosDeNegocio(idNegocio);
+	public List<CanjearVale> getCanjeadosDeNegocio (String email) {
+		List<CanjearVale> listaCanjear = new ArrayList<CanjearVale>();
+		List<Canjeado> canjeadosDeNegocio = canjeadoRepository.getCanjeadosDeNegocio(email);
+		for (Canjeado canjeado : canjeadosDeNegocio) {
+			CanjearVale aux = new CanjearVale(canjeado, false, true);
+			listaCanjear.add(aux);
+		}
+		return listaCanjear;
 	}
 	
 	public BigDecimal guardarCanjeado(CanjearVale canjearVale) {

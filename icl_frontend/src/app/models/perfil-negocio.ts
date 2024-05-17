@@ -7,6 +7,7 @@ export class PerfilNegocio {
   direccion: string;
   cif: string;
   email: string;
+  valorTotal: number;
   tipo: TipoNegocio;
 
   constructor(
@@ -15,6 +16,7 @@ export class PerfilNegocio {
     direccion: string = '',
     cif: string = '',
     email: string = '',
+    valorTotal: number = 0,
     tipo: TipoNegocio = new TipoNegocio,
   ) {
     this.id = id;
@@ -22,6 +24,7 @@ export class PerfilNegocio {
     this.direccion = direccion;
     this.cif = cif;
     this.email = email;
+    this.valorTotal = valorTotal;
     this.tipo = tipo;
   }
 }

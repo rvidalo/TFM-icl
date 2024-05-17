@@ -48,14 +48,14 @@ export class ListaNegociosComponent implements OnInit {
   }
 
   filtroPersonalizado(data: Negocio, filter: string): boolean {
-  const searchString = filter.toLowerCase().trim();
+    const searchString = filter.toLowerCase().trim();
 
-  // Verifica si el filtro coincide con cualquier propiedad de la fila de datos
-  return (
-    data.nombre.toLowerCase().includes(searchString) ||
-    data.direccion.toLowerCase().includes(searchString) ||
-    data.tipo.descripcion.toLowerCase().includes(searchString) ||
-    data.email.toLowerCase().includes(searchString)
-  );
-}
+    // Verifica si el filtro coincide con cualquier propiedad de la fila de datos
+    return (
+      data.nombre.toLowerCase().includes(searchString) ||
+      data.direccion.toLowerCase().includes(searchString) ||
+      data.tipo.descripcion.toLowerCase().includes(searchString) ||
+      data.email.toLowerCase().includes(searchString)
+    );
+  }
 }

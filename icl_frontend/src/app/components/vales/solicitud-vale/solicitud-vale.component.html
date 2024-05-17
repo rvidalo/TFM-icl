@@ -1,35 +1,31 @@
 <div class="container mt-5 mb-5">
     <h2>Reglas de Uso de los Vales</h2>
-    <ul class="list-group">
-        <li class="list-group-item">Regla 1: Lorem ipsum dolor sit amet.</li>
-        <li class="list-group-item">Regla 2: Consectetur adipiscing elit.</li>
-        <li class="list-group-item">Regla 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
-        <!-- Agrega más reglas según sea necesario -->
+    <ul class="list-group m-5">
+        <li class="list-group-item m-1">Cada usuario registrado podrá solicitar un vale con valor de 50€.</li>
+        <li class="list-group-item m-1">Los vales únicamente podrán canjearse en los negocios registrados.</li>
+        <li class="list-group-item m-1">Se descontará el 50% de la compra realizada como máximo.</li>
+        <li class="list-group-item m-1">Los vales tendrán una validez de un mes desde su solicitud.</li>
+        <li class="list-group-item m-1">Cada negocio tendrá un límite de 1000€ en vales descuentos.</li>
+        <li class="list-group-item m-1">Para canjear el vale únicamente necesitas mostrar el código QR.</li>
     </ul>
 
-    <div class="mt-4 mb-5" >
-        <h4>Progreso de Vales Entregados</h4>
-        <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" [style.width.%]="porcentajeValesEntregados()"
-                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                {{ numVales }} / 1000 Vales
-            </div>
-        </div>
-    </div>
-
-    <div *ngIf="solicitudRealizada">
-        <qrcode [qrdata]="valeUsuario.qr" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
-    </div>
-
-    <div *ngIf="solicitudRealizada">
+    <div *ngIf="solicitudRealizada" class="my-5" >
         <div class="alert alert-info mt-3" role="alert">
-            ¡Ya tienes un vale asignado! Por favor, ve al menú de Vales.
+            ¡Tienes un vale asignado! Por favor, visita el nuevo menú de Vales.
         </div>
     </div>
-    
-    <div *ngIf="!solicitudRealizada && numVales >= 1000">
+
+    <div *ngIf="!solicitudRealizada && numVales >= 1000" class="my-5">
         <div class="alert alert-warning mt-3" role="alert">
             ¡Se ha alcanzado el máximo de vales solicitados (1000)!
+        </div>
+    </div>
+    <div class="my-5" >
+        <h4>Progreso de Vales Entregados: {{ numVales }} / 1000 Vales</h4>
+        <div class="progress w-50 mx-auto">
+            <div class="progress-bar bg-success" role="progressbar" [style.width.%]="porcentajeValesEntregados()"
+                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+            </div>
         </div>
     </div>
 

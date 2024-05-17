@@ -10,7 +10,7 @@ import es.uoc.icl.domain.Canjeado;
 public interface CanjeadoRepository {
 	Canjeado getCanjeado(Integer idCanjeado);
 	List<Canjeado> getCanjeados();
-	List<Canjeado> getCanjeadosDeUsuario(Integer idUsuario);
-	List<Canjeado> getCanjeadosDeNegocio(Integer idNegocio);
+	List<Canjeado> getCanjeadosDeUsuario(String email);
+	List<Canjeado> getCanjeadosDeNegocio(String email);
 	void guardarCanjeado(Canjeado canjeado);
 }

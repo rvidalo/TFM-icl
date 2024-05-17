@@ -1,1 +1,64 @@
-<p>vales-negocio works!</p>
+<div class="container my-4">
+    <div class="card mx-2">
+        <div class="card-header">
+            <h2 class="mt-4">Registros Canjeados</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <p class="mb-1">
+                        <strong style="display: inline-block; width: 250px;">Máximo Canjeable:</strong>
+                        <span style="display: inline-block;">{{ negocio.valorTotal }}€</span>
+                    </p>
+                </div>
+                <div class="col">
+                    <p class="mb-1">
+                        <strong style="display: inline-block; width: 250px;">Descuento Acumulado:</strong>
+                        <span style="display: inline-block;">{{ totalDescuentos }}€</span>
+                    </p>
+                </div>
+                <div class="col">
+                    <p class="mb-1">
+                        <strong style="display: inline-block; width: 250px;">Cantidad Restante:</strong>
+                        <span style="display: inline-block;">{{ restante }}€</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-4" *ngIf="dataSource.data.length > 0; else noRecords">
+        <input type="text" class="form-control mb-2" placeholder="Buscar..." (input)="aplicarFiltro($event)">
+
+        <table mat-table *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" matSort class="table">
+            <ng-container matColumnDef="usuario">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Usuario</th>
+                <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%;">{{ valeCanjeado.qr }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Gasto total</th>
+                <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%;">{{ valeCanjeado.total }}€</td>
+            </ng-container>
+
+            <ng-container matColumnDef="descuento">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Descuento</th>
+                <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%;">{{ valeCanjeado.descuento }}€</td>
+            </ng-container>
+
+            <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Fecha</th>
+                <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%;">{{ valeCanjeado.fechaRegistro | date:'dd-MM-yyyy HH:mm'}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[10, 15, 25]" showFirstLastButtons></mat-paginator>
+    </div>
+    <ng-template #noRecords>
+        <div class="card my-3">
+            <p class="text-center mt-4"><strong>Sin registros canjeados</strong></p>
+        </div>
+    </ng-template>
+</div>

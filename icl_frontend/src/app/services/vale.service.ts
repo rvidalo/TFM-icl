@@ -17,7 +17,17 @@ export class ValeService {
   public getVales(): Observable<any> {
     return this.http.get<any>(BACK_URL + 'api/vales');
   }
+
+  public getCanjeadosUsuario(email: string): Observable<any> {
+    const param = new HttpParams().append('email', email);
+    return this.http.get<any>(BACK_URL + 'api/canjeados/usuario', { params: param });
+  }
   
+  public getCanjeadosNegocio(email: string): Observable<any> {
+    const param = new HttpParams().append('email', email);
+    return this.http.get<any>(BACK_URL + 'api/canjeados/negocio', { params: param });
+  }
+
   public getValeUsuario(email: string): Observable<any> {
     const param = new HttpParams().append('email', email);
     return this.http.get<any>(BACK_URL + 'api/vales/usuario', { params: param });
@@ -32,4 +42,15 @@ export class ValeService {
   public canjearValue(valeCanjeado: ValeCanjeado) : Observable<any> {
     return this.http.post<number>(BACK_URL + 'api/canjeados/nuevo', valeCanjeado);
   }
+
+  calcularTotalDescuentos(valesCanjeados: ValeCanjeado[]): number {
+    let totalDescuentos = 0;
+    if(valesCanjeados != null){
+      valesCanjeados.forEach(item => {
+        totalDescuentos += item.descuento;
+      });
+    }
+    return totalDescuentos;
+  }
 }
+

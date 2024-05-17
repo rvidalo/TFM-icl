@@ -18,7 +18,6 @@ export class SolicitudValeComponent implements OnInit {
   mensaje = '';
  
   constructor(
-    //private formBuilder: FormBuilder,
     private valeService: ValeService,
     private authService: AuthService,
   ) {}
@@ -26,7 +25,6 @@ export class SolicitudValeComponent implements OnInit {
   ngOnInit(): void {
 
     const emailToken = this.authService.getEmail();
-    console.log('Solicitud vale');
     this.valeService.getVales().subscribe(
       (data) => {
         this.valesSolicitados = data;
@@ -39,8 +37,6 @@ export class SolicitudValeComponent implements OnInit {
 
     this.valeService.getValeUsuario(emailToken).subscribe(
       (data) => {
-        console.log('Solicitud vale empleado');
-        console.log(data);
         this.valeUsuario = data;
         if (this.valeUsuario != null){
           this.solicitudRealizada = true;
@@ -66,6 +62,8 @@ export class SolicitudValeComponent implements OnInit {
             this.valesSolicitados = data;
             this.numVales = this.valesSolicitados.length;
             this.solicitudRealizada = true;
+            //muestra el nuevo menú vales en caso de usuarios
+            window.location.reload();
           },
           (err) => {
             this.mensaje = err.error;
