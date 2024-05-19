@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class CanjearVale {
 	int id;
 	String qr;
@@ -24,19 +26,21 @@ public class CanjearVale {
 	}
 
 	public CanjearVale(Canjeado canjeado, boolean nombreUsuario, boolean nombreNegocio) {
-		this.id = canjeado.getId();
-		if(nombreUsuario) {
-			this.qr = canjeado.getVale().getUsuario().getNombreCompleto();
-		}else {
-			this.qr = canjeado.getVale().getQr();
+		if(canjeado != null) {
+			this.id = canjeado.getId();
+			if(nombreUsuario) {
+				this.qr = canjeado.getVale().getUsuario().getNombreCompleto();
+			}else {
+				this.qr = canjeado.getVale().getQr();
+			}
+			if(nombreNegocio) {
+				this.emailNegocio = canjeado.getNegocio().getNombre() + " [" + canjeado.getNegocio().getTipo().getDescripcion() + "]";
+			}else {
+				this.emailNegocio = canjeado.getNegocio().getEmail();
+			}
+			this.total = canjeado.getTotal();
+			this.descuento = canjeado.getDescuento();
+			this.fechaRegistro = canjeado.getFechaRegistro();
 		}
-		if(nombreNegocio) {
-			this.emailNegocio = canjeado.getNegocio().getNombre() + " [" + canjeado.getNegocio().getTipo().getDescripcion() + "]";
-		}else {
-			this.emailNegocio = canjeado.getNegocio().getEmail();
-		}
-		this.total = canjeado.getTotal();
-		this.descuento = canjeado.getDescuento();
-		this.fechaRegistro = canjeado.getFechaRegistro();
 	}
 }

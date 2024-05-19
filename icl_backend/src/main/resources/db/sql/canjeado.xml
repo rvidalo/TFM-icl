@@ -100,15 +100,8 @@
     </select>
 
     <insert id="guardarCanjeado" parameterType="es.uoc.icl.domain.Canjeado">
-        INSERT INTO canjeados (vale, negocio, usuario, total, descuento)
-        VALUES (#{vale.id}, #{negocio.id}, #{usuario.id}, #{total}, #{descuento})
+        INSERT INTO canjeados (vale, negocio, total, descuento)
+        VALUES (#{vale.id}, #{negocio.id}, #{total}, #{descuento})
     </insert>
-
-    <update id="modificarCanjeado" parameterType="es.uoc.icl.domain.Canjeado">
-        UPDATE canjeados
-        SET vale = #{vale.id}, negocio = #{negocio.id}, usuario = #{usuario.id}, total = #{total},
-            descuento = #{descuento}
-        WHERE id = #{id}
-    </update>
 
 </mapper>

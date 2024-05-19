@@ -26,6 +26,10 @@
                         <strong style="display: inline-block; width: 250px;">Fecha Límite de Uso:</strong>
                         <span style="display: inline-block;">{{ valeUsuario.fechaLimite | date:'dd-MM-yyyy'}}</span>
                     </p>
+                    <p class="mb-1">
+                        <strong style="display: inline-block; width: 250px;">Código del Vale:</strong>
+                        <span style="display: inline-block;">{{ valeUsuario.qr}}</span>
+                    </p>
                 </div>
                 <div class="col text-center">
                     <qrcode [qrdata]="valeUsuario.qr" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>

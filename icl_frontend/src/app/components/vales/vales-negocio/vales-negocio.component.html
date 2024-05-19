@@ -31,8 +31,8 @@
         <input type="text" class="form-control mb-2" placeholder="Buscar..." (input)="aplicarFiltro($event)">
 
         <table mat-table *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" matSort class="table">
-            <ng-container matColumnDef="usuario">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Usuario</th>
+            <ng-container matColumnDef="vale">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Vale</th>
                 <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%;">{{ valeCanjeado.qr }}</td>
             </ng-container>
 

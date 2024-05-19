@@ -24,7 +24,7 @@ export class ValesNegocioComponent implements OnInit {
   dataSource = new MatTableDataSource<ValeCanjeado>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['usuario', 'total', 'descuento', 'fecha'];
+  displayedColumns: string[] = ['vale', 'total', 'descuento', 'fecha'];
 
   constructor(
     private valeService: ValeService,
@@ -55,7 +55,8 @@ export class ValesNegocioComponent implements OnInit {
         this.totalDescuentos = this.valeService.calcularTotalDescuentos(this.canjeadosNegocio);
         this.restante = this.negocio.valorTotal - this.totalDescuentos;
         this.dataSource.paginator = this.paginator;
-        this.paginator.pageSize = 15;
+        this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
+        this.paginator.pageSize = 10;
       },
       (err) => {
         console.log(err);
@@ -71,6 +72,17 @@ export class ValesNegocioComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  filtroPersonalizado(data: ValeCanjeado, filter: string): boolean {
+    const searchString = filter.toLowerCase().trim();
+
+    return (
+      data.qr.toLowerCase().includes(searchString) ||
+      data.total.toString().toLowerCase().includes(searchString) ||
+      data.descuento.toString().toLowerCase().includes(searchString) ||
+      data.fechaRegistro.toString().toLowerCase().includes(searchString)
+    );
   }
 
 }

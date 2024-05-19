@@ -79,9 +79,11 @@ export class CanjearValeComponent implements OnInit {
     this.valeCanjeado.emailNegocio = this.authService.getEmail();
     this.valeCanjeado.total = this.total.value;
 
-    this.valeService.canjearValue(this.valeCanjeado).subscribe(
+    this.valeService.canjearVale(this.valeCanjeado).subscribe(
       (data) => {
         this.mensaje = 'Vale canjeado correctamente';
+        console.log("canjeado:");
+        console.log(data);
         this.descuento = data;
       },
       (err) => {

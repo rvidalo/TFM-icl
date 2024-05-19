@@ -125,7 +125,8 @@ export class RegistroComponent implements OnInit {
 
     this.authService.registro(this.nuevoUsuario).subscribe(
       (data) => {
-        this.router.navigate(['/login']);
+        this.mensaje = 'Registro finalizado correctamente. ¡Revisa tu correo!';
+        //this.router.navigate(['/login']);
       },
       (err) => {
         this.mensaje = err.error;
@@ -145,6 +146,7 @@ export class RegistroComponent implements OnInit {
 
     this.authService.registroNegocio(this.nuevoNegocio).subscribe(
       (data) => {
+        this.mensaje = 'Registro finalizado correctamente. ¡Revisa tu correo!';
         this.router.navigate(['/login']);
       },
       (err) => {

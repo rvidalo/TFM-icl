@@ -52,8 +52,8 @@ export class ValesUsuarioComponent implements OnInit {
         this.dataSource.data = data;
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        this.paginator.pageSize = 15;
-        //this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
+        this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
+        this.paginator.pageSize = 10;
       },
       (err) => {
         console.log(err);
@@ -72,5 +72,16 @@ export class ValesUsuarioComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  filtroPersonalizado(data: ValeCanjeado, filter: string): boolean {
+    const searchString = filter.toLowerCase().trim();
+
+    return (
+      data.emailNegocio.toLowerCase().includes(searchString) ||
+      data.total.toString().toLowerCase().includes(searchString) ||
+      data.descuento.toString().toLowerCase().includes(searchString) ||
+      data.fechaRegistro.toString().toLowerCase().includes(searchString)
+    );
   }
 }

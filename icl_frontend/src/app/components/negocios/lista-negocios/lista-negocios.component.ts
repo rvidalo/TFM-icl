@@ -27,10 +27,10 @@ export class ListaNegociosComponent implements OnInit {
     this.negocioService.getNegocios().subscribe(
       (data) => {
         this.dataSource.data = data;
-        this.paginator.pageSize = 15;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
+        this.paginator.pageSize = 10;
       },
       (error) => {
         console.error('Error al obtener los negocios:', error);

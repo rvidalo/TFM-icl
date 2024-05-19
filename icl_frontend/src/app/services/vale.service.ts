@@ -39,7 +39,7 @@ export class ValeService {
     return this.http.post<any>(BACK_URL + 'api/vales/nuevo?email='+email, null);
   }
   
-  public canjearValue(valeCanjeado: ValeCanjeado) : Observable<any> {
+  public canjearVale(valeCanjeado: ValeCanjeado) : Observable<any> {
     return this.http.post<number>(BACK_URL + 'api/canjeados/nuevo', valeCanjeado);
   }
 
