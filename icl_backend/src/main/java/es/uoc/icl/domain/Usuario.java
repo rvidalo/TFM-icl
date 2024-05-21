@@ -24,11 +24,14 @@ public class Usuario implements UserDetails{
     private String documento;
     private String email;
     private String contrasena;
-    private Rol rol;
-	@Override
+    private boolean admin;
+
+    @Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-//		return Collections.emptyList();
-		return List.of(new SimpleGrantedAuthority(Rol.USUARIO.name()));
+    	if(admin)
+    		return List.of(new SimpleGrantedAuthority(Rol.ADMIN.name()));
+    	else
+    		return List.of(new SimpleGrantedAuthority(Rol.USUARIO.name()));
 	}
 	@Override
 	public String getPassword() {

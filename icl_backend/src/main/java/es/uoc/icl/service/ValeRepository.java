@@ -15,5 +15,4 @@ public interface ValeRepository {
 	void guardarVale(Vale vale);
 	void modificarVale2(Vale vale);
 	Vale getValeConQr(String qr);
-	BigDecimal getTotalCanjeado(Vale vale);
 }

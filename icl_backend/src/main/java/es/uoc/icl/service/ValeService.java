@@ -1,6 +1,5 @@
 package es.uoc.icl.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +48,4 @@ public class ValeService {
 		return valeRepository.getValeConQr(qr);
 	}
 
-	public BigDecimal getTotalCanjeado(Vale vale) {
-		return valeRepository.getTotalCanjeado(vale);
-	}
 }

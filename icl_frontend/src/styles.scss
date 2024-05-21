@@ -85,8 +85,8 @@ a:hover {
     height: 3em;
 }
 
-.z-index-top {
-    z-index: 99;
+.clickable-row {
+    cursor: pointer;
 }
 
 .accordion-button:not(.collapsed) {
@@ -95,18 +95,14 @@ a:hover {
 
 .progress {
     border: 2px solid #ccc;
-    /* Agrega un borde a la barra de progreso */
     border-radius: 5px;
-    /* Borde redondeado */
     height: 30px;
     background-color: #fff;
 }
 
 .progress-bar {
     font-size: 16px;
-    /* Tamaño de fuente */
     line-height: 50px;
-    /* Altura de línea para centrar el texto verticalmente */
 }
 
 html, body { height: 100%; }

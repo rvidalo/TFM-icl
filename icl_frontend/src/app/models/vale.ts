@@ -6,6 +6,7 @@ export class Vale {
   qr: string;
   fechaLimite: Date;
   fechaRegistro: Date;
+  totalCanjeado: number;
   usuario: Usuario;
 
   constructor(
@@ -14,7 +15,8 @@ export class Vale {
     qr: string = '',
     usuario: Usuario = new Usuario,
     fechaLimite: Date = new Date,
-    fechaRegistro: Date = new Date
+    fechaRegistro: Date = new Date,
+    totalCanjeado: number = 0
   ) {
     this.id = id;
     this.valorTotal = valorTotal;
@@ -22,5 +24,6 @@ export class Vale {
     this.usuario = usuario;
     this.fechaLimite = fechaLimite;
     this.fechaRegistro = fechaRegistro;
+    this.totalCanjeado = totalCanjeado;
   }
 }

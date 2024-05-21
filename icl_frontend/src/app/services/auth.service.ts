@@ -12,6 +12,7 @@ import { Negocio } from '../models/negocio';
 import { CambiarContrasena } from '../models/cambiar-contrasena';
 
 const TOKEN_KEY = 'AuthToken';
+const EMAIL_DETALLE = 'EmailDetalle';
 const BACK_URL = environment.APIEndpoint;
 
 @Injectable({
@@ -20,6 +21,15 @@ const BACK_URL = environment.APIEndpoint;
 export class AuthService {
 
   constructor(private router: Router, private http: HttpClient) {}
+
+  public setEmailDetalle(email: string): void {
+    window.sessionStorage.removeItem(EMAIL_DETALLE);
+    window.sessionStorage.setItem(EMAIL_DETALLE, email);
+  }
+
+  public getEmailDetalle(): string | null {
+    return sessionStorage.getItem(EMAIL_DETALLE);
+  }
 
   public setToken(token: string): void {
     window.sessionStorage.removeItem(TOKEN_KEY);

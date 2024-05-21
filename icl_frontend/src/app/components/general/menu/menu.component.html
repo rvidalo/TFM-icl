@@ -1,7 +1,7 @@
 <nav *ngIf="isLogged" class="navbar navbar-expand-lg navbar-light bg-principal shadow-sm p-0 p-sm-1">
     <div class="container-fluid">
         <a class="navbar-brand" routerLink="/">
-            <img src="assets/images/logo-negro.png" alt="" class="max-h50" />ICL
+            <img src="assets/images/logo.png" alt="ICL" class="max-h50" />
         </a>
         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -13,7 +13,7 @@
                 <li class="nav-item">
                     <a class="nav-link px-4" routerLink="/">Inicio</a>
                 </li>
-                <li   class="nav-item">
+                <li *ngIf="isLogged && !isAdmin" class="nav-item">
                     <a class="nav-link px-4" routerLink="lista-negocios">Negocios</a>
                 </li>
                 <li *ngIf="isLogged && isUsuario"  class="nav-item">
@@ -28,14 +28,11 @@
                 <li *ngIf="isLogged && isNegocio" class="nav-item">
                     <a class="nav-link px-4" routerLink="canjear-vale">Canjear</a>
                 </li>
-                <li *ngIf="isLogged && isAdmin" class="nav-item dropdown">
-                    <button class="nav-link dropdown-toggle border-0 bg-transparent w-100" href="#"
-                        id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Administrador
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" routerLink="admin/usuarios">Usuarios</a>
-                    </div>
+                <li *ngIf="isLogged && isAdmin" class="nav-item">
+                    <a class="nav-link px-4" routerLink="lista-negocios-admin">Negocios</a>
+                </li>
+                <li *ngIf="isLogged && isAdmin" class="nav-item">
+                    <a class="nav-link px-4" routerLink="lista-usuarios-admin">Usuarios</a>
                 </li>
             </ul>
             <div>

@@ -18,6 +18,7 @@ public class Vale {
     private LocalDate fechaLimite;
     private LocalDateTime fechaRegistro;
 	private Usuario usuario;
+	private BigDecimal totalCanjeado;
 
 	public Vale (Usuario usuario) {
 		this.usuario=usuario;
@@ -41,21 +42,24 @@ public class Vale {
         }
 	}
 
-	public Vale(Integer id, BigDecimal valorTotal, LocalDate fechaLimite, LocalDateTime fechaRegistro, String qr,
+	public Vale(Integer id, BigDecimal valorTotal, LocalDate fechaLimite, LocalDateTime fechaRegistro, String qr, BigDecimal totalCanjeado,
 			Integer usuario_id, String usuario_nombre, String usuario_apellidos, String usuario_documento, String usuario_email, String usuario_contrasena) {
 		this.id = id;
 		this.valorTotal = valorTotal;
 		this.fechaLimite = fechaLimite;
 		this.fechaRegistro = fechaRegistro;
 		this.qr = qr;
+		this.totalCanjeado = totalCanjeado;
 		this.usuario = new Usuario();
 	}
 	
-	public Vale(Integer id, BigDecimal valorTotal, LocalDate fechaLimite, LocalDateTime fechaRegistro, String qr) {
+	public Vale(Integer id, BigDecimal valorTotal, LocalDate fechaLimite, LocalDateTime fechaRegistro, String qr, BigDecimal totalCanjeado) {
 		this.id = id;
 		this.valorTotal = valorTotal;
 		this.fechaLimite = fechaLimite;
 		this.fechaRegistro = fechaRegistro;
+		this.qr = qr;
+		this.totalCanjeado = totalCanjeado;
 	}
 	
 }

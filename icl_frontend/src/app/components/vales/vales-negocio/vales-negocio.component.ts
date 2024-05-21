@@ -16,7 +16,6 @@ import { ValeService } from 'src/app/services/vale.service';
 export class ValesNegocioComponent implements OnInit {
   
   canjeadosNegocio: ValeCanjeado[];
-  totalDescuentos: number = 0;
   solicitudRealizada: boolean = false;
   restante: number = 0;
   negocio: PerfilNegocio = new PerfilNegocio();
@@ -34,8 +33,9 @@ export class ValesNegocioComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const emailToken = this.authService.getEmail();
-    
+    const emailDetalle = this.authService.getEmailDetalle();
+    const emailToken = emailDetalle ? emailDetalle : this.authService.getEmail();
+
     this.negocioService.getPerfilNegocio(emailToken).subscribe(
       (data) => {
         console.log('Negocio');
@@ -49,11 +49,12 @@ export class ValesNegocioComponent implements OnInit {
 
     this.valeService.getCanjeadosNegocio(emailToken).subscribe(
       (data) => {
+        console.log("vales negocio");
+        console.log(data);
         this.canjeadosNegocio = data;
         this.dataSource.data = data;
         this.dataSource.sort = this.sort;
-        this.totalDescuentos = this.valeService.calcularTotalDescuentos(this.canjeadosNegocio);
-        this.restante = this.negocio.valorTotal - this.totalDescuentos;
+        this.restante = this.negocio.valorTotal - this.negocio.totalCanjeado;
         this.dataSource.paginator = this.paginator;
         this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
         this.paginator.pageSize = 10;
@@ -62,7 +63,7 @@ export class ValesNegocioComponent implements OnInit {
         console.log(err);
       }
     );
-    
+    this.authService.setEmailDetalle("");
   }
   
   aplicarFiltro(event: Event): void {

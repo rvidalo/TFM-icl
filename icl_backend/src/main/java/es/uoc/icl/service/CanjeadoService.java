@@ -66,11 +66,9 @@ public class CanjeadoService {
 	
 	public BigDecimal guardarCanjeado(CanjearVale canjearVale) {
 		Negocio negocio = negocioService.getNegocioConEmail(canjearVale.getEmailNegocio()).orElseThrow();
-		BigDecimal totalCanjeadoNegocio = negocioService.getTotalCanjeado(negocio);
 		Vale valeUsuario = valeService.getValeConQr(canjearVale.getQr());
-		BigDecimal totalCanjeadoUsuario = valeService.getTotalCanjeado(valeUsuario);
-		BigDecimal restoNegocio = negocio.getValorTotal().subtract(totalCanjeadoNegocio);
-		BigDecimal restoUsuario = valeUsuario.getValorTotal().subtract(totalCanjeadoUsuario);
+		BigDecimal restoNegocio = negocio.getValorTotal().subtract(negocio.getTotalCanjeado());
+		BigDecimal restoUsuario = valeUsuario.getValorTotal().subtract(valeUsuario.getTotalCanjeado());
 		
 		//Obtiene el 50% redondeando hacía abajo en caso ded ser necesario en el segundo decimal
 		BigDecimal descuentoMitad = canjearVale.getTotal().multiply(new BigDecimal("0.5")).setScale(2, RoundingMode.HALF_DOWN);

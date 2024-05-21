@@ -11,6 +11,7 @@ export class Negocio {
   valorTotal: number;
   estado: number;
   tipo: TipoNegocio;
+  totalCanjeado: number;
 
   constructor(
     id: string = '',
@@ -22,6 +23,7 @@ export class Negocio {
     valorTotal: number = 0,
     estado: number = 1,
     tipo: TipoNegocio = new TipoNegocio,
+    totalCanjeado: number = 0
   ) {
     this.id = id;
     this.nombre = nombre;
@@ -32,5 +34,6 @@ export class Negocio {
     this.valorTotal = valorTotal;
     this.estado = estado;
     this.tipo = tipo;
+    this.totalCanjeado = totalCanjeado;
   }
 }

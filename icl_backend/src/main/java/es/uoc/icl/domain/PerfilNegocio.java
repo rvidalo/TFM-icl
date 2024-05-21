@@ -17,6 +17,7 @@ public class PerfilNegocio {
     private String email;
     private BigDecimal valorTotal;
     private TipoNegocio tipo;
+    private BigDecimal totalCanjeado;
     
     public PerfilNegocio(Negocio negocio) {
     	this.id = negocio.getId();
@@ -26,5 +27,6 @@ public class PerfilNegocio {
     	this.email = negocio.getEmail();
     	this.valorTotal = negocio.getValorTotal();
     	this.tipo = negocio.getTipo();
+    	this.totalCanjeado = negocio.getTotalCanjeado();
     }
 }

@@ -43,14 +43,5 @@ export class ValeService {
     return this.http.post<number>(BACK_URL + 'api/canjeados/nuevo', valeCanjeado);
   }
 
-  calcularTotalDescuentos(valesCanjeados: ValeCanjeado[]): number {
-    let totalDescuentos = 0;
-    if(valesCanjeados != null){
-      valesCanjeados.forEach(item => {
-        totalDescuentos += item.descuento;
-      });
-    }
-    return totalDescuentos;
-  }
 }
 

@@ -1,6 +1,5 @@
 package es.uoc.icl.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,10 +81,6 @@ public class NegocioService {
 	public void rechazar(Negocio negocio) {
 		negocio.setEstado(2);
 		negocioRepository.modificarNegocio(negocio);
-	}
-
-	public BigDecimal getTotalCanjeado(Negocio negocio) {
-		return negocioRepository.getTotalCanjeado(negocio);
 	}
 	
 }

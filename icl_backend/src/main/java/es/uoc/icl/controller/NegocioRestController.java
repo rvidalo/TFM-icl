@@ -56,17 +56,6 @@ public class NegocioRestController {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/total")
-	public ResponseEntity<BigDecimal> obtenerTotalCanjeado(@RequestParam (required = true) String email) {
-		Negocio negocio = negocioService.getNegocioConEmail(email).orElseThrow();
-		if(negocio == null) {
-			return new ResponseEntity("El negocio no existe", HttpStatus.BAD_REQUEST);
-		} 
-		BigDecimal totalCanjeado = negocioService.getTotalCanjeado(negocio);
-		return new ResponseEntity<BigDecimal>(totalCanjeado, HttpStatus.OK);
-	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("/aceptar")
 	public ResponseEntity<Negocio> aceptarNegocio(@RequestParam (required = true) String email) {
 		Negocio negocio = negocioService.getNegocioConEmail(email).orElseThrow();

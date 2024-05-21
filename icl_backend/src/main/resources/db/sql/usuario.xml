@@ -10,6 +10,7 @@
 		<result property="documento" column="documento" />
 		<result property="email" column="email" />
 		<result property="contrasena" column="contrasena" />
+		<result property="admin" column="admin" />
 	</resultMap>
 
 	<select id="getUsuario" resultType="es.uoc.icl.domain.Usuario">

@@ -11,6 +11,7 @@
         <result property="fechaLimite" column="fecha_limite"/>
         <result property="fechaRegistro" column="fecha_registro"/>
         <result property="qr" column="qr"/>
+        <result property="totalCanjeado" column="total_canjeado"/>
         <association property="usuario" javaType="es.uoc.icl.domain.Usuario" resultMap="usuario" />
     </resultMap>
     
@@ -26,6 +27,7 @@
 
     <select id="getVale" resultMap="vale">
         SELECT v.id, v.valor_total, v.fecha_limite, v.fecha_registro, v.qr,
+        	COALESCE((SELECT SUM(c.descuento) FROM canjeados c WHERE c.vale = v.id), 0) AS total_canjeado,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
             u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
@@ -35,6 +37,7 @@
     
     <select id="getValeConQr" resultMap="vale">
 		SELECT v.id, v.valor_total, v.fecha_limite, v.fecha_registro, v.qr,
+			COALESCE((SELECT SUM(c.descuento) FROM canjeados c WHERE c.vale = v.id), 0) AS total_canjeado,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
             u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
@@ -44,6 +47,7 @@
 
     <select id="getValeDeUsuario" resultMap="vale">
         SELECT  v.id, v.valor_total, v.fecha_limite, v.fecha_registro, v.qr,
+    		COALESCE((SELECT SUM(c.descuento) FROM canjeados c WHERE c.vale = v.id), 0) AS total_canjeado, 
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
             u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v
@@ -53,6 +57,7 @@
 
     <select id="getVales" resultMap="vale">
         SELECT v.id, v.valor_total, v.fecha_limite, v.fecha_registro, v.qr,
+        	COALESCE((SELECT SUM(c.descuento) FROM canjeados c WHERE c.vale = v.id), 0) AS total_canjeado,
         	v.usuario AS usuario_id, u.nombre AS usuario_nombre, u.apellidos AS usuario_apellidos, u.documento AS usuario_documento,
              u.email AS usuario_email, u.contrasena AS usuario_contrasena
         FROM vales v

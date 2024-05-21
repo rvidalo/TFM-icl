@@ -13,6 +13,8 @@ import { PerfilNegocioComponent } from './components/negocios/perfil-negocio/per
 import { ValesNegocioComponent } from './components/vales/vales-negocio/vales-negocio.component';
 import { ListaNegociosComponent } from './components/negocios/lista-negocios/lista-negocios.component';
 import { CanjearValeComponent } from './components/vales/canjear-vale/canjear-vale.component';
+import { ListaNegociosAdminComponent } from './components/negocios/lista-negocios-admin/lista-negocios-admin.component';
+import { ListaUsuariosAdminComponent } from './components/usuarios/lista-usuarios-admin/lista-usuarios-admin.component';
 
 const routes: Routes = [{ path: '', component: IndexComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
@@ -22,11 +24,12 @@ const routes: Routes = [{ path: '', component: IndexComponent, canActivate: [Aut
   { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
   { path: 'perfil-negocio', component: PerfilNegocioComponent, canActivate: [AuthGuard] },
    { path: 'lista-negocios', component: ListaNegociosComponent, canActivate: [AuthGuard] },
+   { path: 'lista-negocios-admin', component: ListaNegociosAdminComponent, canActivate: [AuthGuard] },
+   { path: 'lista-usuarios-admin', component: ListaUsuariosAdminComponent, canActivate: [AuthGuard] },
    { path: 'solicitud-vale', component: SolicitudValeComponent, canActivate: [AuthGuard] },
    { path: 'vales-usuario', component: ValesUsuarioComponent, canActivate: [AuthGuard] },
    { path: 'vales-negocio', component: ValesNegocioComponent, canActivate: [AuthGuard] },
    { path: 'canjear-vale', component: CanjearValeComponent, canActivate: [AuthGuard] },
-  // { path: 'admin/usuarios', component: ListaUsuariosComponent, canActivate: [AdminGuard] }
 ];
 
 @NgModule({

@@ -16,7 +16,6 @@ export class ValesUsuarioComponent implements OnInit {
   
   canjeadosUsuario: ValeCanjeado[];
   valeUsuario: Vale = new Vale();
-  totalDescuentos: number = 0;
   restante: number = 0;
 
   dataSource = new MatTableDataSource<ValeCanjeado>();
@@ -31,11 +30,13 @@ export class ValesUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const emailToken = this.authService.getEmail();
+    const emailDetalle = this.authService.getEmailDetalle();
+    const emailToken = emailDetalle ? emailDetalle : this.authService.getEmail();
 
     this.valeService.getValeUsuario(emailToken).subscribe(
       (data) => {
         this.valeUsuario = data;
+        this.restante = parseInt(this.valeUsuario.valorTotal, 10) - this.valeUsuario.totalCanjeado;
       },
       (err) => {
         console.log(err);
@@ -48,6 +49,8 @@ export class ValesUsuarioComponent implements OnInit {
     
     this.valeService.getCanjeadosUsuario(emailToken).subscribe(
       (data) => {
+        console.log("vales usuario");
+        console.log(data);
         this.canjeadosUsuario = data;
         this.dataSource.data = data;
         this.dataSource.sort = this.sort;
@@ -59,10 +62,7 @@ export class ValesUsuarioComponent implements OnInit {
         console.log(err);
       }
     );
-    this.totalDescuentos = this.valeService.calcularTotalDescuentos(this.canjeadosUsuario);
-    console.log(parseInt(this.valeUsuario.valorTotal, 10) );
-    console.log(this.totalDescuentos );
-    this.restante = parseInt(this.valeUsuario.valorTotal, 10) - this.totalDescuentos;
+    this.authService.setEmailDetalle("");
   }
 
   aplicarFiltro(event: Event): void {

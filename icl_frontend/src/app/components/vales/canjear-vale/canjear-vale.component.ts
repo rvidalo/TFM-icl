@@ -16,7 +16,6 @@ export class CanjearValeComponent implements OnInit {
   
   valeCanjeado: ValeCanjeado;
   totalNegocio: number;
-  totalCanjeadoNegocio: number;
   descuento: number;
   negocio: PerfilNegocio;
   
@@ -53,14 +52,6 @@ export class CanjearValeComponent implements OnInit {
 
   obtenerTotalNegocio(): void {
     const emailNegocio = this.authService.getEmail();
-    this.negocioService.obtenerTotalCanjeadoNegocio(emailNegocio).subscribe(
-      (data) => {
-        this.totalCanjeadoNegocio = data;
-      },
-      (err) => {
-        this.error = true;
-      }
-    );
 
     this.negocioService.getPerfilNegocio(emailNegocio).subscribe(
       (data) => {

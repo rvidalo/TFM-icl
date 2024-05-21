@@ -24,6 +24,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { QRCodeModule } from 'angularx-qrcode';
 import { CanjearValeComponent } from './components/vales/canjear-vale/canjear-vale.component';
+import { ListaUsuariosAdminComponent } from './components/usuarios/lista-usuarios-admin/lista-usuarios-admin.component';
+import { ListaNegociosAdminComponent } from './components/negocios/lista-negocios-admin/lista-negocios-admin.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { CanjearValeComponent } from './components/vales/canjear-vale/canjear-va
     PerfilNegocioComponent,
     ValesNegocioComponent,
     ListaNegociosComponent,
-    CanjearValeComponent
+    CanjearValeComponent,
+    ListaUsuariosAdminComponent,
+    ListaNegociosAdminComponent
   ],
   imports: [
     BrowserModule,

@@ -23,11 +23,10 @@ public class Negocio implements UserDetails{
     private BigDecimal valorTotal;
     private String contrasena;
     private Integer estado;
-    private Rol rol;
+    private BigDecimal totalCanjeado;
     
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-//		return Collections.emptyList();
 		return List.of(new SimpleGrantedAuthority(Rol.NEGOCIO.name()));
 	}
 	@Override
