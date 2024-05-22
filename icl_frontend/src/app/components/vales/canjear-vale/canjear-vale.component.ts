@@ -15,9 +15,10 @@ import { ValeService } from 'src/app/services/vale.service';
 export class CanjearValeComponent implements OnInit {
   
   valeCanjeado: ValeCanjeado;
-  totalNegocio: number;
   descuento: number;
   negocio: PerfilNegocio;
+  restante: number = 0;
+   isLoading = true;
   
   qr: FormControl;
   total: FormControl;
@@ -41,25 +42,25 @@ export class CanjearValeComponent implements OnInit {
     ]);
     this.total = new FormControl('', [
       Validators.required,
-      Validators.pattern("^[0-9]+(?:\.[0-9]{1,2})?$") ///^\d+(\.\d{1,2})?$/")
+      Validators.pattern("^(?!0$)(?!0\\.0$)(?!0\\.00$)[0-9]+(?:\\.[0-9]{1,2})?$") //"^[0-9]+(?:\.[0-9]{1,2})?$")
     ]);
 
     this.canjearValeForm = this.formBuilder.group({
       qr: this.qr,
       total: this.total,
     });
-  }
 
-  obtenerTotalNegocio(): void {
     const emailNegocio = this.authService.getEmail();
 
     this.negocioService.getPerfilNegocio(emailNegocio).subscribe(
       (data) => {
         this.negocio = data
-        this.totalNegocio = this.negocio.valorTotal;
+        this.restante = this.negocio.valorTotal - this.negocio.totalCanjeado;
+        this.isLoading = false;
       },
       (err) => {
         this.error = true;
+        this.isLoading = false;
       }
     );
   }
@@ -76,6 +77,9 @@ export class CanjearValeComponent implements OnInit {
         console.log("canjeado:");
         console.log(data);
         this.descuento = data;
+        if(this.descuento == 0){
+          this.valeCanjeado = null;
+        }
       },
       (err) => {
         this.error = true;

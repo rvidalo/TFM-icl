@@ -4,6 +4,9 @@
             <h2 class="mt-4">Registros Canjeados</h2>
         </div>
         <div class="card-body">
+            <div *ngIf="!isLoading && restante == 0" class="alert alert-danger" role="alert">
+                ¡Se ha alcanzado el máximo canjeable para este negocio!
+            </div>
             <div class="row">
                 <div class="col">
                     <p class="mb-1">

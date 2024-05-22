@@ -4,6 +4,9 @@
             <h2 class="card-title">Detalles del Vale</h2>
         </div>
         <div class="card-body">
+            <div *ngIf="!isLoading && restante == 0" class="alert alert-danger" role="alert">
+                ¡Se ha alcanzado el máximo canjeable para este vale!
+            </div>
             <div class="row">
                 <div class="col m-auto px-5">
                     <p class="mb-1">

@@ -7,6 +7,37 @@
                 ¡Vale canjeado con éxito!
             </div>
 
+            <div *ngIf="!isLoading && restante == 0" class="alert alert-danger" role="alert">
+                ¡Se ha alcanzado el máximo canjeable para este negocio!
+            </div>
+
+            <div *ngIf="descuento == 0" class="alert alert-danger" role="alert">
+                ¡El código introducido no tiene crédito, operación cancelada!
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <p class="mb-1">
+                            <strong style="display: inline-block; width: 250px;">Máximo Canjeable:</strong>
+                            <span style="display: inline-block;">{{ negocio.valorTotal }}€</span>
+                        </p>
+                    </div>
+                    <div class="col">
+                        <p class="mb-1">
+                            <strong style="display: inline-block; width: 250px;">Descuento Acumulado:</strong>
+                            <span style="display: inline-block;">{{ negocio.totalCanjeado }}€</span>
+                        </p>
+                    </div>
+                    <div class="col">
+                        <p class="mb-1">
+                            <strong style="display: inline-block; width: 250px;">Cantidad Restante:</strong>
+                            <span style="display: inline-block;">{{ restante }}€</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <form [formGroup]="canjearValeForm" (ngSubmit)="onCanjearVale()">
                 <div class="form-group m-3">
                     <label for="codigo">Código</label>
@@ -36,7 +67,7 @@
                 </div>
 
                 <div *ngIf="!valeCanjeado" class="form-group m-3">
-                    <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="canjearValeForm.invalid">
+                    <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="canjearValeForm.invalid || restante ==0">
                         Guardar Operación
                     </button>
                 </div>

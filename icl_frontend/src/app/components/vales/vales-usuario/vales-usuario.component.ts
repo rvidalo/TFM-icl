@@ -17,6 +17,7 @@ export class ValesUsuarioComponent implements OnInit {
   canjeadosUsuario: ValeCanjeado[];
   valeUsuario: Vale = new Vale();
   restante: number = 0;
+  isLoading = true;
 
   dataSource = new MatTableDataSource<ValeCanjeado>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -56,10 +57,12 @@ export class ValesUsuarioComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
+        this.isLoading = false;
         this.paginator.pageSize = 10;
       },
       (err) => {
         console.log(err);
+        this.isLoading = false;
       }
     );
     this.authService.setEmailDetalle("");

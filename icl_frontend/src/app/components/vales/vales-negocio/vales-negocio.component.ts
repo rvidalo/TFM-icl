@@ -19,6 +19,7 @@ export class ValesNegocioComponent implements OnInit {
   solicitudRealizada: boolean = false;
   restante: number = 0;
   negocio: PerfilNegocio = new PerfilNegocio();
+  isLoading = true;
   
   dataSource = new MatTableDataSource<ValeCanjeado>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -57,10 +58,12 @@ export class ValesNegocioComponent implements OnInit {
         this.restante = this.negocio.valorTotal - this.negocio.totalCanjeado;
         this.dataSource.paginator = this.paginator;
         this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
+        this.isLoading = false;
         this.paginator.pageSize = 10;
       },
       (err) => {
         console.log(err);
+        this.isLoading = false;
       }
     );
     this.authService.setEmailDetalle("");
