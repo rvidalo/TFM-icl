@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PerfilNegocio } from 'src/app/models/perfil-negocio';
-import { Vale } from 'src/app/models/vale';
 import { ValeCanjeado } from 'src/app/models/vale-canjeado';
 import { AuthService } from 'src/app/services/auth.service';
 import { NegocioService } from 'src/app/services/negocio.service';
 import { ValeService } from 'src/app/services/vale.service';
+import QrScanner from 'qr-scanner';
 
 @Component({
   selector: 'app-canjear-vale',
@@ -18,7 +18,9 @@ export class CanjearValeComponent implements OnInit {
   descuento: number;
   negocio: PerfilNegocio;
   restante: number = 0;
-   isLoading = true;
+  isLoading = true;
+  @ViewChild('video', { static: true }) videoElement: ElementRef;
+  qrScanner: any;
   
   qr: FormControl;
   total: FormControl;
@@ -60,9 +62,29 @@ export class CanjearValeComponent implements OnInit {
       },
       (err) => {
         this.error = true;
+        console.log(err);
         this.isLoading = false;
       }
     );
+
+    // Inicializar QR Scanner
+    this.qrScanner = new QrScanner(
+      this.videoElement.nativeElement,
+      (result: string) => this.onCodeResult(result),
+      /*{
+         highlightScanRegion: true,
+        highlightCodeOutline: true, 
+      } */
+    );
+
+    this.qrScanner.start().catch((error: any) => {
+      console.error('Error al iniciar el escáner QR:', error);
+    });
+    
+  }
+
+  onCodeResult(decodedText: string): void {
+    this.qr.setValue(decodedText);
   }
 
   onCanjearVale(): void {

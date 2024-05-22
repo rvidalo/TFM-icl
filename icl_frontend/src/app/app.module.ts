@@ -26,6 +26,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { CanjearValeComponent } from './components/vales/canjear-vale/canjear-vale.component';
 import { ListaUsuariosAdminComponent } from './components/usuarios/lista-usuarios-admin/lista-usuarios-admin.component';
 import { ListaNegociosAdminComponent } from './components/negocios/lista-negocios-admin/lista-negocios-admin.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ListaNegociosAdminComponent } from './components/negocios/lista-negocio
     MatPaginatorModule, 
     MatTableModule,
     MatSortModule,
+    MatDialogModule,
     QRCodeModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

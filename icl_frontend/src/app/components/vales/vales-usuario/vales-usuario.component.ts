@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,6 +6,7 @@ import { Vale } from 'src/app/models/vale';
 import { ValeCanjeado } from 'src/app/models/vale-canjeado';
 import { AuthService } from 'src/app/services/auth.service';
 import { ValeService } from 'src/app/services/vale.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-vales-usuario',
@@ -22,11 +23,15 @@ export class ValesUsuarioComponent implements OnInit {
   dataSource = new MatTableDataSource<ValeCanjeado>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('qrModal', { static: true }) qrModalTemplate: TemplateRef<any>;
   displayedColumns: string[] = ['negocio', 'total', 'descuento', 'fecha'];
+
+  private modalRef: MatDialogRef<any>;
  
   constructor(
     private valeService: ValeService,
     private authService: AuthService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +79,17 @@ export class ValesUsuarioComponent implements OnInit {
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+
+  openQrModal(qrData: string): void {
+    this.valeUsuario.qr = qrData;
+    this.modalRef = this.dialog.open(this.qrModalTemplate);
+  }
+
+  closeQrModal(): void {
+     if (this.modalRef) {
+      this.modalRef.close();
     }
   }
 

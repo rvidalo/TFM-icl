@@ -35,7 +35,7 @@
                     </p>
                 </div>
                 <div class="col text-center">
-                    <qrcode [qrdata]="valeUsuario.qr" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+                    <qrcode [qrdata]="valeUsuario.qr" [width]="150" [errorCorrectionLevel]="'M'" (click)="openQrModal(valeUsuario.qr)"></qrcode>
                 </div>
             </div>
         </div>
@@ -74,6 +74,14 @@
     <ng-template #noRecords>
         <div class="card my-3">
             <p class="text-center mt-4"><strong>Sin registros canjeados</strong></p>
+        </div>
+    </ng-template>
+    <!-- Modal template -->
+    <ng-template #qrModal let-modal>
+        <div class="modal-backdrop" (click)="closeQrModal()">
+            <div class="modal-content">
+                <qrcode [qrdata]="valeUsuario.qr" [width]="300" [errorCorrectionLevel]="'M'"></qrcode>
+            </div>
         </div>
     </ng-template>
 </div>
