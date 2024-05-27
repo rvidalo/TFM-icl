@@ -59,7 +59,7 @@ export class ValesNegocioComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
         this.isLoading = false;
-        this.paginator.pageSize = 10;
+        this.paginator.pageSize = 15;
       },
       (err) => {
         console.log(err);

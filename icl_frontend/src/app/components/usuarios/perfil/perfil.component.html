@@ -1,100 +1,106 @@
-<h3 class="mt-5 text-center">PERFIL DE USUARIO</h3>
-<div class="container col-md-5 mx-auto">
-    <form class="bg-white p-3" *ngIf="perfilUsuarioForm" [formGroup]="perfilUsuarioForm" (ngSubmit)="onActualizaDatos()">
-        <div class="form-group m-3" *ngIf="mensaje && !error" class="alert" [class.alert-success]="!error"
-            [class.alert-danger]="error" role="alert"> {{ mensaje }}
+<div class="container my-4">
+    <div class="card mx-2">
+        <div class="card-header">
+            <h2 class="card-title">Perfil de usuario</h2>
         </div>
-        <input type="hidden" name="id" [formControl]="id" />
-        <div class="form-group m-3">
-            <label for="nombre">Nombre</label>
-            <input type="text" name="nombre" class="form-control" [formControl]="nombre" />
-            <span class="text-danger" *ngIf="
-          perfilUsuarioForm.get('nombre').errors &&
-          (perfilUsuarioForm.get('nombre').touched ||
-            perfilUsuarioForm.get('nombre').dirty)
-        ">
-                <span class="text-danger" *ngIf="nombre.invalid && nombre.errors && nombre.errors['required']">El campo es
-                    obligatorio</span>
-            </span>
+        <div class="card-body">
+            <form class="bg-white p-3" *ngIf="perfilUsuarioForm" [formGroup]="perfilUsuarioForm" (ngSubmit)="onActualizaDatos()">
+                <div class="form-group m-3" *ngIf="mensaje && !error" class="alert" [class.alert-success]="!error"
+                    [class.alert-danger]="error" role="alert"> {{ mensaje }}
+                </div>
+                <input type="hidden" name="id" [formControl]="id" />
+                <div class="form-group m-3">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" class="form-control" [formControl]="nombre" />
+                    <span class="text-danger" *ngIf="
+                perfilUsuarioForm.get('nombre').errors &&
+                (perfilUsuarioForm.get('nombre').touched ||
+                    perfilUsuarioForm.get('nombre').dirty)
+                ">
+                        <span class="text-danger" *ngIf="nombre.invalid && nombre.errors && nombre.errors['required']">El campo es
+                            obligatorio</span>
+                    </span>
+                </div>
+                <div class="form-group m-3">
+                    <label for="apellidos">Apellidos</label>
+                    <input type="text" name="apellidos" class="form-control" [formControl]="apellidos" />
+                    <span class="text-danger" *ngIf="
+                perfilUsuarioForm.get('apellidos').errors &&
+                (perfilUsuarioForm.get('apellidos').touched ||
+                    perfilUsuarioForm.get('apellidos').dirty)
+                ">
+                        <span class="text-danger" *ngIf="apellidos.invalid && apellidos.errors && apellidos.errors['required']">El campo es
+                            obligatorio</span>
+                    </span>
+                </div>
+                <div class="form-group m-3">
+                    <label for="documento">Documento</label>
+                    <input type="text" name="documento" class="form-control" [formControl]="documento" />
+                    <span class="text-danger" *ngIf="
+                perfilUsuarioForm.get('documento').errors &&
+                (perfilUsuarioForm.get('documento').touched ||
+                    perfilUsuarioForm.get('documento').dirty)
+                ">
+                        <span class="text-danger" *ngIf="documento.invalid && documento.errors && documento.errors['required']">El campo es
+                            obligatorio</span>
+                    </span>
+                </div>
+                <div class="form-group m-3">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" class="form-control" [formControl]="email" />
+                    <span class="text-danger" *ngIf="
+                perfilUsuarioForm.get('email').errors &&
+                (perfilUsuarioForm.get('email').touched ||
+                    perfilUsuarioForm.get('email').dirty)
+                ">
+                        <span class="text-danger" *ngIf="email.invalid && email.errors && email.errors['required']">El campo es obligatorio</span>
+                    </span>
+                </div>
+                <div class="form-group m-5">
+                    <button class="btn btn-success btn-block w-100" [disabled]="!perfilUsuarioForm.valid" type="submit">
+                        Actualizar datos
+                    </button>
+                </div>
+            </form>
+            <!-- <form class="bg-white p-3 mt-3 mb-3" [formGroup]="cambiarContrasenaForm" (ngSubmit)="onCambiarContrasena()">
+                <div class="form-group m-3" *ngIf="mensajePass" class="alert" [class.alert-success]="!errorPass"
+                    [class.alert-danger]="errorPass" role="alert">
+                    {{ mensajePass }}
+                </div>
+                <div class="form-group m-3">
+                    <label for="email">Nueva contraseña</label>
+                    <input type="password" name="contrasena" class="form-control" [formControl]="contrasena" />
+                    <span class="text-danger" *ngIf="
+                cambiarContrasenaForm.get('contrasena').errors &&
+                (cambiarContrasenaForm.get('contrasena').touched ||
+                    cambiarContrasenaForm.get('contrasena').dirty)
+                ">
+                        <span class="text-danger" *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['required']">El campo es
+                            obligatorio</span>
+                        <span class="text-danger" *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['minlength']">Debe tener 8 caracteres
+                            como mínimo</span>
+                    </span>
+                </div>
+                <div class="form-group m-3">
+                    <label for="email">Confirme nueva contraseña</label>
+                    <input type="password" name="contrasena" class="form-control" [formControl]="confirmaContrasena" />
+                    <span class="text-danger" *ngIf="
+                cambiarContrasenaForm.get('confirmaContrasena').errors &&
+                (cambiarContrasenaForm.get('confirmaContrasena').touched ||
+                    cambiarContrasenaForm.get('confirmaContrasena').dirty)
+                ">
+                        <span class="text-danger" *ngIf="confirmaContrasena.invalid && confirmaContrasena.errors && confirmaContrasena.errors['required']">El campo es
+                            obligatorio</span>
+                        <span class="text-danger" *ngIf="confirmaContrasena.invalid && confirmaContrasena.errors && confirmaContrasena.errors['minlength']">Debe tener
+                            8 caracteres como mínimo</span>
+                    </span>
+                </div>
+                <div class="form-group m-3">
+                    <button class="btn btn-outline-success btn-block" [disabled]="!cambiarContrasenaForm.valid" type="submit">
+                        Actualizar contraseña
+                    </button>
+                </div>
+            </form> -->
         </div>
-        <div class="form-group m-3">
-            <label for="apellidos">Apellidos</label>
-            <input type="text" name="apellidos" class="form-control" [formControl]="apellidos" />
-            <span class="text-danger" *ngIf="
-          perfilUsuarioForm.get('apellidos').errors &&
-          (perfilUsuarioForm.get('apellidos').touched ||
-            perfilUsuarioForm.get('apellidos').dirty)
-        ">
-                <span class="text-danger" *ngIf="apellidos.invalid && apellidos.errors && apellidos.errors['required']">El campo es
-                    obligatorio</span>
-            </span>
-        </div>
-        <div class="form-group m-3">
-            <label for="documento">Documento</label>
-            <input type="text" name="documento" class="form-control" [formControl]="documento" />
-            <span class="text-danger" *ngIf="
-          perfilUsuarioForm.get('documento').errors &&
-          (perfilUsuarioForm.get('documento').touched ||
-            perfilUsuarioForm.get('documento').dirty)
-        ">
-                <span class="text-danger" *ngIf="documento.invalid && documento.errors && documento.errors['required']">El campo es
-                    obligatorio</span>
-            </span>
-        </div>
-        <div class="form-group m-3">
-            <label for="email">Email</label>
-            <input type="text" name="email" class="form-control" [formControl]="email" />
-            <span class="text-danger" *ngIf="
-          perfilUsuarioForm.get('email').errors &&
-          (perfilUsuarioForm.get('email').touched ||
-            perfilUsuarioForm.get('email').dirty)
-        ">
-                <span class="text-danger" *ngIf="email.invalid && email.errors && email.errors['required']">El campo es obligatorio</span>
-            </span>
-        </div>
-        <div class="form-group m-3">
-            <button class="btn btn-success btn-block w-100" [disabled]="!perfilUsuarioForm.valid" type="submit">
-                Actualizar datos
-            </button>
-        </div>
-    </form>
-    <form class="bg-white p-3 mt-3 mb-3" [formGroup]="cambiarContrasenaForm" (ngSubmit)="onCambiarContrasena()">
-        <div class="form-group m-3" *ngIf="mensajePass" class="alert" [class.alert-success]="!errorPass"
-            [class.alert-danger]="errorPass" role="alert">
-            {{ mensajePass }}
-        </div>
-        <div class="form-group m-3">
-            <label for="email">Nueva contraseña</label>
-            <input type="password" name="contrasena" class="form-control" [formControl]="contrasena" />
-            <span class="text-danger" *ngIf="
-          cambiarContrasenaForm.get('contrasena').errors &&
-          (cambiarContrasenaForm.get('contrasena').touched ||
-            cambiarContrasenaForm.get('contrasena').dirty)
-        ">
-                <span class="text-danger" *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['required']">El campo es
-                    obligatorio</span>
-                <span class="text-danger" *ngIf="contrasena.invalid && contrasena.errors && contrasena.errors['minlength']">Debe tener 8 caracteres
-                    como mínimo</span>
-            </span>
-        </div>
-        <div class="form-group m-3">
-            <label for="email">Confirme nueva contraseña</label>
-            <input type="password" name="contrasena" class="form-control" [formControl]="confirmaContrasena" />
-            <span class="text-danger" *ngIf="
-          cambiarContrasenaForm.get('confirmaContrasena').errors &&
-          (cambiarContrasenaForm.get('confirmaContrasena').touched ||
-            cambiarContrasenaForm.get('confirmaContrasena').dirty)
-        ">
-                <span class="text-danger" *ngIf="confirmaContrasena.invalid && confirmaContrasena.errors && confirmaContrasena.errors['required']">El campo es
-                    obligatorio</span>
-                <span class="text-danger" *ngIf="confirmaContrasena.invalid && confirmaContrasena.errors && confirmaContrasena.errors['minlength']">Debe tener
-                    8 caracteres como mínimo</span>
-            </span>
-        </div>
-        <div class="form-group m-3">
-            <button class="btn btn-outline-success btn-block" [disabled]="!cambiarContrasenaForm.valid" type="submit">
-                Actualizar contraseña
-            </button>
-        </div>
-    </form>
+    </div>
 </div>

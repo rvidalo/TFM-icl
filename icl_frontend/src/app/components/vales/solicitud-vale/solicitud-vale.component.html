@@ -1,39 +1,45 @@
-<div class="container mt-5 mb-5">
-    <h2>Reglas de Uso de los Vales</h2>
-    <ul class="list-group m-5">
-        <li class="list-group-item m-1">Cada usuario registrado podrá solicitar un vale con valor de 50€.</li>
-        <li class="list-group-item m-1">Los vales únicamente podrán canjearse en los negocios registrados.</li>
-        <li class="list-group-item m-1">Se descontará el 50% de la compra realizada como máximo.</li>
-        <li class="list-group-item m-1">Los vales tendrán una validez de un mes desde su solicitud.</li>
-        <li class="list-group-item m-1">Cada negocio tendrá un límite de 1000€ en vales descuentos.</li>
-        <li class="list-group-item m-1">Para canjear el vale únicamente necesitas mostrar el código QR.</li>
-    </ul>
-
-    <div *ngIf="solicitudRealizada" class="my-5" >
-        <div class="alert alert-info mt-3" role="alert">
-            ¡Tienes un vale asignado! Por favor, visita el nuevo menú de Vales.
+<div class="container my-4">
+    <div class="card mx-2">
+        <div class="card-header">
+            <h2 class="card-title">Reglas de Uso de los Vales</h2>
         </div>
-    </div>
+        <div class="card-body">
+   
+            <ul class="list-group m-5">
+                <li class="list-group-item m-1">Cada usuario registrado podrá solicitar un vale con valor de 50€.</li>
+                <li class="list-group-item m-1">Los vales únicamente podrán canjearse en los negocios registrados.</li>
+                <li class="list-group-item m-1">Se descontará el 50% de la compra realizada como máximo.</li>
+                <li class="list-group-item m-1">Los vales tendrán una validez de un mes desde su solicitud.</li>
+                <li class="list-group-item m-1">Cada negocio tendrá un límite de 1000€ en vales descuentos.</li>
+                <li class="list-group-item m-1">Para canjear el vale únicamente necesitas mostrar el código QR.</li>
+            </ul>
 
-    <div *ngIf="!solicitudRealizada && numVales >= 1000" class="my-5">
-        <div class="alert alert-warning mt-3" role="alert">
-            ¡Se ha alcanzado el máximo de vales solicitados (1000)!
-        </div>
-    </div>
-    <div class="my-5" >
-        <h4>Progreso de Vales Entregados: {{ numVales }} / 1000 Vales</h4>
-        <div class="progress w-50 mx-auto">
-            <div class="progress-bar bg-success" role="progressbar" [style.width.%]="porcentajeValesEntregados()"
-                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+            <div *ngIf="solicitudRealizada" class="my-5" >
+                <div class="alert alert-info mt-3" role="alert">
+                    ¡Tienes un vale asignado! Por favor, visita el nuevo menú de Vales.
+                </div>
+            </div>
+
+            <div *ngIf="!solicitudRealizada && numVales >= 1000" class="my-5">
+                <div class="alert alert-warning mt-3" role="alert">
+                    ¡Se ha alcanzado el máximo de vales solicitados (1000)!
+                </div>
+            </div>
+            <div class="my-5" >
+                <h4>Progreso de Vales Entregados: {{ numVales }} / 1000 Vales</h4>
+                <div class="progress w-50 mx-auto">
+                    <div class="progress-bar bg-success" role="progressbar" [style.width.%]="porcentajeValesEntregados()"
+                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-primary btn-lg mt-3" (click)="onSolicitudVale()"
+                    [disabled]="numVales >= 1000 || solicitudRealizada">
+                    Solicitar Vale
+                </button>
             </div>
         </div>
     </div>
-
-    <div class="text-center">
-        <button class="btn btn-primary btn-lg mt-3" (click)="onSolicitudVale()"
-            [disabled]="numVales >= 1000 || solicitudRealizada">
-            Solicitar Vale
-        </button>
-    </div>
-
 </div>

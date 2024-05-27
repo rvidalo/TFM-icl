@@ -41,35 +41,40 @@
         </div>
     </div>
 
-    <div class="container my-4" *ngIf="dataSource.data.length > 0; else noRecords">
-        <h2 class="mt-4">Registros Canjeados</h2>
-        <input type="text" class="form-control mb-2" placeholder="Buscar..." (input)="aplicarFiltro($event)">
-    
-        <table mat-table *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" matSort class="table">
-            <ng-container matColumnDef="negocio">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Negocio</th>
-                <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%;">{{ valeCanjeado.emailNegocio }}</td>
-            </ng-container>
-    
-            <ng-container matColumnDef="total">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%">Gasto total</th>
-                <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%; ">{{ valeCanjeado.total }}€</td>
-            </ng-container>
-    
-            <ng-container matColumnDef="descuento">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Descuento</th>
-                <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%; " >{{ valeCanjeado.descuento }}€</td>
-            </ng-container>
-    
-            <ng-container matColumnDef="fecha">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Fecha</th>
-                <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%;">{{ valeCanjeado.fechaRegistro | date:'dd-MM-yyyy  HH:mm'}}</td>
-            </ng-container>
-    
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-        <mat-paginator [pageSizeOptions]="[10, 15, 25]" showFirstLastButtons></mat-paginator>
+    <div class="card mx-2 my-4" *ngIf="dataSource.data.length > 0; else noRecords">
+        <div class="card-header">
+            <h2 class="card-title">Registros Canjeados</h2>
+        </div>
+        <div class="card-body">
+        
+            <input type="text" class="form-control mb-2" placeholder="Buscar..." (input)="aplicarFiltro($event)">
+        
+            <table mat-table *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" matSort class="table">
+                <ng-container matColumnDef="negocio">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Negocio</th>
+                    <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%;">{{ valeCanjeado.emailNegocio }}</td>
+                </ng-container>
+        
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%">Gasto total</th>
+                    <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%; ">{{ valeCanjeado.total }}€</td>
+                </ng-container>
+        
+                <ng-container matColumnDef="descuento">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Descuento</th>
+                    <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%; " >{{ valeCanjeado.descuento }}€</td>
+                </ng-container>
+        
+                <ng-container matColumnDef="fecha">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Fecha</th>
+                    <td mat-cell *matCellDef="let valeCanjeado" style="width: 25%;">{{ valeCanjeado.fechaRegistro | date:'dd-MM-yyyy  HH:mm'}}</td>
+                </ng-container>
+        
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 15, 25]" showFirstLastButtons></mat-paginator>
+        </div>
     </div>  
     <ng-template #noRecords>
         <div class="card my-3">
