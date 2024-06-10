@@ -17,7 +17,7 @@ export class ValesNegocioComponent implements OnInit {
   
   canjeadosNegocio: ValeCanjeado[];
   solicitudRealizada: boolean = false;
-  restante: number = 0;
+  restante: number = 1;
   negocio: PerfilNegocio = new PerfilNegocio();
   isLoading = true;
   
@@ -36,11 +36,9 @@ export class ValesNegocioComponent implements OnInit {
 
     const emailDetalle = this.authService.getEmailDetalle();
     const emailToken = emailDetalle ? emailDetalle : this.authService.getEmail();
-
+    this.restante=1;
     this.negocioService.getPerfilNegocio(emailToken).subscribe(
       (data) => {
-        console.log('Negocio');
-        console.log(data);
         this.negocio = data;
       },
       (err) => {
@@ -50,22 +48,22 @@ export class ValesNegocioComponent implements OnInit {
 
     this.valeService.getCanjeadosNegocio(emailToken).subscribe(
       (data) => {
-        console.log("vales negocio");
-        console.log(data);
         this.canjeadosNegocio = data;
         this.dataSource.data = data;
         this.dataSource.sort = this.sort;
-        this.restante = this.negocio.valorTotal - this.negocio.totalCanjeado;
-        this.dataSource.paginator = this.paginator;
         this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
         this.isLoading = false;
-        this.paginator.pageSize = 15;
       },
       (err) => {
         console.log(err);
         this.isLoading = false;
       }
     );
+    setTimeout(() => {
+      this.restante = this.negocio.valorTotal - this.negocio.totalCanjeado;
+      this.paginator.pageSize = 10;
+      this.dataSource.paginator = this.paginator;
+    }, 100);
     this.authService.setEmailDetalle("");
   }
   

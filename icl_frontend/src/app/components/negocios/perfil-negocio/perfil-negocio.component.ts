@@ -44,8 +44,6 @@ export class PerfilNegocioComponent implements OnInit {
     this.cargarTiposNegocio();
     this.negocioService.getPerfilNegocio(emailToken).subscribe(
       (data) => {
-        console.log('Perfil negocio');
-        console.log(data);
         this.id = new FormControl(data.id);
         this.nombre = new FormControl(data.nombre, Validators.required);
         this.direccion = new FormControl(data.direccion, Validators.required);
@@ -91,8 +89,6 @@ export class PerfilNegocioComponent implements OnInit {
     this.perfilNegocio.cif = this.cif.value;
     this.perfilNegocio.email = this.email.value;
     this.perfilNegocio.tipo = this.tipoNegocio.value;
-    console.log(this.perfilNegocio);
-    console.log('Tipo: ' + this.tipoNegocio.value);
     this.negocioService.modificar(this.perfilNegocio).subscribe(
       (data) => {
         this.mensaje = data.mensaje;
@@ -127,8 +123,6 @@ export class PerfilNegocioComponent implements OnInit {
   cargarTiposNegocio(): void {
     this.negocioService.getTiposNegocio().subscribe(
       (data: TipoNegocio[]) => {
-        /* console.log('Tipos Negocio');
-        console.log(data); */
         this.tiposNegocio = data;
       },
       (error) => {

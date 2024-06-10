@@ -56,7 +56,8 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                 </table>
-                <mat-paginator [pageSizeOptions]="[10, 15, 25]" showFirstLastButtons></mat-paginator>
+                <!-- <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 15, 25]" showFirstLastButtons></mat-paginator> -->
+                <mat-paginator #paginator [length]="dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[10, 15, 25]"></mat-paginator>
             </div>
             <ng-template #noRecords>
                 <div class="card my-3">

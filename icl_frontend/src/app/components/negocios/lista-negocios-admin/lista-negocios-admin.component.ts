@@ -54,7 +54,6 @@ export class ListaNegociosAdminComponent implements OnInit {
   }
 
   onRowClicked(row: Negocio) {
-    console.log("ONROWCLICKED!! " + row.email);
     this.authService.setEmailDetalle(row.email);
     this.router.navigate(['/vales-negocio']);
   }

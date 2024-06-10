@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@CrossOrigin
 public class LoginRestController {
 
 	@Autowired
@@ -113,11 +115,6 @@ public class LoginRestController {
 	@PostMapping("/cambio-contrasena")
 	public ResponseEntity<?> cambiarContrasena(@RequestBody Usuario aux){
 
-		//VALIDAR ESTO EN EL FRONTEND 
-//		if(!dto.getPassword().equals(dto.getConfirmPassword())) {
-//			return new ResponseEntity("Las contraseñas no coinciden", HttpStatus.BAD_REQUEST);
-//		}
-		
 		Usuario usuario = usuarioService.getUsuario(aux.getId());
 		if(usuario == null) {
 			return new ResponseEntity("No existe el usuario", HttpStatus.BAD_REQUEST);

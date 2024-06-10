@@ -55,14 +55,12 @@ export class ValesUsuarioComponent implements OnInit {
     
     this.valeService.getCanjeadosUsuario(emailToken).subscribe(
       (data) => {
-        console.log("vales usuario");
-        console.log(data);
         this.canjeadosUsuario = data;
         this.dataSource.data = data;
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
         this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
         this.isLoading = false;
+        this.dataSource.paginator = this.paginator;
         this.paginator.pageSize = 10;
       },
       (err) => {

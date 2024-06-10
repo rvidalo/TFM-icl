@@ -47,7 +47,7 @@ public class AuthService {
 	
 	public void enviarEmailBienvenida(String correoElectronico) throws Exception {
 		Email email = new Email();
-		email.setDestino("ricardovidalortiz@gmail.com");//correoElectronico);
+		email.setDestino(correoElectronico);
 		email.setTitulo("Bienvenida a la plataforma de Impulso del comercio local del Ayuntamiento de Chiclana");
 		Map<String, Object> modelo = new HashMap<String, Object>();
 		modelo.put("url", urlFront);
@@ -56,7 +56,7 @@ public class AuthService {
 	
 	public void enviarEmailCambioContrasena(Usuario usuario, String token) throws Exception {
 		Email email = new Email();
-		email.setDestino("ricardovidalortiz@gmail.com");//usuario.getEmail());
+		email.setDestino(usuario.getEmail());
 		email.setTitulo("Cambio de contraseña en la plataforma de Impulso del comercio local del Ayuntamiento de Chiclana");
 		Map<String, Object> modelo = new HashMap<String, Object>();
 		modelo.put("idUsuario", usuario.getId());

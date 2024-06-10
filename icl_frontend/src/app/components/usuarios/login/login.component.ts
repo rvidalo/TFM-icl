@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginUsuario).subscribe(
       (data) => {
-        console.log('Datos recibidos:', data); 
         if (data) {
           this.authService.setToken(data.token);
           window.location.href = '/';

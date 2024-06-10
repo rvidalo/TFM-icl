@@ -40,8 +40,6 @@ export class PerfilComponent implements OnInit {
     const emailToken = this.authService.getEmail();
     this.usuarioService.getPerfilUsuario(emailToken).subscribe(
       (data) => {
-        console.log('Perfil usuario');
-        console.log(data);
         this.id = new FormControl(data.id);
         this.nombre = new FormControl(data.nombre, Validators.required);
         this.apellidos = new FormControl(data.apellidos, Validators.required);

@@ -73,7 +73,6 @@ export class AuthService {
     const values = JSON.parse(payloadDecoded);
     const rol = values.rol[0].authority;
     if (rol == 'ADMIN') {
-      console.log(rol);
       return true;
     }
     return false;
@@ -91,7 +90,6 @@ export class AuthService {
     const values = JSON.parse(payloadDecoded);
     const rol = values.rol[0].authority;
     if (rol == 'USUARIO') {
-      console.log(rol);
       return true;
     }
     return false;
@@ -109,7 +107,6 @@ export class AuthService {
     const values = JSON.parse(payloadDecoded);
     const rol = values.rol[0].authority;
     if (rol == 'NEGOCIO') {
-      console.log(rol);
       return true;
     }
     return false;

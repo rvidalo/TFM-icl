@@ -20,7 +20,6 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Collections.emptyList();
-//		List.of(new SimpleGrantedAuthority(rol.name()));
 	}
 
 	@Override

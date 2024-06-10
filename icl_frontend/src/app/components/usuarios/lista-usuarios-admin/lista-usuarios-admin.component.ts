@@ -56,7 +56,6 @@ export class ListaUsuariosAdminComponent implements OnInit {
   }
 
   onRowClicked(row: Vale) {
-    console.log("ONROWCLICKED!! " + row.usuario.email);
     this.authService.setEmailDetalle(row.usuario.email);
     this.router.navigate(['/vales-usuario']);
   }

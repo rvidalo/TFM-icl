@@ -33,8 +33,6 @@ export class MenuComponent implements OnInit {
     if(this.isUsuario){
       this.valeService.getValeUsuario(this.email).subscribe(
         (data) => {
-          console.log("menu usuario con vale?")
-          console.log(data);
           if (data != null){
             this.solicitudRealizada = true;
           }

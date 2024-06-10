@@ -96,8 +96,6 @@ export class CanjearValeComponent implements OnInit {
     this.valeService.canjearVale(this.valeCanjeado).subscribe(
       (data) => {
         this.mensaje = 'Vale canjeado correctamente';
-        console.log("canjeado:");
-        console.log(data);
         this.descuento = data;
         if(this.descuento == 0){
           this.valeCanjeado = null;

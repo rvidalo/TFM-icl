@@ -52,36 +52,24 @@ public class ApplicationConfig {
 	@Bean
 	@Lazy
 	public UserDetailsService userDetailService() {
-		//UserDetails usuario = userDetailsService.loadUserByUsername(username);
-		  //return username -> usuarioRepository.getUsuarioConEmail(username).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 		return username -> {
 	        // Intenta buscar el usuario en usuarioRepository
 	        Optional<Usuario> usuarioOptional = usuarioRepository.getUsuarioConEmail(username);
 
 	        if (usuarioOptional.isPresent()) {
-	            // Usuario encontrado en usuarioRepository
-	            return usuarioOptional.orElseThrow(); // Devuelve el UserDetails correspondiente
+	            return usuarioOptional.orElseThrow(); 
 	        } else {
 	            // Usuario no encontrado en usuarioRepository, intenta en negocioRepository
 	            Optional<Negocio> negocioOptional = negocioRepository.getNegocioConEmail(username);
 
 	            if (negocioOptional.isPresent()) {
-	                // Negocio encontrado en negocioRepository, devuelve un UserDetails personalizado si es necesario
 	                return negocioOptional.orElseThrow();
 	            } else {
-	                // Ningún usuario encontrado, lanza una excepción
 	                throw new UsernameNotFoundException("Usuario no encontrado: " + username);
 	            }
 	        }
 		};
 	}
-		
-//	private UserDetails createCustomUserDetailsFromNegocio(Negocio negocio) {
-//	    // Implementa la creación de UserDetails personalizados para un negocio si es necesario
-//	    // Aquí puedes retornar un UserDetails personalizado basado en la información del negocio
-//	    // Por ejemplo, si el negocio tiene roles específicos, puedes crear un UserDetails adaptado a esos roles
-//	    return new CustomUserDetails(negocio);
-//	}
 
 	public static void main(String[] args) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
