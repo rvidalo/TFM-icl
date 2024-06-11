@@ -28,13 +28,13 @@
 	<select id="getUsuarios" resultType="es.uoc.icl.domain.Usuario">
 		SELECT * 
 		FROM usuarios
-		WHERE admin = 0
+		WHERE admin = 'FALSE'
 	</select>
 	
 	<select id="getAdministradores" resultType="es.uoc.icl.domain.Usuario">
 		SELECT * 
 		FROM usuarios
-		WHERE admin = 1
+		WHERE admin = 'TRUE'
 	</select>
 	
 	<select id="getUsuariosConVale" resultType="es.uoc.icl.domain.Usuario">
@@ -54,7 +54,7 @@
 		INSERT INTO usuarios (nombre, apellidos, documento, email,
 		contrasena, admin)
 		VALUES (#{nombre}, #{apellidos}, #{documento}, #{email},
-		#{contrasena}, 0)
+		#{contrasena}, 'FALSE')
 	</insert>
 
 	<update id="modificarUsuario" parameterType="es.uoc.icl.domain.Perfil">
