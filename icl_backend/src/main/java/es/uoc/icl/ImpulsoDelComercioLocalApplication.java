@@ -9,11 +9,15 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class ImpulsoDelComercioLocalApplication {
 
 	public static void main(String[] args) {
-		// Cargar el archivo .env
-        Dotenv dotenv = Dotenv.load();
-        dotenv.entries().forEach(entry -> {
-            System.setProperty(entry.getKey(), entry.getValue());
-        });
+		try {
+            // Cargar el archivo .env
+            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+            dotenv.entries().forEach(entry -> {
+                System.setProperty(entry.getKey(), entry.getValue());
+            });
+        } catch (Exception e) {
+            System.err.println("No se encontró el archivo .env, usando variables de entorno del sistema");
+        }
 
         // Iniciar la aplicación Spring Boot
 		SpringApplication.run(ImpulsoDelComercioLocalApplication.class, args);
