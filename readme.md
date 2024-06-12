@@ -2,25 +2,25 @@ URL de acceso a la aplicación: https://tfm-icl.netlify.app
 
 Perfiles de prueba:
 
-1. Administrador
-	•	Correo: admin@chiclana.com
-	•	Contraseña: contrasena
-
-2. Negocio
-	•	Correo: negocio2@chiclana.com
-	•	Contraseña: contrasena
-	•	Alternativas:
-		o	negocio3@chiclana.com
-		o	negocio4@chiclana.com
-		o	Todos utilizan la misma contraseña: contrasena
-		
-3. Ciudadano
-	•	Correo: usuario01@chiclana.com
-	•	Contraseña: contrasena
-	•	Alternativas:
-		o	usuario02@chiclana.com
-		o	usuario03@chiclana.com
-		o	Todos utilizan la misma contraseña: contrasena
+	1. Administrador
+		•	Correo: admin@chiclana.com
+		•	Contraseña: contrasena
+	
+	2. Negocio
+		•	Correo: negocio2@chiclana.com
+		•	Contraseña: contrasena
+		•	Alternativas:
+			o	negocio3@chiclana.com
+			o	negocio4@chiclana.com
+			o	Todos utilizan la misma contraseña: contrasena
+			
+	3. Ciudadano
+		•	Correo: usuario01@chiclana.com
+		•	Contraseña: contrasena
+		•	Alternativas:
+			o	usuario02@chiclana.com
+			o	usuario03@chiclana.com
+			o	Todos utilizan la misma contraseña: contrasena
 
 
 Despliegue en local
