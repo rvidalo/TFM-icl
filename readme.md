@@ -1,6 +1,8 @@
 # Acceso a la Aplicación y Perfiles de Prueba
 
-**URL de acceso a la aplicación:** [https://tfm-icl.netlify.app](https://tfm-icl.netlify.app)
+**URL de acceso a la aplicación:** [https://tfm-icl.netlify.app](https://tfm-icl.netlify.app) 
+
+Nota: Al tratarse de un servidor gratuito la api no es demasiado rápida, ralentizando bastante el uso de la aplicación. La velocidad desplegando en local es mucho más rápida.
 
 ## Perfiles de prueba
 
