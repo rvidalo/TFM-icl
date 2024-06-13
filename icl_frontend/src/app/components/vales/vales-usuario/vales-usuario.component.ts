@@ -34,40 +34,28 @@ export class ValesUsuarioComponent implements OnInit {
     private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {
-
+  async ngOnInit() {
     const emailDetalle = this.authService.getEmailDetalle();
     const emailToken = emailDetalle ? emailDetalle : this.authService.getEmail();
 
-    this.valeService.getValeUsuario(emailToken).subscribe(
-      (data) => {
-        this.valeUsuario = data;
+    try {
+      this.valeUsuario = await this.valeService.getValeUsuario(emailToken);
+      if (this.valeUsuario) {
         this.restante = parseInt(this.valeUsuario.valorTotal, 10) - this.valeUsuario.totalCanjeado;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
 
-    if (this.valeUsuario == null){
-      return;
-    }
-    
-    this.valeService.getCanjeadosUsuario(emailToken).subscribe(
-      (data) => {
-        this.canjeadosUsuario = data;
-        this.dataSource.data = data;
+        this.canjeadosUsuario = await this.valeService.getCanjeadosUsuario(emailToken);
+        this.dataSource.data = this.canjeadosUsuario;
         this.dataSource.sort = this.sort;
         this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
-        this.isLoading = false;
         this.dataSource.paginator = this.paginator;
         this.paginator.pageSize = 10;
-      },
-      (err) => {
-        console.log(err);
-        this.isLoading = false;
       }
-    );
+    } catch (err) {
+      console.log(err);
+    } finally {
+      this.isLoading = false;
+    }
+
     this.authService.setEmailDetalle("");
   }
 

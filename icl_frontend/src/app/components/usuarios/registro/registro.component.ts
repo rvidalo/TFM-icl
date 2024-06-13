@@ -116,24 +116,22 @@ export class RegistroComponent implements OnInit {
     this.formularioActivo = tipo;
   }
 
-  onRegisterUsuario(): void {
+  async onRegisterUsuario(): Promise<void> {
     this.nuevoUsuario.nombre = this.nombre.value;
     this.nuevoUsuario.apellidos = this.apellidos.value;
     this.nuevoUsuario.documento = this.documento.value;
     this.nuevoUsuario.email = this.email.value;
     this.nuevoUsuario.contrasena = this.contrasena.value;
 
-    this.authService.registro(this.nuevoUsuario).subscribe(
-      (data) => {
-        this.mensaje = 'Registro finalizado correctamente. ¡Revisa tu correo!';
-      },
-      (err) => {
-        this.mensaje = err.error;
-      }
-    );
+    try {
+      const data = await this.authService.registro(this.nuevoUsuario);
+      this.mensaje = 'Registro finalizado correctamente. ¡Revisa tu correo!';
+    } catch (err) {
+      this.mensaje = err.error;
+    }
   }
 
-  onRegisterNegocio(): void {
+  async onRegisterNegocio(): Promise<void> {
     this.nuevoNegocio.nombre = this.nombreNegocio.value;
     this.nuevoNegocio.direccion = this.direccionNegocio.value;
     this.nuevoNegocio.cif = this.cifNegocio.value;
@@ -141,25 +139,19 @@ export class RegistroComponent implements OnInit {
     this.nuevoNegocio.contrasena = this.contrasenaNegocio.value;
     this.nuevoNegocio.tipo = this.tipoNegocio.value;
 
-    this.authService.registroNegocio(this.nuevoNegocio).subscribe(
-      (data) => {
-        this.mensaje = 'Registro finalizado correctamente. ¡Revisa tu correo!';
-        this.router.navigate(['/login']);
-      },
-      (err) => {
-        this.mensaje = err.error;
-      }
-    );
+    try {
+      const data = await this.authService.registroNegocio(this.nuevoNegocio);
+      this.mensaje = 'Registro finalizado correctamente. ¡Revisa tu correo!';
+    } catch (err) {
+      this.mensaje = err.error;
+    }
   }
 
-  cargarTiposNegocio(): void {
-    this.negocioService.getTiposNegocio().subscribe(
-      (data: TipoNegocio[]) => {
-        this.tiposNegocio = data;
-      },
-      (error) => {
-        console.error('Error al cargar tipos de negocio:', error);
-      }
-    );
+  async cargarTiposNegocio(): Promise<void> {
+    try {
+      this.tiposNegocio = await this.negocioService.getTiposNegocio();
+    } catch (error) {
+      console.error('Error al cargar tipos de negocio:', error);
+    }
   }
 }

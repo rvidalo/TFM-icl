@@ -39,24 +39,23 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public onLogin(): void {
-    this.loginUsuario.email = this.email.value;
-    this.loginUsuario.contrasena = this.contrasena.value;
+  async onLogin(): Promise<void> {
+    try{
+      this.loginUsuario.email = this.email.value;
+      this.loginUsuario.contrasena = this.contrasena.value;
 
-    this.authService.login(this.loginUsuario).subscribe(
-      (data) => {
-        if (data) {
-          this.authService.setToken(data.token);
-          window.location.href = '/';
-        } else {
-          console.error('Error: datos nulos recibidos');
-        }
-      },
-      (err) => {
-        let msg = err.error && err.error.mensaje ? err.error.mensaje : 'El email o contraseña no son correctos';
-        this.mensaje = msg;
-        console.error('Error en la solicitud:', err);
-      } 
-    );
+      const data = await this.authService.login(this.loginUsuario);
+
+      if (data) {
+        this.authService.setToken(data.token);
+        window.location.href = '/';
+      } else {
+        console.error('Error: datos nulos recibidos');
+      }
+    } catch (err) {
+      let msg = err.error && err.error.mensaje ? err.error.mensaje : 'El email o contraseña no son correctos';
+      this.mensaje = msg;
+      console.error('Error en la solicitud:', err);
+    }
   }
 }

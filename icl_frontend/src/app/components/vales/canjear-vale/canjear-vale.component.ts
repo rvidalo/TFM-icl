@@ -52,59 +52,53 @@ export class CanjearValeComponent implements OnInit {
       total: this.total,
     });
 
-    const emailNegocio = this.authService.getEmail();
-
-    this.negocioService.getPerfilNegocio(emailNegocio).subscribe(
-      (data) => {
-        this.negocio = data
-        this.restante = this.negocio.valorTotal - this.negocio.totalCanjeado;
-        this.isLoading = false;
-      },
-      (err) => {
-        this.error = true;
-        console.log(err);
-        this.isLoading = false;
-      }
-    );
+    this.loadPerfilNegocio();
 
     // Inicializar QR Scanner
     this.qrScanner = new QrScanner(
       this.videoElement.nativeElement,
-      (result: string) => this.onCodeResult(result),
-      /*{
-         highlightScanRegion: true,
-        highlightCodeOutline: true, 
-      } */
+      (result: string) => this.onCodeResult(result)
     );
 
     this.qrScanner.start().catch((error: any) => {
       console.error('Error al iniciar el escáner QR:', error);
     });
-    
+  }
+
+  async loadPerfilNegocio(): Promise<void> {
+    const emailNegocio = this.authService.getEmail();
+    try {
+      const data = await this.negocioService.getPerfilNegocio(emailNegocio);
+      this.negocio = data;
+      this.restante = this.negocio.valorTotal - this.negocio.totalCanjeado;
+    } catch (err) {
+      this.error = true;
+      console.log(err);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   onCodeResult(decodedText: string): void {
     this.qr.setValue(decodedText);
   }
 
-  onCanjearVale(): void {
+  async onCanjearVale(): Promise<void> {
     this.valeCanjeado = new ValeCanjeado();
     this.valeCanjeado.qr = this.qr.value;
     this.valeCanjeado.emailNegocio = this.authService.getEmail();
     this.valeCanjeado.total = this.total.value;
 
-    this.valeService.canjearVale(this.valeCanjeado).subscribe(
-      (data) => {
-        this.mensaje = 'Vale canjeado correctamente';
-        this.descuento = data;
-        if(this.descuento == 0){
-          this.valeCanjeado = null;
-        }
-      },
-      (err) => {
-        this.error = true;
-        this.mensaje = err.error;
+    try {
+      const data = await this.valeService.canjearVale(this.valeCanjeado);
+      this.mensaje = 'Vale canjeado correctamente';
+      this.descuento = data;
+      if (this.descuento == 0) {
+        this.valeCanjeado = null;
       }
-    );
+    } catch (err) {
+      this.error = true;
+      this.mensaje = err.error;
+    }
   }
 }

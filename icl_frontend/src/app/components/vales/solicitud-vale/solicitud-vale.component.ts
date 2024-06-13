@@ -22,30 +22,22 @@ export class SolicitudValeComponent implements OnInit {
     private authService: AuthService,
   ) {}
 
-  ngOnInit(): void {
-
+  async ngOnInit(): Promise<void> {
     const emailToken = this.authService.getEmail();
-    this.valeService.getVales().subscribe(
-      (data) => {
-        this.valesSolicitados = data;
-        this.numVales = this.valesSolicitados.length;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
 
-    this.valeService.getValeUsuario(emailToken).subscribe(
-      (data) => {
-        this.valeUsuario = data;
-        if (this.valeUsuario != null){
-          this.solicitudRealizada = true;
-        }
-      },
-      (err) => {
-        console.log(err);
+    try {
+      // Obtener vales solicitados
+      this.valesSolicitados = await this.valeService.getVales();
+      this.numVales = this.valesSolicitados.length;
+
+      // Verificar si el usuario tiene un vale
+      this.valeUsuario = await this.valeService.getValeUsuario(emailToken);
+      if (this.valeUsuario != null) {
+        this.solicitudRealizada = true;
       }
-    );
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // Método para calcular el porcentaje de vales entregados
@@ -53,28 +45,23 @@ export class SolicitudValeComponent implements OnInit {
     return (this.numVales / 1000) * 100;
   }
 
-  onSolicitudVale() {
-    this.valeService.nuevoVale(this.authService.getEmail()).subscribe(
-      (data) => {
-        this.mensaje = data.mensaje;
-        this.valeService.getVales().subscribe(
-          (data) => {
-            this.valesSolicitados = data;
-            this.numVales = this.valesSolicitados.length;
-            this.solicitudRealizada = true;
-            //muestra el nuevo menú vales en caso de usuarios
-            window.location.reload();
-          },
-          (err) => {
-            this.mensaje = err.error;
-            console.log(err);
-          }
-        );
-      },
-      (err) => {
-        this.mensaje = err.error;
-        console.log(err);
-      }
-    );
+  async onSolicitudVale(): Promise<void> {
+    try {
+      // Hacer solicitud de un nuevo vale
+      const nuevoValeData = await this.valeService.nuevoVale(this.authService.getEmail());
+      this.mensaje = nuevoValeData.mensaje;
+
+      // Actualizar la lista de vales solicitados después de la solicitud
+      const valesData = await this.valeService.getVales();
+      this.valesSolicitados = valesData;
+      this.numVales = this.valesSolicitados.length;
+      this.solicitudRealizada = true;
+
+      // Recargar la página para mostrar el nuevo menú de vales
+      window.location.reload();
+    } catch (error) {
+      this.mensaje = error.error;
+      console.log(error);
+    }
   }
 }

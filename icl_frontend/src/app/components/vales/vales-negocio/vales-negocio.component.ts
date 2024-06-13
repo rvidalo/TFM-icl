@@ -32,39 +32,27 @@ export class ValesNegocioComponent implements OnInit {
     private negocioService: NegocioService,
   ) {}
 
-  ngOnInit(): void {
-
+    async ngOnInit() {
     const emailDetalle = this.authService.getEmailDetalle();
     const emailToken = emailDetalle ? emailDetalle : this.authService.getEmail();
-    this.restante=1;
-    this.negocioService.getPerfilNegocio(emailToken).subscribe(
-      (data) => {
-        this.negocio = data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.restante = 1;
+    this.isLoading = true;
 
-    this.valeService.getCanjeadosNegocio(emailToken).subscribe(
-      (data) => {
-        this.canjeadosNegocio = data;
-        this.dataSource.data = data;
-        this.dataSource.sort = this.sort;
-        this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
-        this.isLoading = false;
-      },
-      (err) => {
-        console.log(err);
-        this.isLoading = false;
-      }
-    );
-    setTimeout(() => {
+    try {
+      this.negocio = await this.negocioService.getPerfilNegocio(emailToken);
+      this.canjeadosNegocio = await this.valeService.getCanjeadosNegocio(emailToken);
+      this.dataSource.data = this.canjeadosNegocio;
+      this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
       this.restante = this.negocio.valorTotal - this.negocio.totalCanjeado;
       this.paginator.pageSize = 10;
       this.dataSource.paginator = this.paginator;
-    }, 100);
-    this.authService.setEmailDetalle("");
+      this.authService.setEmailDetalle("");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      this.isLoading = false;
+    }
   }
   
   aplicarFiltro(event: Event): void {

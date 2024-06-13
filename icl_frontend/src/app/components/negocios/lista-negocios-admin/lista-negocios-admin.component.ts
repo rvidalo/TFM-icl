@@ -29,19 +29,17 @@ export class ListaNegociosAdminComponent implements OnInit {
     this.obtenerNegocios();
   }
 
-  obtenerNegocios(): void {
-    this.negocioService.getNegocios().subscribe(
-      (data) => {
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
-        this.paginator.pageSize = 10;
-      },
-      (error) => {
-        console.error('Error al obtener los negocios:', error);
-      }
-    );
+  async obtenerNegocios(): Promise<void> {
+    try {
+      const data = await this.negocioService.getNegocios();
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
+      this.paginator.pageSize = 10;
+    } catch (error) {
+      console.error('Error al obtener los negocios:', error);
+    }
   }
 
   aplicarFiltro(event: Event): void {

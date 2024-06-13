@@ -55,34 +55,6 @@ public class NegocioRestController {
 		PerfilNegocio perfil = new PerfilNegocio(negocio);
 		return new ResponseEntity<PerfilNegocio>(perfil, HttpStatus.OK);
 	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/aceptar")
-	public ResponseEntity<Negocio> aceptarNegocio(@RequestParam (required = true) String email) {
-		Negocio negocio = negocioService.getNegocioConEmail(email).orElseThrow();
-		if(negocio == null) {
-			return new ResponseEntity("El negocio no existe", HttpStatus.BAD_REQUEST);
-		} 
-		negocioService.aceptar(negocio);
-		return new ResponseEntity<Negocio>(negocio, HttpStatus.OK);
-	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/rechazar")
-	public ResponseEntity<Negocio> rechazarNegocio(@RequestParam (required = true) String email) {
-		Negocio negocio = negocioService.getNegocioConEmail(email).orElseThrow();
-		if(negocio == null) {
-			return new ResponseEntity("El negocio no existe", HttpStatus.BAD_REQUEST);
-		} 
-		negocioService.rechazar(negocio);
-		return new ResponseEntity<Negocio>(negocio, HttpStatus.OK);
-	}
-	
-	@GetMapping("/tipos")
-	public ResponseEntity<List<TipoNegocio>> getTiposNegocio() {
-		List<TipoNegocio> tipos = negocioService.getTipos();
-		return new ResponseEntity<List<TipoNegocio>>(tipos, HttpStatus.OK);
-	}
 
 	@PostMapping("/nuevo")
 	@SuppressWarnings({ "rawtypes", "unchecked" })

@@ -31,19 +31,17 @@ export class ListaUsuariosAdminComponent implements OnInit {
     this.obtenerVales();
   }
 
-  obtenerVales(): void {
-    this.valeService.getVales().subscribe(
-      (data) => {
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
-        this.paginator.pageSize = 10;
-      },
-      (error) => {
-        console.error('Error al obtener los negocios:', error);
-      }
-    );
+  async obtenerVales(): Promise<void> {
+    try {
+      const data = await this.valeService.getVales();
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = this.filtroPersonalizado.bind(this);
+      this.paginator.pageSize = 10;
+    } catch (error) {
+      console.error('Error al obtener los vales de usuario:', error);
+    }
   }
 
   aplicarFiltro(event: Event): void {

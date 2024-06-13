@@ -26,91 +26,50 @@ export class PerfilComponent implements OnInit {
   email: FormControl;
   perfilUsuarioForm: FormGroup;
 
-  contrasena: FormControl;
-  confirmaContrasena: FormControl;
-  cambiarContrasenaForm: FormGroup;
-
   constructor(
     private authService: AuthService,
     private usuarioService: UsuarioService,
     private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): void {
-    const emailToken = this.authService.getEmail();
-    this.usuarioService.getPerfilUsuario(emailToken).subscribe(
-      (data) => {
-        this.id = new FormControl(data.id);
-        this.nombre = new FormControl(data.nombre, Validators.required);
-        this.apellidos = new FormControl(data.apellidos, Validators.required);
-        this.documento = new FormControl(data.documento, Validators.required);
-        this.email = new FormControl(data.email, Validators.required);
+  async ngOnInit(): Promise<void> {
+    try {
+      const emailToken = this.authService.getEmail();
+      const data = await this.usuarioService.getPerfilUsuario(emailToken);
 
-        this.perfilUsuarioForm = this.formBuilder.group({
-          id: this.id,
-          nombre: this.nombre,
-          apellidos: this.apellidos,
-          documento: this.documento,
-          email: this.email,
-        });
-      },
-      (err) => {
-        this.error = true;
-        this.mensaje = err.error;
-        console.log(err);
-      }
-    );
+      this.id = new FormControl(data.id);
+      this.nombre = new FormControl(data.nombre, Validators.required);
+      this.apellidos = new FormControl(data.apellidos, Validators.required);
+      this.documento = new FormControl(data.documento, Validators.required);
+      this.email = new FormControl(data.email, Validators.required);
 
-    this.contrasena = new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-    ]);
-    this.confirmaContrasena = new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-    ]);
-
-    this.cambiarContrasenaForm = this.formBuilder.group({
-      contrasena: this.contrasena,
-      confirmaContrasena: this.confirmaContrasena,
-    });
+      this.perfilUsuarioForm = this.formBuilder.group({
+        id: this.id,
+        nombre: this.nombre,
+        apellidos: this.apellidos,
+        documento: this.documento,
+        email: this.email,
+      });
+    } catch (err) {
+      this.error = true;
+      this.mensaje = err.error;
+      console.log(err);
+    }
   }
 
-  onActualizaDatos(): void {
-    this.perfilUsuario.id = this.id.value;
-    this.perfilUsuario.nombre = this.nombre.value;
-    this.perfilUsuario.apellidos = this.apellidos.value;
-    this.perfilUsuario.documento = this.documento.value;
-    this.perfilUsuario.email = this.email.value;
+  async onActualizaDatos(): Promise<void> {
+    try {
+      this.perfilUsuario.id = this.id.value;
+      this.perfilUsuario.nombre = this.nombre.value;
+      this.perfilUsuario.apellidos = this.apellidos.value;
+      this.perfilUsuario.documento = this.documento.value;
+      this.perfilUsuario.email = this.email.value;
 
-    this.usuarioService.modificar(this.perfilUsuario).subscribe(
-      (data) => {
-        this.mensaje = data.mensaje;
-      },
-      (err) => {
-        this.error = true;
-        this.mensaje = err.error;
-      }
-    );
-  }
-
-   onCambiarContrasena(): void {
-    this.cambiarContrasena.email = this.authService.getEmail();
-    this.cambiarContrasena.contrasena = this.contrasena.value;
-    this.cambiarContrasena.confirmaContrasena = this.confirmaContrasena.value;
-
-    this.authService.cambiarContrasena(this.cambiarContrasena)
-      .subscribe(
-        (data) => {
-          this.mensajePass = data.mensaje;
-          const token = this.authService.getToken();
-          this.authService.refresh(new Jwt(token));
-        },
-        (err) => {
-          this.mensajePass = err.error;
-          this.errorPass = true;
-          console.log(err);
-        }
-      );
+      const data = await this.usuarioService.modificar(this.perfilUsuario);
+      this.mensaje = data.mensaje;
+    } catch (err) {
+      this.error = true;
+      this.mensaje = err.error;
+    }
   }
 }

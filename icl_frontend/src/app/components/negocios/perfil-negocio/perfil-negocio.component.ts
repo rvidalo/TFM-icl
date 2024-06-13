@@ -39,33 +39,31 @@ export class PerfilNegocioComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): void {
+async ngOnInit(): Promise<void> {
     const emailToken = this.authService.getEmail();
-    this.cargarTiposNegocio();
-    this.negocioService.getPerfilNegocio(emailToken).subscribe(
-      (data) => {
-        this.id = new FormControl(data.id);
-        this.nombre = new FormControl(data.nombre, Validators.required);
-        this.direccion = new FormControl(data.direccion, Validators.required);
-        this.cif = new FormControl(data.cif, Validators.required);
-        this.email = new FormControl(data.email, Validators.required);
-        this.tipoNegocio = new FormControl(data.tipo.id, Validators.required);
+    await this.cargarTiposNegocio();
+    try {
+      const data = await this.negocioService.getPerfilNegocio(emailToken);
+      this.id = new FormControl(data.id);
+      this.nombre = new FormControl(data.nombre, Validators.required);
+      this.direccion = new FormControl(data.direccion, Validators.required);
+      this.cif = new FormControl(data.cif, Validators.required);
+      this.email = new FormControl(data.email, Validators.required);
+      this.tipoNegocio = new FormControl(data.tipo.id, Validators.required);
 
-        this.perfilNegocioForm = this.formBuilder.group({
-          id: this.id,
-          nombre: this.nombre,
-          direccion: this.direccion,
-          cif: this.cif,
-          email: this.email,
-          tipoNegocio: this.tipoNegocio
-        });
-      },
-      (err) => {
-        this.error = true;
-        this.mensaje = err.error;
-        console.log(err);
-      }
-    );
+      this.perfilNegocioForm = this.formBuilder.group({
+        id: this.id,
+        nombre: this.nombre,
+        direccion: this.direccion,
+        cif: this.cif,
+        email: this.email,
+        tipoNegocio: this.tipoNegocio
+      });
+    } catch (err) {
+      this.error = true;
+      this.mensaje = err.error;
+      console.log(err);
+    }
 
     this.contrasena = new FormControl('', [
       Validators.required,
@@ -82,52 +80,27 @@ export class PerfilNegocioComponent implements OnInit {
     });
   }
 
-  onActualizaDatos(): void {
+  async onActualizaDatos(): Promise<void> {
     this.perfilNegocio.id = this.id.value;
     this.perfilNegocio.nombre = this.nombre.value;
     this.perfilNegocio.direccion = this.direccion.value;
     this.perfilNegocio.cif = this.cif.value;
     this.perfilNegocio.email = this.email.value;
     this.perfilNegocio.tipo = this.tipoNegocio.value;
-    this.negocioService.modificar(this.perfilNegocio).subscribe(
-      (data) => {
-        this.mensaje = data.mensaje;
-      },
-      (err) => {
-        this.error = true;
-        this.mensaje = err.error;
-      }
-    );
+    try {
+      const data = await this.negocioService.modificar(this.perfilNegocio);
+      this.mensaje = data.mensaje;
+    } catch (err) {
+      this.error = true;
+      this.mensaje = err.error;
+    }
   }
 
-   onCambiarContrasena(): void {
-    this.cambiarContrasena.email = this.authService.getEmail();
-    this.cambiarContrasena.contrasena = this.contrasena.value;
-    this.cambiarContrasena.confirmaContrasena = this.confirmaContrasena.value;
-
-    this.authService.cambiarContrasena(this.cambiarContrasena)
-      .subscribe(
-        (data) => {
-          this.mensajePass = data.mensaje;
-          const token = this.authService.getToken();
-          this.authService.refresh(new Jwt(token));
-        },
-        (err) => {
-          this.mensajePass = err.error;
-          this.errorPass = true;
-          console.log(err);
-        }
-      );
-  }
-
-  cargarTiposNegocio(): void {
-    this.negocioService.getTiposNegocio().subscribe(
-      (data: TipoNegocio[]) => {
-        this.tiposNegocio = data;
-      },
-      (error) => {
-        console.error('Error al cargar tipos de negocio:', error);
-      }
-    );
+  async cargarTiposNegocio(): Promise<void> {
+    try {
+      this.tiposNegocio = await this.negocioService.getTiposNegocio();
+    } catch (error) {
+      console.error('Error al cargar tipos de negocio:', error);
+    }
   }
 }

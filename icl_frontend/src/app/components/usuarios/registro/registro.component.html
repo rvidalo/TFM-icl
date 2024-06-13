@@ -134,7 +134,7 @@
                     <div *ngIf="formularioActivo === 'negocio'" class="tab-pane fade show active">
                         <h4 class="text-center mt-3">Registro de Negocio</h4>
 
-                        <div *ngIf="mensaje" class="alert alert-danger" role="alert">
+                        <div *ngIf="mensaje" class="alert alert-success" role="alert">
                             {{ mensaje }}
                         </div>
                         <form [formGroup]="registroNegocioForm" (ngSubmit)="onRegisterNegocio()">

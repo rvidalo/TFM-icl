@@ -1,15 +1,11 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Jwt } from '../models/jwt';
-// import { CambiarPassword } from '../models/cambiar-password';
-// import { EmailPassword } from '../models/email-password';
 import { Usuario } from '../models/usuario';
 import { Login } from '../models/login';
 import { Negocio } from '../models/negocio';
-import { CambiarContrasena } from '../models/cambiar-contrasena';
 
 const TOKEN_KEY = 'AuthToken';
 const EMAIL_DETALLE = 'EmailDetalle';
@@ -117,28 +113,18 @@ export class AuthService {
     window.location.href = '/';
   }
 
-   public registro(nuevoUsuario: Usuario): Observable<any> {
-     return this.http.post<Jwt>(BACK_URL + 'api/auth/registroUsuario', nuevoUsuario);
+   public registro(nuevoUsuario: Usuario): Promise<any> {
+     return this.http.post<Jwt>(BACK_URL + 'api/auth/registroUsuario', nuevoUsuario).toPromise();
    }
 
-   public registroNegocio(nuevoNegocio: Negocio): Observable<any> {
-     return this.http.post<Jwt>(BACK_URL + 'api/auth/registroNegocio', nuevoNegocio);
+   public registroNegocio(nuevoNegocio: Negocio): Promise<any> {
+     return this.http.post<Jwt>(BACK_URL + 'api/auth/registroNegocio', nuevoNegocio).toPromise();
    }
 
-   public login(login: Login): Observable<Jwt> {
+   public login(login: Login): Promise<Jwt> {
     console.log(BACK_URL + 'api/auth/login');
     console.log(login)
-    return this.http.post<Jwt>(BACK_URL + 'api/auth/login', login);
+    return this.http.post<Jwt>(BACK_URL + 'api/auth/login', login).toPromise();
   }
 
-    public refresh(jwt: Jwt): Observable<Jwt> {
-      return this.http.post<Jwt>(BACK_URL + 'api/auth/refresh', jwt);
-    }
-/*   public enviarEmailPassword(emailPassword: EmailPassword): Observable<any> {
-    return this.http.post<any>(BACK_URL + 'api/auth/email-password', emailPassword);
-  }*/
-
-  public cambiarContrasena(cambiarContrasena: CambiarContrasena): Observable<any> {
-    return this.http.post<any>(BACK_URL + 'api/auth/cambiar-contrasena', cambiarContrasena);
-  } 
 }

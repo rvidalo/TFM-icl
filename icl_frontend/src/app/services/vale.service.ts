@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Vale } from '../models/vale';
 import { ValeCanjeado } from '../models/vale-canjeado';
@@ -14,32 +13,32 @@ export class ValeService {
   
   constructor(private http: HttpClient) {}
   
-  public getVales(): Observable<any> {
-    return this.http.get<any>(BACK_URL + 'api/vales');
+  public getVales(): Promise<any> {
+    return this.http.get<any>(BACK_URL + 'api/vales').toPromise();
   }
 
-  public getCanjeadosUsuario(email: string): Observable<any> {
+  public getCanjeadosUsuario(email: string): Promise<any> {
     const param = new HttpParams().append('email', email);
-    return this.http.get<any>(BACK_URL + 'api/canjeados/usuario', { params: param });
+    return this.http.get<any>(BACK_URL + 'api/canjeados/usuario', { params: param }).toPromise();
   }
   
-  public getCanjeadosNegocio(email: string): Observable<any> {
+  public getCanjeadosNegocio(email: string): Promise<any> {
     const param = new HttpParams().append('email', email);
-    return this.http.get<any>(BACK_URL + 'api/canjeados/negocio', { params: param });
+    return this.http.get<any>(BACK_URL + 'api/canjeados/negocio', { params: param }).toPromise();
   }
 
-  public getValeUsuario(email: string): Observable<any> {
+  public getValeUsuario(email: string): Promise<any> {
     const param = new HttpParams().append('email', email);
-    return this.http.get<any>(BACK_URL + 'api/vales/usuario', { params: param });
+    return this.http.get<any>(BACK_URL + 'api/vales/usuario', { params: param }).toPromise();
   }
   
-  public nuevoVale(email: string): Observable<any> {
+  public nuevoVale(email: string): Promise<any> {
     const param = new HttpParams().append('email', email);
-    return this.http.post<any>(BACK_URL + 'api/vales/nuevo?email='+email, null);
+    return this.http.post<any>(BACK_URL + 'api/vales/nuevo?email='+email, null).toPromise();
   }
   
-  public canjearVale(valeCanjeado: ValeCanjeado) : Observable<any> {
-    return this.http.post<number>(BACK_URL + 'api/canjeados/nuevo', valeCanjeado);
+  public canjearVale(valeCanjeado: ValeCanjeado) : Promise<any> {
+    return this.http.post<number>(BACK_URL + 'api/canjeados/nuevo', valeCanjeado).toPromise();
   }
 
 }

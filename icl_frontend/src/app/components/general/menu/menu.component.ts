@@ -20,27 +20,27 @@ export class MenuComponent implements OnInit {
     private valeService: ValeService,
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.isLogged = this.authService.isLogged();
     this.isAdmin = this.authService.isAdmin();
     this.isUsuario = this.authService.isUsuario();
     this.isNegocio = this.authService.isNegocio();
+    
     if (this.isLogged) {
       this.email = this.authService.getEmail();
     }
+    
     this.closeOnClick();
 
-    if(this.isUsuario){
-      this.valeService.getValeUsuario(this.email).subscribe(
-        (data) => {
-          if (data != null){
-            this.solicitudRealizada = true;
-          }
-        },
-        (err) => {
-          console.log(err);
+    if (this.isUsuario) {
+      try {
+        const data = await this.valeService.getValeUsuario(this.email);
+        if (data != null) {
+          this.solicitudRealizada = true;
         }
-      );
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 
