@@ -110,7 +110,7 @@ export class AuthService {
 
   public logOut(): void {
     window.sessionStorage.clear();
-    window.location.href = '/';
+    this.router.navigateByUrl('/');
   }
 
    public registro(nuevoUsuario: Usuario): Promise<any> {
